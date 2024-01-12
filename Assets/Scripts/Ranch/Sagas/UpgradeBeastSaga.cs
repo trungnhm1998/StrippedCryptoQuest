@@ -6,8 +6,8 @@ using CryptoQuest.Ranch.Object;
 using CryptoQuest.UI.Actions;
 using IndiGames.Core.Common;
 using IndiGames.Core.Events;
-using UniRx;
 using Newtonsoft.Json;
+using UniRx;
 using UnityEngine;
 
 namespace CryptoQuest.Ranch.Sagas
@@ -42,7 +42,7 @@ namespace CryptoQuest.Ranch.Sagas
             ActionDispatcher.Dispatch(new ShowLoading(false));
 
             ActionDispatcher.Dispatch(new BeastUpgradeSucceed());
-            ActionDispatcher.Dispatch(new GetBeasts());
+            ActionDispatcher.Dispatch(new FetchProfileBeastsAction());
         }
 
         private void OnError(Exception exception)

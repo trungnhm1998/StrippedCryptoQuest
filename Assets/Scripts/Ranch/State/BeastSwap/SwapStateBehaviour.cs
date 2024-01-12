@@ -1,9 +1,6 @@
-using System.Collections.Generic;
-using CryptoQuest.Beast;
-using CryptoQuest.Ranch.Sagas;
 using CryptoQuest.Ranch.UI;
+using CryptoQuest.Sagas.Objects;
 using CryptoQuest.UI.Tooltips.Events;
-using IndiGames.Core.Common;
 using IndiGames.Core.Events;
 using TinyMessenger;
 using UnityEngine;
@@ -19,23 +16,28 @@ namespace CryptoQuest.Ranch.State.BeastSwap
         private TinyMessageSubscriptionToken _getDataInBoxSucceed;
         private TinyMessageSubscriptionToken _getDataSucceed;
 
-        private List<IBeast> _cachedGameData = new();
-        private List<IBeast> _cachedWalletData = new();
-
         private static readonly int OverViewState = Animator.StringToHash("OverviewState");
         private static readonly int ConfirmState = Animator.StringToHash("ConfirmState");
+        private bool _hasFocus;
 
         protected override void OnEnter()
         {
             _controller = StateMachine.GetComponent<RanchStateController>();
+            var uiBeastSwap = _controller.UIBeastSwap;
 
-            _getDataSucceed = ActionDispatcher.Bind<GetNftBeastsSucceed>(InitializeUI);
-            _getDataInGameSucceed = ActionDispatcher.Bind<GetInGameBeastsSucceed>(GetInGameBeasts);
-            _getDataInBoxSucceed = ActionDispatcher.Bind<GetInBoxBeastsSucceed>(GetWalletBeasts);
+            uiBeastSwap.Contents.SetActive(true);
+            uiBeastSwap.InBoxBeastList.Clear();
+            uiBeastSwap.InGameBeastList.Clear();
+            _hasFocus = false;
 
-            _controller.UIBeastSwap.Contents.SetActive(true);
-            _controller.UIBeastSwap.SelectedWalletBeatIds.Clear();
-            _controller.UIBeastSwap.SelectedInGameBeatIds.Clear();
+            _getDataSucceed = ActionDispatcher.Bind<GetBeastSucceeded>(_ => _hasFocus = false);
+
+            _getDataInGameSucceed =
+                ActionDispatcher.Bind<FetchInGameBeastSucceeded>(ctx =>
+                    FillBeasts(uiBeastSwap.InGameBeastList, ctx.InGameBeasts));
+            _getDataInBoxSucceed =
+                ActionDispatcher.Bind<FetchInboxBeastSucceeded>(data =>
+                    FillBeasts(uiBeastSwap.InBoxBeastList, data.InBoxBeasts));
 
             UIBeastItem.Pressed += UIBeastItemOnPressed;
 
@@ -46,8 +48,7 @@ namespace CryptoQuest.Ranch.State.BeastSwap
             _controller.Controller.Input.ShowDetailEvent += ShowBeastDetail;
 
             _controller.Controller.ShowWalletEventChannel.EnableAll().Show();
-            ResetBeastData();
-            ActionDispatcher.Dispatch(new GetBeasts());
+            ActionDispatcher.Dispatch(new FetchProfileBeastsAction());
         }
 
         protected override void OnExit()
@@ -67,82 +68,58 @@ namespace CryptoQuest.Ranch.State.BeastSwap
             ActionDispatcher.Unbind(_getDataSucceed);
         }
 
-        private void ResetBeastData()
-        {
-            _cachedGameData = new List<IBeast>();
-            _cachedWalletData = new List<IBeast>();
-        }
-
         private void ShowBeastDetail()
         {
             _showTooltipEventChannelSO.RaiseEvent(true);
         }
 
-        private void HideBeastDetail()
+        private void HideBeastTooltip()
         {
             _showTooltipEventChannelSO.RaiseEvent(false);
         }
 
+        private void UIBeastItemOnPressed(UIBeastItem item) => _controller.UIBeastSwap.TransferBeast();
+
         private void ResetTransferRequested()
         {
-            HideBeastDetail();
-            DisablePendingTag();
-            _controller.UIBeastSwap.InGameBeastList.SetData(_cachedGameData);
-            _controller.UIBeastSwap.WalletBeastList.SetData(_cachedWalletData);
-            _controller.UIBeastSwap.Focus();
-        }
-
-        private void DisablePendingTag()
-        {
-            _controller.UIBeastSwap.InGameBeastList.UpdateList();
-            _controller.UIBeastSwap.WalletBeastList.UpdateList();
+            HideBeastTooltip();
+            _controller.UIBeastSwap.ResetSelected();
         }
 
         private void SendItemsRequested()
         {
-            HideBeastDetail();
+            HideBeastTooltip();
             if (!_controller.UIBeastSwap.IsValid()) return;
             StateMachine.Play(ConfirmState);
         }
 
         private void CancelBeastSwapState()
         {
-            HideBeastDetail();
-            DisablePendingTag();
+            HideBeastTooltip();
             _controller.UIBeastSwap.Contents.SetActive(false);
             _controller.Controller.Initialize();
+            _controller.UIBeastSwap.OnTransferring();
             StateMachine.Play(OverViewState);
         }
 
-        private void InitializeUI(GetNftBeastsSucceed _) => _controller.UIBeastSwap.Focus();
-
-        private void UIBeastItemOnPressed(UIBeastItem item) => _controller.UIBeastSwap.OnBeastSelected(item);
-        private void GetWalletBeasts(GetInBoxBeastsSucceed beast)
+        private void FillBeasts(UIBeastList uiList, BeastResponse[] beasts)
         {
-            foreach (var data in beast.WalletBeasts)
+            uiList.Initialize(beasts);
+            uiList.Interactable = false;
+
+            if (_hasFocus)
             {
-                var newBeast = ServiceProvider.GetService<IBeastResponseConverter>().Convert(data);
-                _cachedWalletData.Add(newBeast);
+                _hasFocus = false;
+                return;
             }
 
-            _controller.UIBeastSwap.WalletBeastList.SetData(_cachedWalletData);
-        }
-
-        private void GetInGameBeasts(GetInGameBeastsSucceed beast)
-        {
-            foreach (var data in beast.InGameBeasts)
-            {
-                var newBeast = ServiceProvider.GetService<IBeastResponseConverter>().Convert(data);
-                _cachedGameData.Add(newBeast);
-            }
-
-            _controller.UIBeastSwap.InGameBeastList.SetData(_cachedGameData);
+            _hasFocus = uiList.TryFocus();
         }
 
         private void SwitchToOtherListRequested(Vector2 direction)
         {
             _controller.UIBeastSwap.SwitchList(direction);
-            HideBeastDetail();
+            HideBeastTooltip();
         }
     }
 }

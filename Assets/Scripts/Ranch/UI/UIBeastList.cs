@@ -1,87 +1,55 @@
 using System.Collections.Generic;
-using CryptoQuest.Beast;
-using UnityEngine;
-using UnityEngine.Pool;
-using UnityEngine.UI;
+using CryptoQuest.Sagas.Objects;
 
 namespace CryptoQuest.Ranch.UI
 {
-    public class UIBeastList : MonoBehaviour
+    public class UIBeastList : UIBoxList<UIBeastItem>
     {
-        private const bool COLLECTION_CHECK = true;
-        private const int DEFAULT_POOL_SIZE = 10;
-        [SerializeField] private int _poolSize = 10;
-        public Transform Child => _scrollRect.content;
-        [SerializeField] private ScrollRect _scrollRect;
-        [SerializeField] private UIBeastItem _beastItemPrefab;
-        [SerializeField] private RectTransform _tooltipSafeArea;
-
-        private List<IBeast> _beastData = new();
-        public List<IBeast> Data => _beastData;
-        private List<UIBeastItem> _beastUI = new();
-
-        private IObjectPool<UIBeastItem> _beastUIPool;
-
-        private IObjectPool<UIBeastItem> BeastUIPool =>
-            _beastUIPool ??= new ObjectPool<UIBeastItem>(OnCreate, OnGet, OnRelease, OnDestroyBeast,
-                COLLECTION_CHECK, DEFAULT_POOL_SIZE, _poolSize);
-
-        private void OnDisable()
+        public List<UIBeastItem> SelectedItems
         {
-            CleanUpScrollView();
-        }
-
-        public void SetData(List<IBeast> data)
-        {
-            _beastData = data;
-            CleanUpScrollView();
-            RenderData();
-        }
-
-        public void SetEnableButtons(bool isEnable = true)
-        {
-            foreach (var item in _beastUI) item.EnableButton(isEnable);
-        }
-
-        public void UpdateList()
-        {
-            foreach (var item in _beastUI) item.EnablePendingTag(false);
-        }
-
-        private void CleanUpScrollView()
-        {
-            while (_beastUI.Count > 0)
+            get
             {
-                BeastUIPool.Release(_beastUI[0]);
-            }
+                var beasts = GetComponentsInChildren<UIBeastItem>();
+                var beastsToTransfer = new List<UIBeastItem>();
+                foreach (var uiBeast in beasts)
+                {
+                    if (!uiBeast.MarkedForTransfer) continue;
+                    beastsToTransfer.Add(uiBeast);
+                }
 
-            _beastUI.Clear();
-        }
-
-        private void RenderData()
-        {
-            foreach (var data in _beastData)
-            {
-                var item = BeastUIPool.Get();
-                item.SetItemInfo(data);
+                return beastsToTransfer;
             }
         }
 
-        #region Pool
-
-        private void OnDestroyBeast(UIBeastItem beast) => Destroy(beast.gameObject);
-
-        private void OnRelease(UIBeastItem beast) => beast.gameObject.SetActive(false);
-
-        private void OnGet(UIBeastItem beast)
+        public void Initialize(BeastResponse[] beastResponses)
         {
-            _beastUI.Add(beast);
-            beast.transform.SetAsLastSibling();
-            beast.gameObject.SetActive(true);
+            Clear();
+            foreach (var beast in beastResponses)
+            {
+                if (beast.id == -1) continue;
+                var uiBeast = GetItem();
+                uiBeast.Initialize(beast);
+            }
         }
 
-        private UIBeastItem OnCreate() => Instantiate(_beastItemPrefab, _scrollRect.content);
+        public void Reset()
+        {
+            foreach (UIBeastItem uiBeast in GetComponentsInChildren<UIBeastItem>())
+            {
+                uiBeast.MarkedForTransfer = false;
+            }
+        }
 
-        #endregion
+        protected override void OnRelease(UIBeastItem item)
+        {
+            base.OnRelease(item);
+            item.MarkedForTransfer = false;
+        }
+
+        protected override void OnGet(UIBeastItem uiItem)
+        {
+            base.OnGet(uiItem);
+            uiItem.MarkedForTransfer = false;
+        }
     }
 }

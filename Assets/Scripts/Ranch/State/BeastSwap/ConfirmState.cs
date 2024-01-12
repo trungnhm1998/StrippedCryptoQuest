@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+using CryptoQuest.Ranch.UI;
 using CryptoQuest.UI.Actions;
 using IndiGames.Core.Events;
 using TinyMessenger;
@@ -29,18 +29,10 @@ namespace CryptoQuest.Ranch.State.BeastSwap
 
             _controllerState.Controller.Input.CancelEvent += CancelTransmission;
 
-            _controllerState.UIBeastSwap.InGameBeastList.SetEnableButtons(false);
-            _controllerState.UIBeastSwap.WalletBeastList.SetEnableButtons(false);
-
             _controllerState.Controller.DialogController.ChoiceDialog
                 .SetButtonsEvent(OnConfirm, OnCancel)
                 .SetMessage(_confirmMessage)
                 .Show();
-        }
-
-        private void CancelTransmission()
-        {
-            StateMachine.Play(SwapState);
         }
 
         protected override void OnExit()
@@ -53,28 +45,22 @@ namespace CryptoQuest.Ranch.State.BeastSwap
             _controllerState.Controller.DialogController.ChoiceDialog.Hide();
         }
 
-        private void OnConfirm()
+        private void CancelTransmission() => StateMachine.Play(SwapState);
+
+        private void OnConfirm() => ProceedToSendBeasts();
+
+        private void ShowTransferFailedMessage(ActionBase _) => HandleTransferMessage(_transferFailedMsg);
+
+        private void ShowTransferSucceededMessage(ActionBase _)
         {
-            ProceedToSendBeasts();
-            _controllerState.UIBeastSwap.ConfirmedTransmission();
+            ActionDispatcher.Dispatch(new ShowLoading(false));
+            HandleTransferMessage(_transferSucceededMsg);
         }
 
         private void OnCancel()
         {
             _controllerState.Controller.DialogController.ChoiceDialog.Hide();
             StateMachine.Play(SwapState);
-        }
-
-
-        private void ShowTransferFailedMessage(ActionBase _)
-        {
-            HandleTransferMessage(_transferFailedMsg);
-        }
-
-        private void ShowTransferSucceededMessage(ActionBase _)
-        {
-            ActionDispatcher.Dispatch(new ShowLoading(false));
-            HandleTransferMessage(_transferSucceededMsg);
         }
 
         private void HandleTransferMessage(LocalizedString msg)
@@ -94,11 +80,10 @@ namespace CryptoQuest.Ranch.State.BeastSwap
 
         private void ProceedToSendBeasts()
         {
-            List<int> listBeastInGameToTransfer = _controllerState.UIBeastSwap.SelectedInGameBeatIds;
-            List<int> listBeastWalletToTransfer = _controllerState.UIBeastSwap.SelectedWalletBeatIds;
-            _controllerState.UIBeastSwap.TransferBeast();
+            UIBeastItem[] inGameBeasts = _controllerState.UIBeastSwap.ToGame.ToArray();
+            UIBeastItem[] inDBoxBeasts = _controllerState.UIBeastSwap.ToWallet.ToArray();
             ActionDispatcher.Dispatch(new ShowLoading());
-            ActionDispatcher.Dispatch(new SendBeastsToBothSide(listBeastInGameToTransfer.ToArray(), listBeastWalletToTransfer.ToArray()));
+            ActionDispatcher.Dispatch(new SendBeastsToBothSide(inGameBeasts, inDBoxBeasts));
         }
     }
 }

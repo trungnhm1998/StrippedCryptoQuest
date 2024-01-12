@@ -36,11 +36,9 @@ namespace CryptoQuest.Ranch.Sagas
     [Serializable]
     public class EvolveBeastRequest
     {
-        [JsonProperty("baseBeastId1")]
-        public string BaseBeast;
+        [JsonProperty("baseBeastId1")] public string BaseBeast;
 
-        [JsonProperty("baseBeastId2")]
-        public string MaterialBeast;
+        [JsonProperty("baseBeastId2")] public string MaterialBeast;
     }
 
     public class EvolveBeastSaga : SagaBase<RequestEvolveBeast>
@@ -71,8 +69,9 @@ namespace CryptoQuest.Ranch.Sagas
             if (response.code != (int)HttpStatusCode.OK) return;
             Debug.Log($"EvolveBeast:: Load Data Success!");
             ActionDispatcher.Dispatch(new ShowLoading(false));
-            ActionDispatcher.Dispatch(new GetBeasts());
+            ActionDispatcher.Dispatch(new EvolveRequestSuccess());
             ActionDispatcher.Dispatch(new BeastEvolveRespond(response, _requestContext));
+            ActionDispatcher.Dispatch(new FetchProfileBeastsAction());
         }
 
         private void HandleRequestFailed(Exception exception)

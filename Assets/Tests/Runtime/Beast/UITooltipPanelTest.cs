@@ -101,7 +101,7 @@ namespace CryptoQuest.Tests.Runtime.Beast
             _beast.Stats.Returns(originalStats);
             _beast.IsValid().Returns(true);
 
-            _beastItem.SetItemInfo(_beast);
+            // _beastItem.Initialize(_beast);
         }
 
         [UnityTest]
