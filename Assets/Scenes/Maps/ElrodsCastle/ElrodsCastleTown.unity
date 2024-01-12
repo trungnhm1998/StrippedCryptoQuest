@@ -2873,21 +2873,25 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1256786330}
     m_Modifications:
-    - target: {fileID: 1271547619389880595, guid: 8f7c4212ba0891f498bc823491d05d47, type: 3}
-      propertyPath: _actorSpawnSettingSO
-      value: 
+    - target: {fileID: 2237594207876609974, guid: 8f7c4212ba0891f498bc823491d05d47, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 1271547619389880595, guid: 8f7c4212ba0891f498bc823491d05d47, type: 3}
-      propertyPath: _actorDeSpawnSettingSO
+    - target: {fileID: 8138359826185605603, guid: 8f7c4212ba0891f498bc823491d05d47, type: 3}
+      propertyPath: m_SceneBindings.Array.data[202].value
       value: 
-      objectReference: {fileID: 11400000, guid: 03a6ea9bcb10ea2489987bc47791102d, type: 2}
+      objectReference: {fileID: 1783430344}
+    - target: {fileID: 8138359826185605603, guid: 8f7c4212ba0891f498bc823491d05d47, type: 3}
+      propertyPath: m_ExposedReferences.m_References.Array.data[26].second
+      value: 
+      objectReference: {fileID: 1058121845}
+    - target: {fileID: 8138359826185605603, guid: 8f7c4212ba0891f498bc823491d05d47, type: 3}
+      propertyPath: m_ExposedReferences.m_References.Array.data[27].second
+      value: 
+      objectReference: {fileID: 1058121845}
     - target: {fileID: 8462426571574486041, guid: 8f7c4212ba0891f498bc823491d05d47, type: 3}
       propertyPath: m_Name
       value: ActorSpawner_cs_ch005_elrods_belau_1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8462426571574486041, guid: 8f7c4212ba0891f498bc823491d05d47, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9148048175494668415, guid: 8f7c4212ba0891f498bc823491d05d47, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2930,12 +2934,8 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects:
-    - {fileID: 6876889112371356374, guid: 8f7c4212ba0891f498bc823491d05d47, type: 3}
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 9148048175494668415, guid: 8f7c4212ba0891f498bc823491d05d47, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1676934737}
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8f7c4212ba0891f498bc823491d05d47, type: 3}
 --- !u!1001 &861545149
@@ -5462,109 +5462,6 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 1445938002240597384, guid: 1d3e65446eeb0f8469f22e00c1d2daff, type: 3}
   m_PrefabInstance: {fileID: 1675170227}
-  m_PrefabAsset: {fileID: 0}
---- !u!1001 &1676934736
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 1883573894}
-    m_Modifications:
-    - target: {fileID: 4414341839223721585, guid: ac3b4caf1a77beb48a68adebfbe6f838, type: 3}
-      propertyPath: m_Name
-      value: cs_ch005_elrods_belau_1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5254262839350152966, guid: ac3b4caf1a77beb48a68adebfbe6f838, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 20.76
-      objectReference: {fileID: 0}
-    - target: {fileID: 5254262839350152966, guid: ac3b4caf1a77beb48a68adebfbe6f838, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 19.73
-      objectReference: {fileID: 0}
-    - target: {fileID: 6232468918158837689, guid: ac3b4caf1a77beb48a68adebfbe6f838, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 12.525106
-      objectReference: {fileID: 0}
-    - target: {fileID: 6232468918158837689, guid: ac3b4caf1a77beb48a68adebfbe6f838, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -19.585896
-      objectReference: {fileID: 0}
-    - target: {fileID: 6232468918158837689, guid: ac3b4caf1a77beb48a68adebfbe6f838, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0.4192763
-      objectReference: {fileID: 0}
-    - target: {fileID: 6232468918158837689, guid: ac3b4caf1a77beb48a68adebfbe6f838, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6232468918158837689, guid: ac3b4caf1a77beb48a68adebfbe6f838, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6232468918158837689, guid: ac3b4caf1a77beb48a68adebfbe6f838, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6232468918158837689, guid: ac3b4caf1a77beb48a68adebfbe6f838, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6232468918158837689, guid: ac3b4caf1a77beb48a68adebfbe6f838, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6232468918158837689, guid: ac3b4caf1a77beb48a68adebfbe6f838, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6232468918158837689, guid: ac3b4caf1a77beb48a68adebfbe6f838, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8239929161965676886, guid: ac3b4caf1a77beb48a68adebfbe6f838, type: 3}
-      propertyPath: m_SceneBindings.Array.size
-      value: 250
-      objectReference: {fileID: 0}
-    - target: {fileID: 8239929161965676886, guid: ac3b4caf1a77beb48a68adebfbe6f838, type: 3}
-      propertyPath: m_SceneBindings.Array.data[248].key
-      value: 
-      objectReference: {fileID: -8483992491232850278, guid: c40c2068af813934396402117ad1d787, type: 2}
-    - target: {fileID: 8239929161965676886, guid: ac3b4caf1a77beb48a68adebfbe6f838, type: 3}
-      propertyPath: m_SceneBindings.Array.data[249].key
-      value: 
-      objectReference: {fileID: 4018455560138482185, guid: c40c2068af813934396402117ad1d787, type: 2}
-    - target: {fileID: 8239929161965676886, guid: ac3b4caf1a77beb48a68adebfbe6f838, type: 3}
-      propertyPath: m_SceneBindings.Array.data[202].value
-      value: 
-      objectReference: {fileID: 1783430344}
-    - target: {fileID: 8239929161965676886, guid: ac3b4caf1a77beb48a68adebfbe6f838, type: 3}
-      propertyPath: m_SceneBindings.Array.data[249].value
-      value: 
-      objectReference: {fileID: 1682536669}
-    - target: {fileID: 8239929161965676886, guid: ac3b4caf1a77beb48a68adebfbe6f838, type: 3}
-      propertyPath: m_ExposedReferences.m_References.Array.data[26].second
-      value: 
-      objectReference: {fileID: 1058121845}
-    - target: {fileID: 8239929161965676886, guid: ac3b4caf1a77beb48a68adebfbe6f838, type: 3}
-      propertyPath: m_ExposedReferences.m_References.Array.data[27].second
-      value: 
-      objectReference: {fileID: 1058121845}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: ac3b4caf1a77beb48a68adebfbe6f838, type: 3}
---- !u!4 &1676934737 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6232468918158837689, guid: ac3b4caf1a77beb48a68adebfbe6f838, type: 3}
-  m_PrefabInstance: {fileID: 1676934736}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1682536669 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8725327721533510112, guid: ac3b4caf1a77beb48a68adebfbe6f838, type: 3}
-  m_PrefabInstance: {fileID: 1676934736}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1688087981
 GameObject:

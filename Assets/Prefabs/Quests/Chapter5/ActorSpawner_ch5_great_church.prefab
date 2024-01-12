@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 8153197863938334888}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 19.2, y: -14.49, z: 0}
+  m_LocalPosition: {x: 19.2, y: -29.01, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -266,6 +266,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6746964905341171565, guid: 4b60b5b9d2169d24ba73b8ec3fb803ce, type: 3}
+      propertyPath: _trackNames.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6746964905341171565, guid: 4b60b5b9d2169d24ba73b8ec3fb803ce, type: 3}
+      propertyPath: _trackNames.Array.data[1]
+      value: HeroPos
+      objectReference: {fileID: 0}
+    - target: {fileID: 6746964905341171565, guid: 4b60b5b9d2169d24ba73b8ec3fb803ce, type: 3}
+      propertyPath: _objectsToBindTags.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6746964905341171565, guid: 4b60b5b9d2169d24ba73b8ec3fb803ce, type: 3}
+      propertyPath: _objectsToBindTags.Array.data[1]
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 7469948034147515342, guid: 4b60b5b9d2169d24ba73b8ec3fb803ce, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -276,12 +292,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8239929161965676886, guid: 4b60b5b9d2169d24ba73b8ec3fb803ce, type: 3}
       propertyPath: m_SceneBindings.Array.size
-      value: 60
+      value: 61
       objectReference: {fileID: 0}
     - target: {fileID: 8239929161965676886, guid: 4b60b5b9d2169d24ba73b8ec3fb803ce, type: 3}
       propertyPath: m_SceneBindings.Array.data[59].key
       value: 
       objectReference: {fileID: 2736210093364312449, guid: b7b750339d9cf4e43bed9fbbb09793fc, type: 2}
+    - target: {fileID: 8239929161965676886, guid: 4b60b5b9d2169d24ba73b8ec3fb803ce, type: 3}
+      propertyPath: m_SceneBindings.Array.data[60].key
+      value: 
+      objectReference: {fileID: 6658899696097947076, guid: b7b750339d9cf4e43bed9fbbb09793fc, type: 2}
     - target: {fileID: 8239929161965676886, guid: 4b60b5b9d2169d24ba73b8ec3fb803ce, type: 3}
       propertyPath: m_SceneBindings.Array.data[27].value
       value: 

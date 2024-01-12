@@ -89,7 +89,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 461577474559183162}
-  - {fileID: 3770453795825462046}
+  - {fileID: 6112921515979161356}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1271547619389880595
@@ -109,7 +109,7 @@ MonoBehaviour:
   _actorDef: {fileID: 11400000, guid: b1d83d3626453d84c98649de6449a77b, type: 2}
   _actorSpawnSettingSO: {fileID: 0}
   _actorDeSpawnSettingSO: {fileID: 11400000, guid: 03a6ea9bcb10ea2489987bc47791102d, type: 2}
---- !u!1001 &7074445511280192679
+--- !u!1001 &192345054894028981
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -117,6 +117,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 9148048175494668415}
     m_Modifications:
+    - target: {fileID: 2136624722060119811, guid: ac3b4caf1a77beb48a68adebfbe6f838, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4414341839223721585, guid: ac3b4caf1a77beb48a68adebfbe6f838, type: 3}
       propertyPath: m_Name
       value: cs_ch005_elrods_belau_1
@@ -171,19 +175,32 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8239929161965676886, guid: ac3b4caf1a77beb48a68adebfbe6f838, type: 3}
       propertyPath: m_SceneBindings.Array.size
-      value: 249
+      value: 250
       objectReference: {fileID: 0}
     - target: {fileID: 8239929161965676886, guid: ac3b4caf1a77beb48a68adebfbe6f838, type: 3}
       propertyPath: m_SceneBindings.Array.data[248].key
       value: 
       objectReference: {fileID: -8483992491232850278, guid: c40c2068af813934396402117ad1d787, type: 2}
+    - target: {fileID: 8239929161965676886, guid: ac3b4caf1a77beb48a68adebfbe6f838, type: 3}
+      propertyPath: m_SceneBindings.Array.data[249].key
+      value: 
+      objectReference: {fileID: 4018455560138482185, guid: c40c2068af813934396402117ad1d787, type: 2}
+    - target: {fileID: 8239929161965676886, guid: ac3b4caf1a77beb48a68adebfbe6f838, type: 3}
+      propertyPath: m_SceneBindings.Array.data[249].value
+      value: 
+      objectReference: {fileID: 8916511104333343061}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ac3b4caf1a77beb48a68adebfbe6f838, type: 3}
---- !u!4 &3770453795825462046 stripped
+--- !u!4 &6112921515979161356 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6232468918158837689, guid: ac3b4caf1a77beb48a68adebfbe6f838, type: 3}
-  m_PrefabInstance: {fileID: 7074445511280192679}
+  m_PrefabInstance: {fileID: 192345054894028981}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8916511104333343061 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8725327721533510112, guid: ac3b4caf1a77beb48a68adebfbe6f838, type: 3}
+  m_PrefabInstance: {fileID: 192345054894028981}
   m_PrefabAsset: {fileID: 0}
