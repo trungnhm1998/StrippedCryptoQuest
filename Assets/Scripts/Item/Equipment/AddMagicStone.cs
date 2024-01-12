@@ -1,8 +1,10 @@
 using System;
 using System.Net;
 using CryptoQuest.API;
+using CryptoQuest.Inventory.Actions;
 using CryptoQuest.Item.MagicStone.Sagas;
 using CryptoQuest.Networking;
+using CryptoQuest.Sagas.MagicStone;
 using CryptoQuest.Sagas.Objects;
 using CryptoQuest.UI.Actions;
 using IndiGames.Core.Common;
