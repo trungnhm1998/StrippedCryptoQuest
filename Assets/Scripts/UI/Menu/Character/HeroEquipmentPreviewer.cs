@@ -116,17 +116,19 @@ namespace CryptoQuest.UI.Menu.Character
                     Equipment = slotItem.Equipment
                 });
             }
-            _clonedHero.Init(cloneSpec);
 
             // Remove this so equip/unequip wont affect server or inventory
-            RemoveComponent(typeof(EquipmentsNetworkController));
-            RemoveComponent(typeof(InventoryEquipmentsController));
+            RemoveComponent<EquipmentsNetworkController>();
+            RemoveComponent<InventoryEquipmentsController>();
+            
+            _clonedHero.Init(cloneSpec);
         }
 
-        private void RemoveComponent(Type componentType)
+        private void RemoveComponent<T>() where T : CharacterComponentBase
         {
-            var component = _clonedHero.GetComponent(componentType);
-            Destroy(component);
+            var component = _clonedHero.GetComponent<T>();
+            component.enabled = false;
+            DestroyImmediate(component);
         }
 
         private void PreviewValue()

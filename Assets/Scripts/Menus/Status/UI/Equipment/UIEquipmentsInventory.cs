@@ -144,7 +144,7 @@ namespace CryptoQuest.Menus.Status.UI.Equipment
 
         private IEnumerator InstantiateNewEquipmentUICo(IEquipment equipment)
         {
-            if (equipment == null || !equipment.IsValid() || equipment.IsEquipped() ) yield break;
+            if (equipment == null || !equipment.IsValid() || equipment.IsEquipped()) yield break;
             var prefab = equipment.Prefab;
             if (_categoryType != prefab.EquipmentCategory) yield break;
             if (prefab.AllowedSlots.Contains(_slotSlot) == false) yield break;
