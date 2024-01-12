@@ -1,4 +1,7 @@
 using CryptoQuest.Beast;
+using CryptoQuest.Beast.ScriptableObjects;
+using CryptoQuest.Sagas.Objects;
+using IndiGames.Core.Common;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -18,41 +21,35 @@ namespace CryptoQuest.Ranch.UI
         [SerializeField] private GameObject _pendingTag;
         [SerializeField] private GameObject _inGameTag;
         [SerializeField] private Button _button;
-        [SerializeField] private RectTransform _tooltipPosition;
-        public IBeast Beast { get; private set; }
-        public Transform Parent { get; set; }
-        public int Id { get; private set; }
+        private IBeast _beast;
+        public IBeast Beast => _beast;
+        public BeastResponse Response { get; private set; }
+        public int Id => Response.id;
 
-        public bool IsSelected { get; private set; } = false;
-        private bool _isInGame = false;
+        private void OnDisable() => _beast = NullBeast.Instance;
+
+        public bool MarkedForTransfer
+        {
+            get => _pendingTag.activeSelf;
+            set => _pendingTag.SetActive(value);
+        }
+
+        public void Initialize(BeastResponse beast)
+        {
+            _beast = NullBeast.Instance;
+            MarkedForTransfer = false;
+            Response = beast;
+
+            _beast = ServiceProvider.GetService<IBeastResponseConverter>().Convert(beast);
+            _name.text = $"{Id}.{Response.name}";
+            _level.text = $"Lv.{_beast.Level}";
+        }
 
         public void OnSelectToTransfer()
         {
-            if (_isInGame) return;
+            if (_inGameTag.activeSelf) return;
+            MarkedForTransfer = !MarkedForTransfer;
             Pressed?.Invoke(this);
-
-            IsSelected = !IsSelected;
-            EnablePendingTag(IsSelected);
-        }
-
-        public void EnablePendingTag(bool isSelected) => _pendingTag.SetActive(isSelected);
-        public void EnableButton(bool isEnable) => _button.enabled = isEnable;
-
-        public void Transfer(Transform parent)
-        {
-            gameObject.transform.SetParent(parent);
-            Parent = parent;
-        }
-
-        public void OnInspecting(bool isInspecting) { }
-
-        public void SetItemInfo(IBeast beast)
-        {
-            Beast = beast;
-            Id = beast.Id;
-            _localizeName.StringReference = beast.LocalizedName;
-            _level.text = $"Lv{beast.Level}";
-            _localizeName.RefreshString();
         }
     }
 }

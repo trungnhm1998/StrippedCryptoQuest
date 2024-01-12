@@ -1,7 +1,8 @@
 using System;
-using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using CryptoQuest.API;
+using CryptoQuest.Beast;
 using CryptoQuest.Networking;
 using CryptoQuest.Sagas.Objects;
 using CryptoQuest.UI.Actions;
@@ -12,12 +13,11 @@ using UnityEngine;
 
 namespace CryptoQuest.Ranch.Sagas
 {
-    public class GetNftBeast : SagaBase<GetBeasts>
+    public class GetNftBeast : SagaBase<FetchProfileBeastsAction>
     {
-        private readonly List<BeastResponse> _inGameBeastsCache = new();
-        private readonly List<BeastResponse> _inBoxBeastsCache = new();
+        [SerializeField] private BeastInventorySO _beastInventory;
 
-        protected override void HandleAction(GetBeasts ctx)
+        protected override void HandleAction(FetchProfileBeastsAction ctx)
         {
             ActionDispatcher.Dispatch(new ShowLoading());
 
@@ -27,50 +27,50 @@ namespace CryptoQuest.Ranch.Sagas
                 .Subscribe(OnGetBeasts, OnError);
         }
 
-        private void OnError(Exception ex)
-        {
-            Debug.Log($"GetNftBeast::OnError: {ex}");
-            ActionDispatcher.Dispatch(new ShowLoading(false));
-            ActionDispatcher.Dispatch(new GetNftBeastsFailed());
-        }
-
         private void OnGetBeasts(BeastsResponse response)
         {
-            if (response.code != (int)HttpStatusCode.OK) return;
-            UpdateInGameCache(response.data.beasts);
-            UpdateInboxCache(response.data.beasts);
-
             ActionDispatcher.Dispatch(new ShowLoading(false));
-            ActionDispatcher.Dispatch(new GetNftBeastsSucceed());
-            ActionDispatcher.Dispatch(new EvolveRequestSuccess());
+            if (response.code != (int)HttpStatusCode.OK) return;
+
+            var beastResponses = response.data.beasts;
+            if (beastResponses.Length == 0) return;
+
+            UpdateBeastsByStatus(beastResponses);
+
+            ActionDispatcher.Dispatch(new GetBeastSucceeded());
         }
 
-        private void UpdateInGameCache(BeastResponse[] dataBeasts)
+        private void UpdateBeastsByStatus(BeastResponse[] data)
         {
-            if (dataBeasts.Length == 0) return;
-            _inGameBeastsCache.Clear();
+            var inBox = data.Where(x => x.inGameStatus == (int)EBeastStatus.InBox).ToArray();
+            ActionDispatcher.Dispatch(new FetchInboxBeastSucceeded(inBox));
 
-            foreach (var beast in dataBeasts)
-            {
-                if (beast.inGameStatus != (int)EBeastStatus.InGame) continue;
-                _inGameBeastsCache.Add(beast);
-            }
+            var inGame = data.Where(x => x.inGameStatus == (int)EBeastStatus.InGame).ToArray();
+            ActionDispatcher.Dispatch(new FetchInGameBeastSucceeded(inGame));
 
-            ActionDispatcher.Dispatch(new GetInGameBeastsSucceed(_inGameBeastsCache));
+            FillInventory(inGame);
         }
 
-        private void UpdateInboxCache(BeastResponse[] dataBeasts)
+        private void FillInventory(BeastResponse[] data)
         {
-            if (dataBeasts.Length == 0) return;
-            _inBoxBeastsCache.Clear();
+            var converter = ServiceProvider.GetService<IBeastResponseConverter>();
 
-            foreach (var beast in dataBeasts)
+            _beastInventory.OwnedBeasts.Clear();
+
+            foreach (var beastResponse in data)
             {
-                if (beast.inGameStatus != (int)EBeastStatus.InBox) continue;
-                _inBoxBeastsCache.Add(beast);
+                if (beastResponse.id == -1) continue;
+                _beastInventory.OwnedBeasts.Add(converter.Convert(beastResponse));
             }
 
-            ActionDispatcher.Dispatch(new GetInBoxBeastsSucceed(_inBoxBeastsCache));
+            ActionDispatcher.Dispatch(new BeastInventoryFilled());
+        }
+
+        private void OnError(Exception ex)
+        {
+            Debug.Log($"<color=white>Saga::GetNftBeast::Error</color>:: {ex}");
+            ActionDispatcher.Dispatch(new ShowLoading(false));
+            ActionDispatcher.Dispatch(new GetBeastsFailed());
         }
     }
 }

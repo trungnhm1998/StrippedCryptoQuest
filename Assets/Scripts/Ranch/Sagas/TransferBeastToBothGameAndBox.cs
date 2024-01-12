@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using CryptoQuest.API;
 using CryptoQuest.Networking;
 using CryptoQuest.Ranch.Object;
-using CryptoQuest.System;
 using CryptoQuest.UI.Actions;
 using IndiGames.Core.Common;
 using IndiGames.Core.Events;
@@ -33,8 +33,8 @@ namespace CryptoQuest.Ranch.Sagas
         {
             var body = new Dictionary<string, int[]>()
             {
-                { "game", obj.SelectedInDimensionBoxBeasts },
-                { "wallet", obj.SelectedInGameBeasts }
+                { "game", obj.SelectedInDimensionBoxBeasts.Select(item => item.Id).ToArray() },
+                { "wallet", obj.SelectedInGameBeasts.Select(item => item.Id).ToArray() }
             };
 
             Debug.Log($"SendCharactersToBothSide::Body={JsonConvert.SerializeObject(body)}");

@@ -1,108 +1,65 @@
 using System.Collections.Generic;
-using System.Linq;
-using CryptoQuest.UI.Common;
-using CryptoQuest.UI.Utilities;
+using IndiGames.Core.Events;
 using UnityEngine;
 
 namespace CryptoQuest.Ranch.UI
 {
     public class UIBeastSwap : UIAbstractFarm
     {
-        [field: SerializeField] public UIBeastList WalletBeastList { get; private set; }
+        [field: SerializeField] public UIBeastList InBoxBeastList { get; private set; }
         [field: SerializeField] public UIBeastList InGameBeastList { get; private set; }
 
-        [SerializeField] private Transform _walletBeatListContent;
-        [SerializeField] private Transform _inGameBeatListContent;
+        private List<UIBeastItem> _toGame = new();
+        public List<UIBeastItem> ToGame => _toGame;
 
-        private List<int> _selectedInGameBeatIds = new();
 
-        public List<int> SelectedInGameBeatIds
-        {
-            get => _selectedInGameBeatIds;
-            private set => _selectedInGameBeatIds = value;
-        }
+        private List<UIBeastItem> _toWallet = new();
+        public List<UIBeastItem> ToWallet => _toWallet;
 
-        private List<int> _selectedWalletBeatIds = new();
-
-        public List<int> SelectedWalletBeatIds
-        {
-            get => _selectedWalletBeatIds;
-            private set => _selectedWalletBeatIds = value;
-        }
-
-        private List<UIBeastItem> _beastItems = new();
-        public bool IsValid() => _beastItems.Count > 0;
-
-        public void OnBeastSelected(UIBeastItem item)
-        {
-            if (!item.IsSelected) _beastItems.Add(item);
-            else _beastItems.Remove(item);
-        }
+        public bool IsValid() => _toGame.Count > 0 || _toWallet.Count > 0;
 
         public void TransferBeast()
         {
-            _beastItems.ForEach(Transfer);
-            _beastItems = new();
-        }
+            var toWallet = InBoxBeastList.SelectedItems;
+            var toGame = InGameBeastList.SelectedItems;
 
-        private void Transfer(UIBeastItem item)
-        {
-            Transform currentList = item.transform.parent;
-
-            if (currentList == _inGameBeatListContent)
+            if (toWallet.Count == 0 && toGame.Count == 0)
             {
-                item.Transfer(_walletBeatListContent);
-                _selectedInGameBeatIds.Add(item.Id);
-            }
-            else
-            {
-                item.Transfer(_inGameBeatListContent);
-                _selectedWalletBeatIds.Add(item.Id);
+                Debug.Log($"<color=red>No item selected</color>");
+                return;
             }
 
+            _toWallet = toWallet;
+            _toGame = toGame;
 
-            InGameBeastList.SetEnableButtons(!(currentList == _inGameBeatListContent));
-            WalletBeastList.SetEnableButtons(currentList == _inGameBeatListContent);
-
-            Debug.Log($"game={_selectedInGameBeatIds.Count} -- wallet={_selectedWalletBeatIds.Count}");
+            Debug.Log($"game={_toGame.Count} -- wallet={_toWallet.Count}");
         }
 
-        public void SwitchList(Vector2 direction)
+        public void OnTransferring()
         {
-            if (_inGameBeatListContent.childCount <= 0) return;
-            if (_walletBeatListContent.childCount <= 0) return;
+            InGameBeastList.Interactable = InBoxBeastList.Interactable = false;
+        }
 
-            switch (direction.x)
+        public void SwitchList(Vector2 axis)
+        {
+            switch (axis.x)
             {
-                case > 0:   
-                    InGameBeastList.SetEnableButtons(false);
-                    FocusList(WalletBeastList);
+                case 0:
+                    return;
+                case > 0:
+                    InBoxBeastList.TryFocus();
                     break;
                 case < 0:
-                    WalletBeastList.SetEnableButtons(false);
-                    FocusList(InGameBeastList);
+                    InGameBeastList.TryFocus();
                     break;
             }
         }
 
-        private void FocusList(UIBeastList list)
+        public void ResetSelected()
         {
-            list.SetEnableButtons();
-            list.Child.GetOrAddComponent<SelectFirstChildInList>().Select();
-        }
-
-        public void Focus()
-        {
-            InGameBeastList.SetEnableButtons();
-            WalletBeastList.SetEnableButtons();
-            UIBeastList beastList = _inGameBeatListContent.childCount > 0 ? InGameBeastList : WalletBeastList;
-            beastList.Child.GetOrAddComponent<SelectFirstChildInList>().Select();
-        }
-
-        public void ConfirmedTransmission()
-        {
-            InGameBeastList.UpdateList();
-            WalletBeastList.UpdateList();
+            InBoxBeastList.Reset();
+            InGameBeastList.Reset();
+            ActionDispatcher.Dispatch(new FetchProfileBeastsAction());
         }
     }
 }

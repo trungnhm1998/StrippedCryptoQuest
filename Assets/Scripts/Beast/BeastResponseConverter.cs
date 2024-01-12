@@ -4,14 +4,12 @@ using System.Linq;
 using System.Reflection;
 using CryptoQuest.AbilitySystem.Abilities;
 using CryptoQuest.AbilitySystem.Attributes;
-using CryptoQuest.Beast;
 using CryptoQuest.Character;
 using CryptoQuest.Gameplay;
 using CryptoQuest.Sagas.Objects;
 using IndiGames.Core.Common;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
 using UnityEngine;
-using BeastItem = CryptoQuest.Beast;
 
 namespace CryptoQuest.Beast
 {
@@ -38,7 +36,7 @@ namespace CryptoQuest.Beast
 
         public IBeast Convert(BeastResponse response)
         {
-            var beast = new BeastItem.Beast()
+            var beast = new Beast()
             {
                 Id = response.id,
                 BeastId = response.beastId,

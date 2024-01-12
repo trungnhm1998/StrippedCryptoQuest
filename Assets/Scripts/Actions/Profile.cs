@@ -32,17 +32,5 @@ namespace CryptoQuest.Actions
         }
     }
 
-    public class FetchProfileBeastAction : ActionBase { }
-
-    public class GetGameNftBeastsSucceed : ActionBase
-    {
-        public List<BeastResponse> InGameBeasts { get; }
-
-        public GetGameNftBeastsSucceed(List<BeastResponse> inGameBeasts)
-        {
-            InGameBeasts = inGameBeasts;
-        }
-    }
-
     public class FetchProfileConsumablesAction : ActionBase { }
 }

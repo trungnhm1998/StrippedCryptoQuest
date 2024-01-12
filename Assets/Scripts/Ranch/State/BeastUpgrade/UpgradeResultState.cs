@@ -22,7 +22,7 @@ namespace CryptoQuest.Ranch.State.BeastUpgrade
             _stateController = StateMachine.GetComponent<RanchStateController>();
             _input = _stateController.Controller.Input;
 
-            _getDataSucceed = ActionDispatcher.Bind<GetNftBeastsSucceed>(InitResult);
+            _getDataSucceed = ActionDispatcher.Bind<GetBeastSucceeded>(InitResult);
 
             _input.CancelEvent += BackToUpgradeState;
             _input.SubmitEvent += BackToUpgradeState;
@@ -31,15 +31,14 @@ namespace CryptoQuest.Ranch.State.BeastUpgrade
                 .SetMessage(_resultMessage)
                 .Show();
 
-            ActionDispatcher.Dispatch(new GetBeasts());
+            ActionDispatcher.Dispatch(new FetchProfileBeastsAction());
         }
 
         private void InitResult(ActionBase _)
         {
-
             var beast = _stateController.UpgradePresenter.BeastToUpgrade;
 
-            var firstBeast = _stateController.BeastInventory.OwnedBeasts.Find(x => x.BeastId == beast.BeastId);
+            var firstBeast = _stateController.BeastInventory.GetBeast(beast.Id);
 
             _stateController.UpgradePresenter.InitBeast(_stateController.BeastInventory.OwnedBeasts);
             _stateController.UpgradePresenter.ResultBeast.Show(firstBeast);
