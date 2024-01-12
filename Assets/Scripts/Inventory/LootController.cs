@@ -4,6 +4,7 @@ using CryptoQuest.Gameplay.Loot;
 using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.Inventory.Actions;
 using CryptoQuest.Inventory.Currency;
+using CryptoQuest.Item.MagicStone.Sagas;
 using IndiGames.Core.Events;
 using UnityEngine;
 
@@ -49,7 +50,10 @@ namespace CryptoQuest.Inventory
             ActionDispatcher.Dispatch(new AddEquipmentRequestAction(loot.EquipmentId));
         }
 
-        public void Visit(MagicStoneLoot loot) { }
+        public void Visit(MagicStoneLoot loot)
+        {
+            ActionDispatcher.Dispatch(new AddRewardedMagicStoneAction(loot.StoneId, loot.Quantity));
+        }
 
         public void Visit(ExpLoot loot)
         {

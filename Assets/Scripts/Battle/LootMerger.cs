@@ -36,6 +36,7 @@ namespace CryptoQuest.Battle
                 _mergingConsumable = null;
                 _mergingCurrency = null;
                 _mergingExp = null;
+                _mergingStone = null;
             }
 
             return mergedLoots;

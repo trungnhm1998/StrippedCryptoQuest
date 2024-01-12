@@ -15,6 +15,8 @@ namespace CryptoQuest.UI.Dialogs.RewardDialog
 
         protected override void HandleAction(ConfigureMagicStoneLootDisplayAction ctx)
         {
+            if (!IsCorrectStoneSetup(ctx)) return;
+
             var msg = new LocalizedString(_itemWithQuantity.TableReference, _itemWithQuantity.TableEntryReference)
             {
                 {
@@ -26,6 +28,18 @@ namespace CryptoQuest.UI.Dialogs.RewardDialog
             };
 
             ctx.UIRewardItem.SetContentStringRef(msg);
+        }
+
+        private bool IsCorrectStoneSetup(ConfigureMagicStoneLootDisplayAction ctx)
+        {
+            if (ctx.Loot.Quantity <= 0) return false;
+            var stones = _magicStoneDatabase.sheets[0].list;
+            foreach (var stone in stones)
+            {
+                if (stone.stone_id == ctx.Loot.StoneId) return true;
+            }
+
+            return false;
         }
 
         private LocalizedString GetMagicStoneString(string id)
