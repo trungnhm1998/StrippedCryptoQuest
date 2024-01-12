@@ -38,7 +38,6 @@ namespace CryptoQuest.Gameplay.Encounter
         {
             _battleBus.CurrentEncounter = encounter;
             _maxEncounterSteps = _battleBus.CurrentEncounter.EncounterRate;
-            if (_stepLeftBeforeTriggerBattle > 0) return;
             GenerateRandomStepTilNextTrigger();
             if (_gameplayBus.Hero.TryGetComponent(out StepBehaviour stepBehaviourComponent))
                 stepBehaviourComponent.Step += DecrementStepCountBeforeTriggerBattle;
