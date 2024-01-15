@@ -1,3 +1,4 @@
+using CryptoQuest.Mappings;
 using CryptoQuest.UI.Dialogs.RewardDialog;
 using IndiGames.Core.Events;
 using UnityEngine;
@@ -8,7 +9,7 @@ namespace CryptoQuest.Inventory.ConfigureEquipmentRewardDisplays
 {
     public abstract class ConfigureEquipmentRewardDisplay<T> : SagaBase<T> where T : RequestConfigEquipmentRewardBase
     {
-        [SerializeField] private EquipmentIdToName _database;
+        [SerializeField] private NameMappingDatabase _database;
         [SerializeField] private TableReference _tableReference;
 
 
@@ -21,12 +22,12 @@ namespace CryptoQuest.Inventory.ConfigureEquipmentRewardDisplays
             ctx.RewardItem.SetContentStringRef(localizedString);
         }
 
-        private string GetStringKey(string id, EquipmentIdToName database)
+        private string GetStringKey(string id, NameMappingDatabase database)
         {
-            foreach (var param in database.Params)
+            foreach (var mapping in database.NameMappings)
             {
-                if (param.equipment_id != id) continue;
-                return param.localize_key;
+                if (mapping.Id != id) continue;
+                return mapping.Name;
             }
 
             return "";
