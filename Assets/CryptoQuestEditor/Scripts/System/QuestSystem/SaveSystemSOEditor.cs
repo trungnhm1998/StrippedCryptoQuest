@@ -24,7 +24,7 @@ namespace CryptoQuestEditor.System.QuestSystem
             InspectorElement.FillDefaultInspector(root, serializedObject, this);
 
             _uxml.CloneTree(root);
-            
+
             var saveToServerButton = root.Q<Button>("save-to-server-button");
             var clearAllSaveButton = root.Q<Button>("clear-all-save-button");
             var openSaveFolderButton = root.Q<Button>("open-save-folder-button");
@@ -42,7 +42,12 @@ namespace CryptoQuestEditor.System.QuestSystem
             Target.Save();
             var restClient = ServiceProvider.GetService<IRestClient>();
             restClient?.WithBody(new IntervalOnlineProgressionSaver.SaveDataBody() { GameData = Target.SaveData })
-                .Post<IntervalOnlineProgressionSaver.SaveDataResult>(Accounts.USER_SAVE_DATA).Subscribe(_ => { });
+                .Post<IntervalOnlineProgressionSaver.SaveDataResult>(Accounts.USER_SAVE_DATA).Subscribe(Saved);
+        }
+
+        private void Saved(IntervalOnlineProgressionSaver.SaveDataResult res)
+        {
+            Debug.Log($"Saved: {res.code}");
             EditorUtility.SetDirty(Target);
             AssetDatabase.SaveAssets();
         }
@@ -57,9 +62,7 @@ namespace CryptoQuestEditor.System.QuestSystem
             var so = new SerializedObject(Target);
             so.FindProperty("_saveData").boxedValue = new SaveData();
             so.ApplyModifiedProperties();
-            Target.Save();
-            EditorUtility.SetDirty(Target);
-            AssetDatabase.SaveAssets();
+            SaveToServer();
         }
     }
 }
