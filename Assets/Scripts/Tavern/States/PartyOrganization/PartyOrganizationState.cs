@@ -65,7 +65,6 @@ namespace CryptoQuest.Tavern.States.PartyOrganization
                 _cachedInPartyHeroes.Add(partySlot.Hero);
             }
 
-            if (_cachedInPartyHeroes.Count <= 0) return;
             _controller.UIParty.SetData(_cachedInPartyHeroes);
         }
 
