@@ -121,6 +121,7 @@ namespace CryptoQuest.Sagas.Objects
         public int nft;
         public float maxHpAtMaxLv;
         public float maxMpAtMaxLv;
+        public bool IsTransferring => transferring == 1;
     }
 
     
