@@ -61,7 +61,7 @@ public class MagicStones_importer : AssetPostprocessor
                         MagicStoneDatabase.Param p = new MagicStoneDatabase.Param();
 
                         cell = row.GetCell(0);
-                        p.stone_id = (cell == null ? "" : cell.ToString());
+                        p.stone_id = (cell == null ? 0.0 : cell.NumericCellValue);
                         cell = row.GetCell(1);
                         p.name_key = (cell == null ? "" : cell.ToString());
                         s.list.Add(p);
