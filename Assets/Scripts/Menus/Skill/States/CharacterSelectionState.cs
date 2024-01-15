@@ -1,6 +1,8 @@
-﻿using CryptoQuest.Menus.Skill.UI;
+﻿using CryptoQuest.Gameplay.PlayerParty;
+using CryptoQuest.Menus.Skill.UI;
 using CryptoQuest.UI.Menu;
-using CryptoQuest.UI.Menu.Character;
+using IndiGames.Core.Common;
+using UnityEngine;
 
 namespace CryptoQuest.Menus.Skill.States
 {
@@ -20,6 +22,7 @@ namespace CryptoQuest.Menus.Skill.States
             _skillPanel.Input.MenuCancelEvent += HandleCancel;
             _skillPanel.Focusing += SelectFirstHero;
             _skillPanel.Input.MenuConfirmedEvent += ToSelectSkillState;
+            _skillPanel.Input.MenuNavigateEvent += ShowHeroSkills;
             
             SelectFirstHero();
         }
@@ -31,8 +34,14 @@ namespace CryptoQuest.Menus.Skill.States
             _skillPanel.Input.MenuCancelEvent -= HandleCancel;
             _skillPanel.Focusing -= SelectFirstHero;
             _skillPanel.Input.MenuConfirmedEvent -= ToSelectSkillState;
+            _skillPanel.Input.MenuNavigateEvent -= ShowHeroSkills;
 
             DeSelectAllHeroes();
+        }
+
+        private void ShowHeroSkills(Vector2 direction)
+        {
+            _skillPanel.SkillListPanel.TryShowSkillForHero(_skillPanel.SelectingHero.Hero);
         }
 
         private void ToSelectSkillState()
@@ -52,6 +61,7 @@ namespace CryptoQuest.Menus.Skill.States
 
         private void SelectFirstHero()
         {
+            _skillPanel.SkillListPanel.TryShowSkillForHero(ServiceProvider.GetService<IPartyController>().Slots[0].HeroBehaviour);
             _skillPanel.EnableAllHeroButtons();
             DeActiveSelectedHero();
 
