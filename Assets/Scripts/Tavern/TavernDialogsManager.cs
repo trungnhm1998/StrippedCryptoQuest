@@ -1,4 +1,5 @@
 ﻿using CryptoQuest.Input;
+using CryptoQuest.Merchant;
 using CryptoQuest.UI.Dialogs.ChoiceDialog;
 using CryptoQuest.UI.Dialogs.Dialogue;
 using UnityEngine;
@@ -14,7 +15,7 @@ namespace CryptoQuest.Tavern
         public UIDialogueForGenericMerchant Dialogue { get; private set; }
         public UIChoiceDialog ChoiceDialog { get; private set; }
 
-        [SerializeField] private MerchantsInputManager _inputManager;
+        [SerializeField] private MerchantInput _inputManager;
         [SerializeField] private LocalizedString _didYouKnowMsg;
 
         public void TavernOpened()

@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using CryptoQuest.Character.Hero;
+using CryptoQuest.Merchant;
 using CryptoQuest.Sagas.Character;
 using CryptoQuest.Tavern.UI;
 using IndiGames.Core.Common;
-using IndiGames.Core.Events;
 using TinyMessenger;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -13,13 +13,11 @@ namespace CryptoQuest.Tavern.States.CharacterReplacement
 {
     public class CharacterReplacementState : StateMachineBehaviourBase
     {
+        [SerializeField] private MerchantInput _merchantInput;
         private TavernController _controller;
 
         private TinyMessageSubscriptionToken _getGameDataSucceedEvent;
         private TinyMessageSubscriptionToken _getWalletDataSucceedEvent;
-
-        private List<HeroSpec> _cachedGameData = new List<HeroSpec>();
-        private List<HeroSpec> _cachedDboxData = new List<HeroSpec>();
 
         private static readonly int OverviewState = Animator.StringToHash("Overview");
         private static readonly int ConfirmState = Animator.StringToHash("Confirm Character Replacement");
@@ -32,26 +30,12 @@ namespace CryptoQuest.Tavern.States.CharacterReplacement
             _controller.UICharacterReplacement.SelectedDboxItemsIds.Clear();
             UITavernItem.Pressed += _controller.UICharacterReplacement.Transfer;
 
-            _getGameDataSucceedEvent = ActionDispatcher.Bind<GetInGameHeroesSucceeded>(GetInGameCharacters);
-            _getWalletDataSucceedEvent = ActionDispatcher.Bind<GetInDboxHeroesSucceeded>(GetInDboxCharacters);
-
-            _controller.MerchantInputManager.CancelEvent += CancelCharacterReplacement;
-            _controller.MerchantInputManager.NavigateEvent += SwitchToOtherListRequested;
-            _controller.MerchantInputManager.ExecuteEvent += SendItemsRequested;
-            _controller.MerchantInputManager.ResetEvent += ResetTransferRequested;
-            _controller.MerchantInputManager.InteractEvent += ViewCharacterDetails;
-
-            ActionDispatcher.Dispatch(new FetchProfileCharactersAction());
+            _merchantInput.CancelEvent += CancelCharacterReplacement;
+            _merchantInput.NavigateEvent += SwitchToOtherListRequested;
+            _merchantInput.ExecuteEvent += SendItemsRequested;
+            _merchantInput.ResetEvent += ResetTransferRequested;
+            _merchantInput.InteractEvent += ViewCharacterDetails;
         }
-
-        private void GetInGameCharacters(GetInGameHeroesSucceeded obj)
-        {
-            ConvertAndPassDataToUi(obj.Heroes, _cachedGameData, _controller.UIGameList);
-            _controller.UIGameList.HandleInPartyHeroes();
-        }
-
-        private void GetInDboxCharacters(GetInDboxHeroesSucceeded obj) =>
-            ConvertAndPassDataToUi(obj.Heroes, _cachedDboxData, _controller.UIDboxList);
 
         private void ConvertAndPassDataToUi(HeroObject[] heroes, List<HeroSpec> cacheList, UICharacterList listUI)
         {
@@ -92,8 +76,6 @@ namespace CryptoQuest.Tavern.States.CharacterReplacement
             _controller.UICharacterReplacement.SelectedGameItemsIds.Clear();
             _controller.UICharacterReplacement.SelectedDboxItemsIds.Clear();
 
-            _controller.UIGameList.SetData(_cachedGameData);
-            _controller.UIDboxList.SetData(_cachedDboxData);
             _controller.UIGameList.UpdateList();
             _controller.UIDboxList.UpdateList();
             _controller.UIGameList.HandleInPartyHeroes();
@@ -111,14 +93,11 @@ namespace CryptoQuest.Tavern.States.CharacterReplacement
             _controller.UICharacterReplacement.StopHandleListInteractable();
             UITavernItem.Pressed -= _controller.UICharacterReplacement.Transfer;
 
-            ActionDispatcher.Unbind(_getGameDataSucceedEvent);
-            ActionDispatcher.Unbind(_getWalletDataSucceedEvent);
-
-            _controller.MerchantInputManager.CancelEvent -= CancelCharacterReplacement;
-            _controller.MerchantInputManager.NavigateEvent -= SwitchToOtherListRequested;
-            _controller.MerchantInputManager.ExecuteEvent -= SendItemsRequested;
-            _controller.MerchantInputManager.ResetEvent -= ResetTransferRequested;
-            _controller.MerchantInputManager.InteractEvent -= ViewCharacterDetails;
+            _merchantInput.CancelEvent -= CancelCharacterReplacement;
+            _merchantInput.NavigateEvent -= SwitchToOtherListRequested;
+            _merchantInput.ExecuteEvent -= SendItemsRequested;
+            _merchantInput.ResetEvent -= ResetTransferRequested;
+            _merchantInput.InteractEvent -= ViewCharacterDetails;
         }
     }
 }
