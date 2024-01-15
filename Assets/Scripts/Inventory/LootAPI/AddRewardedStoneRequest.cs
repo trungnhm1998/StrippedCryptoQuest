@@ -3,6 +3,7 @@ using System.Net;
 using CryptoQuest.API;
 using CryptoQuest.Inventory.Actions;
 using CryptoQuest.Item.MagicStone.Sagas;
+using CryptoQuest.Mappings;
 using CryptoQuest.Networking;
 using CryptoQuest.Sagas.MagicStone;
 using CryptoQuest.Sagas.Objects;
@@ -16,7 +17,7 @@ namespace CryptoQuest.Inventory.LootAPI
 {
     public class AddRewardedStoneRequest : SagaBase<AddRewardedMagicStoneAction>
     {
-        [SerializeField] private MagicStoneDatabase _magicStoneDatabase;
+        [SerializeField] private NameMappingDatabase _magicStoneDatabase;
 
         private class Body
         {
@@ -43,10 +44,10 @@ namespace CryptoQuest.Inventory.LootAPI
         private bool IsCorrectStoneSetup(AddRewardedMagicStoneAction ctx)
         {
             if (ctx.Quantity <= 0) return false;
-            var stones = _magicStoneDatabase.sheets[0].list;
-            foreach (var stone in stones)
+            var stoneMapping = _magicStoneDatabase.NameMappings;
+            foreach (var stone in stoneMapping)
             {
-                if (stone.stone_id == ctx.Id) return true;
+                if (stone.Id == ctx.Id) return true;
             }
 
             return false;

@@ -1,3 +1,4 @@
+using CryptoQuest.Mappings;
 using CryptoQuest.UI.Dialogs.RewardDialog.ConfigDisplayAction;
 using IndiGames.Core.Events;
 using UnityEngine;
@@ -9,7 +10,7 @@ namespace CryptoQuest.UI.Dialogs.RewardDialog
 {
     public class ConfigureMagicStoneLootDisplay : SagaBase<ConfigureMagicStoneLootDisplayAction>
     {
-        [SerializeField] private MagicStoneDatabase _magicStoneDatabase;
+        [SerializeField] private NameMappingDatabase _magicStoneDatabase;
         [SerializeField] private TableReference _tableReference;
         [SerializeField] private LocalizedString _itemWithQuantity;
 
@@ -33,10 +34,10 @@ namespace CryptoQuest.UI.Dialogs.RewardDialog
         private bool IsCorrectStoneSetup(ConfigureMagicStoneLootDisplayAction ctx)
         {
             if (ctx.Loot.Quantity <= 0) return false;
-            var stones = _magicStoneDatabase.sheets[0].list;
-            foreach (var stone in stones)
+            var mappings = _magicStoneDatabase.NameMappings;
+            foreach (var mapping in mappings)
             {
-                if (stone.stone_id == ctx.Loot.StoneId) return true;
+                if (mapping.Id == ctx.Loot.StoneId) return true;
             }
 
             return false;
@@ -45,10 +46,10 @@ namespace CryptoQuest.UI.Dialogs.RewardDialog
         private LocalizedString GetMagicStoneString(string id)
         {
             var key = "";
-            foreach (var magicStone in _magicStoneDatabase.sheets[0].list)
+            foreach (var magicStone in _magicStoneDatabase.NameMappings)
             {
-                if (magicStone.stone_id != id) continue;
-                key = magicStone.name_key;
+                if (magicStone.Id != id) continue;
+                key = magicStone.Name;
             }
 
             return new LocalizedString(_tableReference, key);
