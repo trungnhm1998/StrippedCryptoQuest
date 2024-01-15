@@ -1,19 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-8152660520160012983
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 34a3443b5c224635a5d56d02e6f37b01, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _party: {fileID: 11400000, guid: 197a08cf381438a48875f05c90e104fb, type: 2}
-  _heroInventory: {fileID: 11400000, guid: 8e54c04f1de81b14b9717fd394372769, type: 2}
 --- !u!1102 &-7996822973195171913
 AnimatorState:
   serializedVersion: 6
@@ -41,41 +27,6 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
---- !u!114 &-4917160140373280794
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2d4eba80a4564a44b02f0b26400354b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _heroInventorySO: {fileID: 11400000, guid: 8e54c04f1de81b14b9717fd394372769, type: 2}
-  _partySO: {fileID: 11400000, guid: 197a08cf381438a48875f05c90e104fb, type: 2}
-  _confirmMessage:
-    m_TableReference:
-      m_TableCollectionName: GUID:1b702bd02874f6349a9f27f039c75abe
-    m_TableEntryReference:
-      m_KeyId: 838521233408
-      m_Key: 
-    m_FallbackState: 0
-    m_WaitForCompletion: 0
-    m_LocalVariables: []
-  _moreThan3Msg:
-    m_TableReference:
-      m_TableCollectionName: GUID:1b702bd02874f6349a9f27f039c75abe
-    m_TableEntryReference:
-      m_KeyId: 7982695594500096
-      m_Key: 
-    m_FallbackState: 0
-    m_WaitForCompletion: 0
-    m_LocalVariables: []
-  references:
-    version: 2
-    RefIds: []
 --- !u!114 &-4165441764109289818
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -88,6 +39,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9de67ca13b24dc8b96d96661bbcc4c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _merchantInput: {fileID: 0}
 --- !u!1107 &-3893600642542082935
 AnimatorStateMachine:
   serializedVersion: 6
@@ -125,13 +77,13 @@ AnimatorStateMachine:
   - serializedVersion: 1
     m_State: {fileID: 8086499050862278440}
     m_Position: {x: 30, y: 270, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: 3331633491555910045}
+    m_Position: {x: 200, y: 370, z: 0}
   m_ChildStateMachines:
   - serializedVersion: 1
     m_StateMachine: {fileID: -3893600642542082935}
     m_Position: {x: -90, y: 370, z: 0}
-  - serializedVersion: 1
-    m_StateMachine: {fileID: 5577530029258857172}
-    m_Position: {x: 170, y: 370, z: 0}
   m_AnyStateTransitions: []
   m_EntryTransitions: []
   m_StateMachineTransitions: {}
@@ -178,6 +130,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 933070506c7f4caf8447807b98ed5142, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _merchantInput: {fileID: 11400000, guid: 48ece151462c85b4fa9f6ea804617569, type: 2}
   _welcomeMsg:
     m_TableReference:
       m_TableCollectionName: GUID:1b702bd02874f6349a9f27f039c75abe
@@ -190,6 +143,19 @@ MonoBehaviour:
   references:
     version: 2
     RefIds: []
+--- !u!114 &-2078663651640681009
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f0b7dcb274401a4c870f475727af32e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _merchantInput: {fileID: 11400000, guid: 48ece151462c85b4fa9f6ea804617569, type: 2}
 --- !u!91 &9100000
 AnimatorController:
   m_ObjectHideFlags: 0
@@ -251,6 +217,7 @@ MonoBehaviour:
     m_FallbackState: 0
     m_WaitForCompletion: 0
     m_LocalVariables: []
+  _merchantInput: {fileID: 11400000, guid: 48ece151462c85b4fa9f6ea804617569, type: 2}
   references:
     version: 2
     RefIds: []
@@ -293,22 +260,23 @@ MonoBehaviour:
     m_FallbackState: 0
     m_WaitForCompletion: 0
     m_LocalVariables: []
+  _merchantInput: {fileID: 0}
   references:
     version: 2
     RefIds: []
---- !u!1102 &1604478178315129840
+--- !u!1102 &3331633491555910045
 AnimatorState:
   serializedVersion: 6
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Confirm Party Organization
+  m_Name: OrganizeParty
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
   m_StateMachineBehaviours:
-  - {fileID: -4917160140373280794}
+  - {fileID: -2078663651640681009}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -351,31 +319,6 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
---- !u!1107 &5577530029258857172
-AnimatorStateMachine:
-  serializedVersion: 6
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Party Organization
-  m_ChildStates:
-  - serializedVersion: 1
-    m_State: {fileID: 8380231736016790566}
-    m_Position: {x: 30, y: 270, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: 1604478178315129840}
-    m_Position: {x: 300, y: 270, z: 0}
-  m_ChildStateMachines: []
-  m_AnyStateTransitions: []
-  m_EntryTransitions: []
-  m_StateMachineTransitions: {}
-  m_StateMachineBehaviours: []
-  m_AnyStatePosition: {x: 50, y: 20, z: 0}
-  m_EntryPosition: {x: 50, y: 120, z: 0}
-  m_ExitPosition: {x: 370, y: 150, z: 0}
-  m_ParentStateMachinePosition: {x: 30, y: 400, z: 0}
-  m_DefaultState: {fileID: 8380231736016790566}
 --- !u!114 &7064816102829086334
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -388,6 +331,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9de67ca13b24dc8b96d96661bbcc4c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _merchantInput: {fileID: 11400000, guid: 48ece151462c85b4fa9f6ea804617569, type: 2}
 --- !u!1102 &7332631318611201473
 AnimatorState:
   serializedVersion: 6
@@ -455,33 +399,6 @@ AnimatorState:
   m_Transitions: []
   m_StateMachineBehaviours:
   - {fileID: -2769788441291568773}
-  m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
-  m_WriteDefaultValues: 1
-  m_Mirror: 0
-  m_SpeedParameterActive: 0
-  m_MirrorParameterActive: 0
-  m_CycleOffsetParameterActive: 0
-  m_TimeParameterActive: 0
-  m_Motion: {fileID: 0}
-  m_Tag: 
-  m_SpeedParameter: 
-  m_MirrorParameter: 
-  m_CycleOffsetParameter: 
-  m_TimeParameter: 
---- !u!1102 &8380231736016790566
-AnimatorState:
-  serializedVersion: 6
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Party Organization Idle
-  m_Speed: 1
-  m_CycleOffset: 0
-  m_Transitions: []
-  m_StateMachineBehaviours:
-  - {fileID: -8152660520160012983}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1

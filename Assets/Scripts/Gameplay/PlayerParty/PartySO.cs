@@ -21,6 +21,7 @@ namespace CryptoQuest.Gameplay.PlayerParty
     {
         [SerializeField] private PartySlotSpec[] _heroSpecs;
         public PartySlotSpec[] GetParty() => _heroSpecs;
+        public int Count => _heroSpecs.Length;
 
         public void SetParty(PartySlotSpec[] newSpecs)
         {
@@ -29,5 +30,15 @@ namespace CryptoQuest.Gameplay.PlayerParty
         }
 
         public event Action Changed;
+
+        public PartySlotSpec this[int i]
+        {
+            get => _heroSpecs[i];
+            set
+            {
+                _heroSpecs[i] = value;
+                Changed?.Invoke();
+            }
+        }
     }
 }

@@ -1,14 +1,13 @@
-﻿using UnityEngine;
+﻿using CryptoQuest.Merchant;
+using UnityEngine;
 using UnityEngine.Localization;
 
 namespace CryptoQuest.Tavern.States
 {
     public class OverviewState : StateMachineBehaviourBase
     {
+        [SerializeField] private MerchantInput _merchantInput;
         private TavernController _controller;
-
-        private static readonly int CharacterReplacementState = Animator.StringToHash("Character Replacement Idle");
-        private static readonly int PartyOrganizationState = Animator.StringToHash("Party Organization Idle");
 
         [SerializeField] private LocalizedString _welcomeMsg;
 
@@ -17,9 +16,7 @@ namespace CryptoQuest.Tavern.States
             _controller = StateMachine.GetComponent<TavernController>();
             _controller.TavernUiOverview.gameObject.SetActive(true);
 
-            _controller.TavernUiOverview.CharacterReplacementButtonPressedEvent += EnterCharacterReplacement;
-            _controller.TavernUiOverview.PartyOrganizationButtonPressedEvent += EnterPartyOrganization;
-            _controller.MerchantInputManager.CancelEvent += ExitTavern;
+            _merchantInput.CancelEvent += ExitTavern;
 
             ShowDialogue();
         }
@@ -35,9 +32,7 @@ namespace CryptoQuest.Tavern.States
 
         protected override void OnExit()
         {
-            _controller.TavernUiOverview.CharacterReplacementButtonPressedEvent -= EnterCharacterReplacement;
-            _controller.TavernUiOverview.PartyOrganizationButtonPressedEvent -= EnterPartyOrganization;
-            _controller.MerchantInputManager.CancelEvent -= ExitTavern;
+            _merchantInput.CancelEvent -= ExitTavern;
 
             _controller.TavernUiOverview.gameObject.SetActive(false);
 
@@ -50,16 +45,6 @@ namespace CryptoQuest.Tavern.States
             _controller.DialogsManager.TavernExited();
             _controller.TavernUiOverview.gameObject.SetActive(false);
             _controller.ExitTavernEvent?.Invoke();
-        }
-
-        private void EnterCharacterReplacement()
-        {
-            StateMachine.Play(CharacterReplacementState);
-        }
-
-        private void EnterPartyOrganization()
-        {
-            StateMachine.Play(PartyOrganizationState);
         }
     }
 }

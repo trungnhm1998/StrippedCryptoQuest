@@ -1,7 +1,4 @@
-﻿using System;
-using CryptoQuest.Character.Hero;
-using CryptoQuest.Input;
-using CryptoQuest.Inventory;
+﻿using CryptoQuest.Inventory;
 using CryptoQuest.Tavern.States;
 using CryptoQuest.Tavern.UI;
 using UnityEngine;
@@ -17,7 +14,6 @@ namespace CryptoQuest.Tavern
         [field: SerializeField] public HeroSpecInitializer SpecInitializer { get; private set; }
 
         [field: Header("Managers")]
-        [field: SerializeField] public MerchantsInputManager MerchantInputManager { get; private set; }
         [field: SerializeField] public TavernDialogsManager DialogsManager { get; private set; }
 
         [field: Header("Overview State")]
@@ -31,7 +27,6 @@ namespace CryptoQuest.Tavern
 
         [field: Header("Party Organization State")]
         [field: SerializeField] public UIPartyOrganization UIPartyOrganization { get; private set; }
-
         [field: SerializeField] public UICharacterList UIParty { get; private set; }
         [field: SerializeField] public UICharacterList UINonParty { get; private set; }
 

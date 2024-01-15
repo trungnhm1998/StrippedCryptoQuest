@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using CryptoQuest.Merchant;
 using CryptoQuest.Sagas.Character;
 using CryptoQuest.UI.Actions;
 using IndiGames.Core.Events;
@@ -13,6 +14,7 @@ namespace CryptoQuest.Tavern.States.CharacterReplacement
         [SerializeField] private LocalizedString _confirmMessage;
         [SerializeField] private LocalizedString _transferSucceededMsg;
         [SerializeField] private LocalizedString _transferFailedMsg;
+        [SerializeField] private MerchantInput _merchantInput;
 
         private TavernController _controller;
 
@@ -26,7 +28,7 @@ namespace CryptoQuest.Tavern.States.CharacterReplacement
 
             _transferSucceedEvent = ActionDispatcher.Bind<TransferSucceed>(ShowTransferSucceededMessage);
             _transferFailedEvent = ActionDispatcher.Bind<TransferFailed>(ShowTransferFailedMessage);
-            _controller.MerchantInputManager.CancelEvent += CancelTransmission;
+            _merchantInput.CancelEvent += CancelTransmission;
 
             _controller.UIGameList.SetInteractableAllButtons(false);
             _controller.UIDboxList.SetInteractableAllButtons(false);
@@ -41,7 +43,7 @@ namespace CryptoQuest.Tavern.States.CharacterReplacement
         {
             ActionDispatcher.Unbind(_transferSucceedEvent);
             ActionDispatcher.Unbind(_transferFailedEvent);
-            _controller.MerchantInputManager.SubmitEvent -= BackToTransferState;
+            _merchantInput.SubmitEvent -= BackToTransferState;
 
             if (_controller.DialogsManager.ChoiceDialog == null) return;
             _controller.DialogsManager.ChoiceDialog.Hide();
@@ -62,7 +64,7 @@ namespace CryptoQuest.Tavern.States.CharacterReplacement
                 .SetMessage(msg)
                 .Show();
 
-            _controller.MerchantInputManager.SubmitEvent += BackToTransferState;
+            _merchantInput.SubmitEvent += BackToTransferState;
         }
 
         private void BackToTransferState()
