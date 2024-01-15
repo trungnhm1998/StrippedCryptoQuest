@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7119017069796514421}
   - component: {fileID: 229515949636435590}
   - component: {fileID: 8495426038200676067}
+  - component: {fileID: 5416106367551332409}
   m_Layer: 0
   m_Name: BattleLoader
   m_TagString: Untagged
@@ -61,6 +62,7 @@ MonoBehaviour:
   _unloadSceneEvent: {fileID: 11400000, guid: 316630d92b908bd4fa253597042e3b8d, type: 2}
   _loadSceneEventChannelSo: {fileID: 11400000, guid: f335d4829ce891e40b75888362db8700, type: 2}
   _rewardEventChannel: {fileID: 11400000, guid: 0c66ec2affb834745a47ac989a1fbcc3, type: 2}
+  _sceneManagerSO: {fileID: 0}
   _enemyParties:
   - {fileID: 11400000, guid: 2bfe2334e5e5a9e4e8e97d7db05fe7fe, type: 2}
   - {fileID: 11400000, guid: 6180b504a4b45ee4b9108907bf1dd8cf, type: 2}
@@ -326,6 +328,22 @@ MonoBehaviour:
   _gameState: {fileID: 11400000, guid: 189395e2c5502c14ca5eed5a3c189d8d, type: 2}
   _unloadSceneEvent: {fileID: 11400000, guid: 316630d92b908bd4fa253597042e3b8d, type: 2}
   _battleBus: {fileID: 11400000, guid: 2290057e7f48d1046b5e0a6c3f6dc910, type: 2}
+--- !u!114 &5416106367551332409
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4490157311320337569}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ece8e2010c93075419309f25906eefa4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _gameState: {fileID: 11400000, guid: 189395e2c5502c14ca5eed5a3c189d8d, type: 2}
+  _battleBus: {fileID: 11400000, guid: 2290057e7f48d1046b5e0a6c3f6dc910, type: 2}
+  _loadSceneOnGoToEventChannel: {fileID: 11400000, guid: ca41668b47239e54fa3577cc2415859a, type: 2}
+  _loadMapEventChannel: {fileID: 11400000, guid: 932ea26428d5f4c4f8bdfd48ebc80873, type: 2}
 --- !u!1 &5019762564768956137
 GameObject:
   m_ObjectHideFlags: 0
