@@ -49,13 +49,14 @@ namespace CryptoQuest.Sagas.Character
 
         private void FillCharacterData(Objects.Character response, ref HeroSpec nftHero)
         {
-            var heroName = !string.IsNullOrEmpty(response.name) ? response.name : _charNames[0];
+            var heroName = response.name;
             nftHero.Id = response.id;
             nftHero.Experience = (float)(response.exp);
             nftHero.Elemental = _elements.FirstOrDefault(element => element.Id == Int32.Parse(response.elementId));
             nftHero.Class = _classes.FirstOrDefault(@class => @class.Id == Int32.Parse(response.classId));
             FillCharacterStats(response, ref nftHero);
-            nftHero.Origin =
+            if (string.IsNullOrEmpty(heroName) == false)
+                nftHero.Origin =
                 _charOrigins[_charNames.IndexOf(_charNames.FirstOrDefault(origin => origin == heroName))];
         }
 
