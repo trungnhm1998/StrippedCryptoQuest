@@ -1,6 +1,8 @@
 using System;
 using CryptoQuest.API;
 using CryptoQuest.Inventory.Actions;
+using CryptoQuest.Inventory.Currency;
+using CryptoQuest.Inventory.ScriptableObjects;
 using CryptoQuest.Networking;
 using CryptoQuest.Sagas.Objects;
 using IndiGames.Core.Common;
@@ -13,20 +15,24 @@ namespace CryptoQuest.Inventory.LootAPI
 {
     public class AddDiamondRequest : SagaBase<AddDiamonds>
     {
+        [SerializeField] private WalletSO _wallet;
+        [SerializeField] private CurrencySO _diamond;
         private IRestClient _restClient;
 
-        private struct Body
+        private class Body
         {
             [JsonProperty("diamond")]
-            public int Diamond;
+            public long Diamond;
         }
 
         protected override void HandleAction(AddDiamonds ctx)
         {
+            var currentDiamondAmount = _wallet[_diamond].Amount;
+            var diamondToUpdate = currentDiamondAmount + ctx.Amount;
             _restClient = ServiceProvider.GetService<IRestClient>();
             _restClient
-                .WithBody(new Body { Diamond = ctx.Amount })
-                .Post<ProfileResponse>(Reward.ADD_DIAMOND)
+                .WithBody(new Body { Diamond = (int)diamondToUpdate })
+                .Post<ProfileResponse>(Reward.COMMON_DATA)
                 .Subscribe(OnAddSucceed, OnAddFailed);
         }
 
