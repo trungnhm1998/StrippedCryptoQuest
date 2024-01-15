@@ -7,7 +7,6 @@ using CryptoQuest.Sagas.Equipment;
 using CryptoQuest.Sagas.Objects;
 using IndiGames.Core.Common;
 using IndiGames.Core.Events;
-using NPOI.HPSF;
 using UniRx;
 
 namespace CryptoQuest.Inventory.LootAPI
