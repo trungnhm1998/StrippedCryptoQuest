@@ -169,6 +169,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _context: {fileID: 7116505576077580199}
   _dropRateAttribute: {fileID: 11400000, guid: af2fad99e1b4fb245a724fae899aafa1, type: 2}
+--- !u!114 &141850215 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3653051520165715109, guid: d0eacd5a881766b4ca08ec4b770526a2, type: 3}
+  m_PrefabInstance: {fileID: 1415878836909279776}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ed5b5bff75b4a25b7a607574093d6e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &161660103
 GameObject:
   m_ObjectHideFlags: 0
@@ -1092,6 +1103,7 @@ MonoBehaviour:
   _content: {fileID: 1415878836909279779}
   _enemyPartyManager: {fileID: 7116505576077580196}
   _enemyPrefab: {fileID: 1676715279052400272, guid: 5f76a999e6416bd4ca834dceb2a0863b, type: 3}
+  _buttonSelector: {fileID: 141850215}
 --- !u!114 &2080584875
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1329,6 +1341,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3653051520165715109, guid: d0eacd5a881766b4ca08ec4b770526a2, type: 3}
+      propertyPath: _isSelectFirstButtonOnEnable
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3653051520165715109, guid: d0eacd5a881766b4ca08ec4b770526a2, type: 3}
+      propertyPath: _isSelectLastManagedButtonOnEnable
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4463206549349502206, guid: d0eacd5a881766b4ca08ec4b770526a2, type: 3}
       propertyPath: m_Pivot.x
       value: 0
