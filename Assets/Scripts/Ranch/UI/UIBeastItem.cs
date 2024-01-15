@@ -20,6 +20,7 @@ namespace CryptoQuest.Ranch.UI
         [SerializeField] private TMP_Text _level;
         [SerializeField] private GameObject _pendingTag;
         [SerializeField] private GameObject _inGameTag;
+        [SerializeField] private GameObject _transferringTag;
         [SerializeField] private Button _button;
         private IBeast _beast;
         public IBeast Beast => _beast;
@@ -36,6 +37,7 @@ namespace CryptoQuest.Ranch.UI
 
         public void Initialize(BeastResponse beast)
         {
+            _transferringTag.SetActive(beast.IsTransferring);
             _beast = NullBeast.Instance;
             MarkedForTransfer = false;
             Response = beast;
@@ -47,7 +49,7 @@ namespace CryptoQuest.Ranch.UI
 
         public void OnSelectToTransfer()
         {
-            if (_inGameTag.activeSelf) return;
+            if (_inGameTag.activeSelf || _transferringTag.activeSelf) return;
             MarkedForTransfer = !MarkedForTransfer;
             Pressed?.Invoke(this);
         }
