@@ -2,6 +2,7 @@ using System.Collections;
 using CryptoQuest.Gameplay.NPC.Chest;
 using CryptoQuest.Gameplay.Reward;
 using UnityEngine;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace CryptoQuest.Gameplay.Loot
 {
@@ -47,7 +48,7 @@ namespace CryptoQuest.Gameplay.Loot
             yield return _lootDatabase.LoadDataById(lootId);
             var handle = _lootDatabase.GetHandle(lootId);
             yield return handle;
-            if (handle.IsValid() == false || handle.IsDone == false || handle.Result == null)
+            if (handle.IsValid() == false || handle.Status != AsyncOperationStatus.Succeeded)
             {
                 Debug.LogError($"Failed to load loot with id {lootId}");
                 yield break;
