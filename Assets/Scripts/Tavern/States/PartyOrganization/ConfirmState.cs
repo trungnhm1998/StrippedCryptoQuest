@@ -176,14 +176,11 @@ namespace CryptoQuest.Tavern.States.PartyOrganization
         private void RemoveHeroFromPartyAndAddToHeroesInventory(List<PartySlotSpec> partySlotSpecs, HeroSpec hero,
             int index)
         {
-            partySlotSpecs.Add(new PartySlotSpec()
-            {
-                Hero = hero
-            });
+            partySlotSpecs.Add(new PartySlotSpec() { Hero = hero });
             _heroInventorySO.OwnedHeroes.Add(hero);
             _partySO.GetParty()[index].Hero = new();
             var validSlots = new List<PartySlotSpec>();
-            foreach (var slot in  _partySO.GetParty())
+            foreach (var slot in _partySO.GetParty())
             {
                 if (!slot.IsValid()) continue;
                 validSlots.Add(slot);
