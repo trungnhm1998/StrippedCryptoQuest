@@ -11,6 +11,7 @@ namespace CryptoQuest.Battle.UI.CommandDetail
         [SerializeField] private Transform _content;
         [SerializeField] private EnemyPartyManager _enemyPartyManager;
         [SerializeField] private UIEnemy _enemyPrefab;
+        [SerializeField] private VerticalButtonSelector _buttonSelector;
 
         private readonly List<UIEnemy> _enemies = new();
 
@@ -59,8 +60,9 @@ namespace CryptoQuest.Battle.UI.CommandDetail
                 if (selected) continue;
                 enemies[index].SetAlpha(1);
                 selected = true;
-                uiEnemy.GetComponent<Button>().Select();
             }
+
+            _buttonSelector.SelectFirstButton();
         }
 
         public void Hide()
