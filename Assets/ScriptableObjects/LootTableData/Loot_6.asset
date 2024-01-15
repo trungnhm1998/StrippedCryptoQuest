@@ -10,18 +10,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 04062c3386cb6334ab47a15c9472d64a, type: 3}
-  m_Name: LootTable0
+  m_Name: Loot_6
   m_EditorClassIdentifier: 
-  <ID>k__BackingField: 0
+  <ID>k__BackingField: 6
   LootInfos:
-  - rid: 2161567476913274882
+  - rid: 6471844534566257146
+  - rid: 6471844534566257147
   references:
     version: 2
     RefIds:
-    - rid: 2161567476913274882
+    - rid: 6471844534566257146
       type: {class: CurrencyLootInfo, ns: CryptoQuest.Gameplay.Loot, asm: IndiGames.CryptoQuest}
       data:
         _item:
-          _id: 621bfd10-0111-4fe3-850a-d63add93bf7d
-          <Data>k__BackingField: {fileID: 11400000, guid: 16b3f6e09fc22d240be1b324116eeb79, type: 2}
-          <Amount>k__BackingField: 13
+          Data: {fileID: 11400000, guid: 16b3f6e09fc22d240be1b324116eeb79, type: 2}
+          _amount: 0
+    - rid: 6471844534566257147
+      type: {class: ConsumableLootInfo, ns: CryptoQuest.Gameplay.Loot, asm: IndiGames.CryptoQuest}
+      data:
+        _item:
+          Data: {fileID: 11400000, guid: 2e8f98d127e23414ba3d272d6a4e48c5, type: 2}
+          _quantity: 1
