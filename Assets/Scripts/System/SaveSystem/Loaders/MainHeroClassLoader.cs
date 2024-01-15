@@ -15,8 +15,7 @@ namespace CryptoQuest.System.SaveSystem.Loaders
         [SerializeField] private QuestSO _questToCheck;
         [SerializeField] private PartySO _party;
 
-        [SerializeField, Space] private Origin _mainHeroOrigin;
-        [SerializeField] private UnitSO _defaultMainClass;
+        [SerializeField, Space] private UnitSO _defaultMainClass;
         [SerializeField] private UnitSO _trueBraveHeartUnit;
 
         public override IEnumerator LoadAsync()
@@ -36,7 +35,7 @@ namespace CryptoQuest.System.SaveSystem.Loaders
             for (var index = 0; index < partySlotSpecs.Length; index++)
             {
                 var partySlotSpec = partySlotSpecs[index];
-                if (!(partySlotSpec.Hero.Origin == _mainHeroOrigin || partySlotSpec.Hero.Id == 0)) continue;
+                if (partySlotSpec.Hero.Id != 0) continue;
                 var heroSpec = partySlotSpec.Hero;
                 heroSpec.Stats = unit.Stats;
                 heroSpec.Class = unit.Class;

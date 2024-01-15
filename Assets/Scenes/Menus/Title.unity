@@ -596,6 +596,7 @@ MonoBehaviour:
   - rid: 3779421920259735794
   - rid: 6753055534399356935
   - rid: 3779421944645943390
+  - rid: 8439353519459795380
   references:
     version: 2
     RefIds:
@@ -678,6 +679,14 @@ MonoBehaviour:
       type: {class: BeastInventoryLoader, ns: CryptoQuest.Beast.Loader, asm: IndiGames.CryptoQuest.Beast}
       data:
         _inventory: {fileID: 11400000, guid: c6b9ed361960def4eb1812770eb77a7b, type: 2}
+    - rid: 8439353519459795380
+      type: {class: MainHeroClassLoader, ns: CryptoQuest.System.SaveSystem.Loaders, asm: IndiGames.CryptoQuest}
+      data:
+        _questSaveSO: {fileID: 11400000, guid: 03445ebfc72acfc499a1e02a30488822, type: 2}
+        _questToCheck: {fileID: 11400000, guid: 7ffac9499264dde499998b959fd1e610, type: 2}
+        _party: {fileID: 11400000, guid: 197a08cf381438a48875f05c90e104fb, type: 2}
+        _defaultMainClass: {fileID: 11400000, guid: df24061ed8a2b8643b7df406d8114b50, type: 2}
+        _trueBraveHeartUnit: {fileID: 11400000, guid: 9282d92220ed8114da6b95522ba3456e, type: 2}
 --- !u!1 &1120536256
 GameObject:
   m_ObjectHideFlags: 0

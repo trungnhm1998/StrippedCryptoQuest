@@ -126,9 +126,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcd9e5b3b0f345a69474a3798fe9c4da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _defaultHeroClassParameter: {fileID: 11400000, guid: 4140056eb71d3264f8c326e5b83a2e32, type: 2}
+  _mainOrigin: {fileID: 0}
   _newHeroClassParameter: {fileID: 11400000, guid: a252f7dab7f5f314f84c2a24c1d86550, type: 2}
   _changeClassEvent: {fileID: 11400000, guid: 6e658fa9c31d73542a727f637f799f5d, type: 2}
+  _partyManager: {fileID: 0}
 --- !u!1 &2761408973493837256
 GameObject:
   m_ObjectHideFlags: 0
@@ -236,6 +237,8 @@ GameObject:
   - component: {fileID: 1231454039765157559}
   - component: {fileID: 3751652966868585991}
   - component: {fileID: -3019586650606109856}
+  - component: {fileID: 366848060812347092}
+  - component: {fileID: -5910506744145910929}
   m_Layer: 9
   m_Name: Hero
   m_TagString: Player
@@ -539,6 +542,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3573c485e40a4dd690d4837dcc88f09e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &366848060812347092
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3117586077093109585}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8169b888ab38dd4d989e60a411c409a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _inputMediator: {fileID: 11400000, guid: 1fb61cdb72f0a484f8e4db68e2011977, type: 2}
+  _facingBehaviour: {fileID: 1066248349066006005}
+  _saveSystemSO: {fileID: 11400000, guid: 660bab7c7e2db6946b3a03dc73ffe40f, type: 2}
+--- !u!114 &-5910506744145910929
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3117586077093109585}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0fa83eb349e47bd4195000b0a157abc0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _facingBehaviour: {fileID: 1066248349066006005}
+  _saveSystemSO: {fileID: 11400000, guid: 660bab7c7e2db6946b3a03dc73ffe40f, type: 2}
 --- !u!1 &3164114989483425062
 GameObject:
   m_ObjectHideFlags: 0
