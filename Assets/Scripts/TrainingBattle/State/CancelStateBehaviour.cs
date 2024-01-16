@@ -27,6 +27,7 @@ namespace CryptoQuest.TrainingBattle.State
             if(!_stateController.IsExitState) return;
             _stateController.DialogController.Dialogue.Hide();
             _stateController.ExitStateEvent?.Invoke();
+            _stateController.IsExitState = false;
         }
     }
 }
