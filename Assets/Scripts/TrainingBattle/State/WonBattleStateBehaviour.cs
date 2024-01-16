@@ -3,7 +3,7 @@ using UnityEngine.Localization;
 
 namespace CryptoQuest.TrainingBattle.State
 {
-    public class ExitStateBehaviour : BaseStateBehaviour
+    public class WonBattleStateBehaviour : BaseStateBehaviour
     {
         [SerializeField] private LocalizedString _message;
         private TrainingBattleStateController _stateController;
@@ -27,6 +27,7 @@ namespace CryptoQuest.TrainingBattle.State
             if(!_stateController.IsExitState) return;
             _stateController.DialogController.Dialogue.Hide();
             _stateController.ExitStateEvent?.Invoke();
+            _stateController.IsExitState = false;
         }
     }
 }
