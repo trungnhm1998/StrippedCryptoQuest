@@ -43,10 +43,10 @@ namespace CryptoQuest.Beast
 
         private IEnumerator CoLoadPassiveAsync(Beast beast, BeastResponse response)
         {
-            var passiveHandler = _passiveAbilityDatabase.GetDataById(response.passiveSkillId);
+            var passiveHandler = _passiveAbilityDatabase.LoadDataById(response.passiveSkillId);
             yield return passiveHandler;
 
-            beast.Passive = passiveHandler;
+            beast.Passive = _passiveAbilityDatabase.GetDataById(response.passiveSkillId);
         }
 
         private StatsDef FillBeastStats(BeastResponse response)
