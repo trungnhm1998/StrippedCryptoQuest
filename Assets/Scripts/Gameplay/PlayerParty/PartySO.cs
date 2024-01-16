@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using CryptoQuest.Character.Hero;
 using UnityEngine;
 
@@ -17,7 +19,7 @@ namespace CryptoQuest.Gameplay.PlayerParty
         public bool IsValid() => Hero != null && Hero.IsValid();
     }
 
-    public class PartySO : ScriptableObject
+    public class PartySO : ScriptableObject, IEnumerable<PartySlotSpec>
     {
         [SerializeField] private PartySlotSpec[] _heroSpecs;
         public PartySlotSpec[] GetParty() => _heroSpecs;
@@ -39,6 +41,19 @@ namespace CryptoQuest.Gameplay.PlayerParty
                 _heroSpecs[i] = value;
                 Changed?.Invoke();
             }
+        }
+
+        public IEnumerator<PartySlotSpec> GetEnumerator() => ((IEnumerable<PartySlotSpec>) _heroSpecs).GetEnumerator();
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+        public bool Exists(HeroSpec item)
+        {
+            foreach (var heroSpec in _heroSpecs)
+            {
+                if (heroSpec.Hero.Id == item.Id) return true;
+            }
+
+            return false;
         }
     }
 }

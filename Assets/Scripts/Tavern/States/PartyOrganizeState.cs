@@ -22,13 +22,12 @@ namespace CryptoQuest.Tavern.States
 
         private void BackToOverview()
         {
+            _partyOrganizePanel.enabled = false;
             StateMachine.Play(OverviewState);
         }
 
         protected override void OnExit()
         {
-            _partyOrganizePanel.enabled = false;
-
             _merchantInput.CancelEvent -= BackToOverview;
         }
     }
