@@ -53,7 +53,7 @@ namespace CryptoQuest.UI.Popups
             return popup;
         }
 
-        private void HideLastPopup()
+        public void HideLastPopup()
         {
             if (_popups.Count <= 0) return;
             var popup = _popups[^1];
