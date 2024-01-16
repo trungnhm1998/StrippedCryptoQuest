@@ -1,5 +1,4 @@
 ﻿using System;
-using CryptoQuest.Character.Behaviours;
 using CryptoQuest.Utils;
 using CryptoQuest.Gameplay.Ship;
 using UnityEngine;
@@ -10,6 +9,7 @@ namespace CryptoQuest.Character.MonoBehaviours
     {
         void Sail(IShip ship);
         void Landing();
+        IShip SailingShip { get; }
     }
 
     [RequireComponent(typeof(Animator), typeof(AutoMoveToPosition))]
@@ -17,7 +17,7 @@ namespace CryptoQuest.Character.MonoBehaviours
     {
         [SerializeField] private Animator _animator;
         [SerializeField] private AutoMoveToPosition _autoMove;
-        [SerializeField] private LayerMask _landLayer;
+        [SerializeField] private LandingShipBehaviour _landingBehaviour;
 
         private readonly int _idleClip = Animator.StringToHash("Idles");
         private readonly int _shipClip = Animator.StringToHash("Ship");
@@ -25,12 +25,13 @@ namespace CryptoQuest.Character.MonoBehaviours
         private readonly int _inputY = Animator.StringToHash("InputY");
 
         private IShip _sailingShip = new NullShip();
-
+        public IShip SailingShip => _sailingShip;
         
         private void OnValidate()
         {
             _animator = GetComponent<Animator>();
             _autoMove = GetComponent<AutoMoveToPosition>();
+            _landingBehaviour = GetComponentInChildren<LandingShipBehaviour>();
         }
 
         public void Sail(IShip ship)
@@ -41,16 +42,9 @@ namespace CryptoQuest.Character.MonoBehaviours
                 _animator.Play(_shipClip);
                 _sailingShip = ship;
                 ship.SetSail();
+                _landingBehaviour.gameObject.SetActive(true);
+                _landingBehaviour.SetShipBehaviour(this);
             });
-        }
-
-        public void OnTriggerChangeDetected(bool entered, GameObject go)
-        {
-            if (!_sailingShip.IsValid()) return;
-            if (_landLayer.Contains(go.layer))
-            {
-                Landing();
-            }
         }
 
         public void Landing()
@@ -62,6 +56,14 @@ namespace CryptoQuest.Character.MonoBehaviours
                 .normalized;
             _sailingShip = new NullShip();
             _autoMove.AutoMoveTo(transform.position + dir);
+            _landingBehaviour.gameObject.SetActive(false);
         }
+    }
+
+    public class NullShipController : IShipController
+    {
+        public void Sail(IShip ship) { }
+        public void Landing() { }
+        public IShip SailingShip => new NullShip();
     }
 }
