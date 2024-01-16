@@ -98,8 +98,8 @@ namespace CryptoQuest.Ranch.Evolve.Presenters
                     }
                 }
             }
+            _uiResultTitle.gameObject.SetActive(false);
             InitializeBeastList();
-            yield break;
         }
 
         private EvolvableBeast CreateEvolvableBeast(IBeast beast, IBeastEvolvableInfo evolvableInfo)
@@ -138,6 +138,7 @@ namespace CryptoQuest.Ranch.Evolve.Presenters
 
         public void ShowBeastResult(LocalizedString localized, int beastId)
         {
+            _uiResultTitle.gameObject.SetActive(true);
             StartCoroutine(UpdateResultStats(beastId));
             _uiResultTitle.ShowResultTitle(localized);
         }

@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using IndiGames.Core.Events;
+using TinyMessenger;
+using UnityEngine;
 using UnityEngine.Localization;
 
 namespace CryptoQuest.Ranch.State.BeastEvolve
@@ -10,6 +12,7 @@ namespace CryptoQuest.Ranch.State.BeastEvolve
         [SerializeField] private LocalizedString _evolveSuccessTitle;
         [SerializeField] private LocalizedString _evolveFailTitle;
         private RanchStateController _controller;
+        private TinyMessageSubscriptionToken _getDataSucceed;
 
         private static readonly int EvolveState = Animator.StringToHash("EvolveState");
 
@@ -18,7 +21,7 @@ namespace CryptoQuest.Ranch.State.BeastEvolve
             _controller = StateMachine.GetComponent<RanchStateController>();
             _controller.Controller.Input.CancelEvent += CancelBeastEvolveState;
             _controller.Controller.Input.SubmitEvent += ChangeConfirmState;
-            UpdateResultStats();
+            _getDataSucceed = ActionDispatcher.Bind<GetBeastSucceeded>(UpdateResultStats);
         }
 
         protected override void OnExit()
@@ -26,9 +29,10 @@ namespace CryptoQuest.Ranch.State.BeastEvolve
             _controller.Controller.Input.SubmitEvent -= ChangeConfirmState;
             _controller.Controller.Input.CancelEvent -= CancelBeastEvolveState;
             _controller.DialogController.NormalDialogue.Hide();
+            ActionDispatcher.Unbind(_getDataSucceed);
         }
 
-        private void UpdateResultStats()
+        private void UpdateResultStats(ActionBase ctx)
         {
             var isSuccess = _controller.EvolveStatus;
             var message = isSuccess ? _evolveSucceededMessage : _evolveFailedMessage;
