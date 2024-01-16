@@ -62,7 +62,22 @@ MonoBehaviour:
   _unloadSceneEvent: {fileID: 11400000, guid: 316630d92b908bd4fa253597042e3b8d, type: 2}
   _loadSceneEventChannelSo: {fileID: 11400000, guid: f335d4829ce891e40b75888362db8700, type: 2}
   _rewardEventChannel: {fileID: 11400000, guid: 0c66ec2affb834745a47ac989a1fbcc3, type: 2}
-  _sceneManagerSO: {fileID: 0}
+  _loadingBattleEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2125598761504152024}
+        m_TargetAssemblyTypeName: CryptoQuest.Battle.Audio.PreBattleAudioManager,
+          IndiGames.CryptoQuest
+        m_MethodName: PlayBattleMusic
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   _enemyParties:
   - {fileID: 11400000, guid: 2bfe2334e5e5a9e4e8e97d7db05fe7fe, type: 2}
   - {fileID: 11400000, guid: 6180b504a4b45ee4b9108907bf1dd8cf, type: 2}
