@@ -47,7 +47,7 @@ namespace CryptoQuest.UI.Popups
                 yield break;
             }
 
-            _handler = _prefab.LoadAssetAsync<GameObject>();
+            _handler = Addressables.LoadAssetAsync<GameObject>(_prefab);
             yield return _handler;
             if (!_handler.IsDone) yield break;
             popupCallback?.Invoke(_popupPool.Get());

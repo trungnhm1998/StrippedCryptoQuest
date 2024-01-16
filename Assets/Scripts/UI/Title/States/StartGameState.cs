@@ -40,19 +40,7 @@ namespace CryptoQuest.UI.Title.States
 
         private void StartGameButtonPressed()
         {
-            if (!IsPlayerNameExist())
-            {
-                _stateMachine.ChangeState(new NameInputState());
-                return;
-            }
-
-            ActionDispatcher.Dispatch(new StartGameAction());
-        }
-
-        private bool IsPlayerNameExist()
-        {
-            var saveSystem = ServiceProvider.GetService<SaveSystemSO>();
-            return !string.IsNullOrEmpty(saveSystem.PlayerName);
+            _stateMachine.ChangeState(new CheckConnectWalletState());
         }
 
         private void OnWalletConnectCompleted(ConnectWalletCompleted ctx)

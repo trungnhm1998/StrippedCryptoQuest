@@ -465,6 +465,76 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 6129887966808198757, guid: 7d6c35d654339cb489dfbf91416939fe, type: 3}
   m_PrefabInstance: {fileID: 11645016425568079}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &732749412
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 732749413}
+  - component: {fileID: 732749415}
+  - component: {fileID: 732749414}
+  m_Layer: 0
+  m_Name: CheckCollectWallet
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &732749413
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 732749412}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1606290891}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &732749414
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 732749412}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f48c943c3d2497e40b0e522dbe99dae6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &732749415
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 732749412}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca40e179b4c261a42bc68d693d173591, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _errorMessage:
+    m_TableReference:
+      m_TableCollectionName: GUID:b85c0a79d763f1e4ca7ef82830844f06
+    m_TableEntryReference:
+      m_KeyId: 72488435547963392
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  _localizedErrorPopupEventSO: {fileID: 11400000, guid: e802a1060ed3bcc40a826d27e9df51e5, type: 2}
+  references:
+    version: 2
+    RefIds: []
 --- !u!1001 &781506704
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1008,6 +1078,7 @@ Transform:
   - {fileID: 652042054}
   - {fileID: 1120536257}
   - {fileID: 1352650705}
+  - {fileID: 732749413}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1647131038
