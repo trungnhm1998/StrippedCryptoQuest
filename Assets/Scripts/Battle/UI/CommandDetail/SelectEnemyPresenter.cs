@@ -55,6 +55,7 @@ namespace CryptoQuest.Battle.UI.CommandDetail
 
                 var uiEnemy = _enemies[index];
                 uiEnemy.Show(enemies[index]);
+                uiEnemy.transform.SetAsLastSibling();
                 uiEnemy.gameObject.SetActive(true);
 
                 if (selected) continue;

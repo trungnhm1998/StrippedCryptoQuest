@@ -115,15 +115,7 @@ namespace CryptoQuest.Battle.UI
             if (!Interactable || dir.y == 0) return;
             CurrentIndex += (int)dir.y * -1;
 
-            var nextObject = _buttonsContainer.GetChild(CurrentIndex).gameObject;
-            // Skip object that are disabled in list
-            if (!nextObject.activeSelf) 
-            {
-                NavigateSelectCommand(dir);
-                return;
-            }
-
-            EventSystem.current.SetSelectedGameObject(nextObject);
+            EventSystem.current.SetSelectedGameObject(_buttonsContainer.GetChild(CurrentIndex).gameObject);
         }
 
         public void SelectFirstButton()
