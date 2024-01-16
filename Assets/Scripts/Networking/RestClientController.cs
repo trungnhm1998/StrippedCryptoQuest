@@ -21,13 +21,14 @@ namespace CryptoQuest.Networking
         public IRestClient WithParams(Dictionary<string, string> parameters);
         public IRestClient WithBody(object body);
         public IRestClient WithHeaders(Dictionary<string, string> headers);
+        public IRestClient WithoutDispactError();
     }
 
     public class ResponseWithError : ActionBase
     {
-        public RequestException RequestException { get; }
+        public Exception RequestException { get; }
 
-        public ResponseWithError(RequestException requestException)
+        public ResponseWithError(Exception requestException)
         {
             RequestException = requestException;
         }
@@ -47,85 +48,65 @@ namespace CryptoQuest.Networking
 
         public IObservable<TResponse> Post<TResponse>(string path)
         {
-            return Observable.Create<TResponse>(observer =>
+            return CreateRequest<TResponse>(observer =>
             {
-                try
-                {
-                    var generateRequest = GenerateRequest(path);
-                    PluginRestClient.Post<TResponse>(generateRequest)
-                        .Then(observer.OnNext)
-                        .Catch(e => ErrorWrapper(e, observer))
-                        .Finally(observer.OnCompleted);
-                }
-                catch (Exception e)
-                {
-                    ErrorWrapper(e, observer);
-                }
-
-                return Disposable.Empty;
+                var generateRequest = GenerateRequest(path);
+                PluginRestClient.Post<TResponse>(generateRequest)
+                    .Then(observer.OnNext)
+                    .Catch(observer.OnError)
+                    .Finally(observer.OnCompleted);
             });
         }
 
         public IObservable<TResponse> Get<TResponse>(string path)
         {
-            return Observable.Create<TResponse>(observer =>
+            return CreateRequest<TResponse>(observer =>
             {
-                try
-                {
-                    var generateRequest = GenerateRequest(path);
-                    generateRequest.Method = "GET";
-                    PluginRestClient.Get<TResponse>(generateRequest)
-                        .Then(observer.OnNext)
-                        .Catch(e => ErrorWrapper(e, observer))
-                        .Finally(observer.OnCompleted);
-                }
-                catch (Exception e)
-                {
-                    ErrorWrapper(e, observer);
-                }
-
-                return Disposable.Empty;
+                var generateRequest = GenerateRequest(path);
+                generateRequest.Method = "GET";
+                PluginRestClient.Get<TResponse>(generateRequest)
+                    .Then(observer.OnNext)
+                    .Catch(observer.OnError)
+                    .Finally(observer.OnCompleted);
             });
         }
 
         public IObservable<TResponse> Put<TResponse>(string path)
         {
+            return CreateRequest<TResponse>(observer =>
+            {
+                var generateRequest = GenerateRequest(path);
+                PluginRestClient.Put<TResponse>(generateRequest)
+                    .Then(observer.OnNext)
+                    .Catch(observer.OnError)
+                    .Finally(observer.OnCompleted);
+            });
+        }
+
+        private IObservable<TResponse> CreateRequest<TResponse>(Action<ObserverWrapper<TResponse>> handleRequest)
+        {
             return Observable.Create<TResponse>(observer =>
             {
+                var wrapper = new ObserverWrapper<TResponse>()
+                {
+                    Observer = observer,
+                    IsDispactError = _isDispactError
+                };
+                _isDispactError = true;
+
                 try
                 {
-                    var generateRequest = GenerateRequest(path);
-                    PluginRestClient.Put<TResponse>(generateRequest)
-                        .Then(observer.OnNext)
-                        .Catch(e => ErrorWrapper(e, observer))
-                        .Finally(observer.OnCompleted);
+                    handleRequest?.Invoke(wrapper);
                 }
                 catch (Exception e)
                 {
-                    ErrorWrapper(e, observer);
+                    wrapper.HandleError(e);
                 }
 
                 return Disposable.Empty;
             });
         }
 
-
-        private void ErrorWrapper<TResponse>(Exception exception, IObserver<TResponse> observer)
-        {
-            RequestException requestException = exception as RequestException;
-
-            if (exception is AggregateException aggregateException)
-            {
-                requestException = aggregateException.InnerException as RequestException;
-            }
-
-            ActionDispatcher.Dispatch(new ResponseWithError(requestException));
-
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
-            Debug.LogWarning(exception);
-#endif
-            observer.OnError(exception);
-        }
 
         public IRestClient WithParam(string key, string value)
         {
@@ -155,6 +136,13 @@ namespace CryptoQuest.Networking
         public IRestClient WithHeaders(Dictionary<string, string> headers)
         {
             _headers = headers;
+            return this;
+        }
+
+        private bool _isDispactError = true;
+        public IRestClient WithoutDispactError()
+        {
+            _isDispactError = false;
             return this;
         }
 
@@ -217,6 +205,31 @@ namespace CryptoQuest.Networking
             }
 
             return finalHeaders;
+        }
+    }
+
+    /// <summary>
+    /// Wrap observer to optional handle error
+    /// </summary>
+    public class ObserverWrapper<TResponse> : IObserver<TResponse>
+    {
+        public IObserver<TResponse> Observer;
+        public bool IsDispactError;
+
+        public void OnCompleted() => Observer.OnCompleted();
+        public void OnError(Exception error) => HandleError(error);
+        public void OnNext(TResponse value) => Observer.OnNext(value);
+
+        public void HandleError(Exception exception)
+        {
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+            Debug.LogWarning(exception);
+#endif
+            Observer.OnError(exception);
+
+            if (!IsDispactError) return;
+            
+            ActionDispatcher.Dispatch(new ResponseWithError(exception));
         }
     }
 }

@@ -20,7 +20,8 @@ namespace CryptoQuest.UI.Title
         {
             ActionDispatcher.Dispatch(new ShowLoading());
             var restClient = ServiceProvider.GetService<IRestClient>();
-            restClient.Get<CommonResponse>(Nft.GET_TOKEN)
+            restClient.WithoutDispactError()
+                .Get<CommonResponse>(Nft.GET_TOKEN)
                 .Subscribe(OnGetToken, OnError);
         }
 

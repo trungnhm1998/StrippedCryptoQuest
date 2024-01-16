@@ -26,6 +26,7 @@ namespace CryptoQuest.Sagas.Profile
                 {
                     { "refreshToken", _credentials.RefreshToken }
                 })
+                .WithoutDispactError()
                 .Post<AuthResponse>(Accounts.REFRESH_TOKENS)
                 .Subscribe(Success, Failed);
         }
