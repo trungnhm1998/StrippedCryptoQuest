@@ -24,13 +24,22 @@ namespace CryptoQuest.Tavern.States
         }
 
         public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex,
-            AnimatorControllerPlayable controller) => OnExit();
+            AnimatorControllerPlayable controller)
+        {
+            _hasEntered = false;
+            OnExit();
+        }
 
-        public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) => OnExit();
+        public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+        {
+            _hasEntered = false;
+            OnExit();
+        }
 
         public void Exit()
         {
             if (!_hasEntered) return;
+            _hasEntered = false;
             OnExit();
         }
 

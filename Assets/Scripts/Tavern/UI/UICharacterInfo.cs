@@ -1,20 +1,41 @@
 ﻿using CryptoQuest.Character.Hero;
+using CryptoQuest.Character.Hero.AvatarProvider;
+using CryptoQuest.UI.Extensions;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
+using UnityEngine.UI;
 
 namespace CryptoQuest.Tavern.UI
 {
-    public class UICharacterInfo : MonoBehaviour
+    public class UICharacterInfo : UICharacterListItem
     {
-        [SerializeField] private GameObject _emptyOverlay;
+        [SerializeField] private GameObject _interactingIndicator;
+        [SerializeField] private HeroAvatarDatabase _avatarDatabase;
+        [SerializeField] private Image _avatar;
+        private AsyncOperationHandle _avatarOpHandle;
 
-        public void SetCharacter(HeroSpec hero)
+        public override void Init(HeroSpec heroSpec)
         {
-             _emptyOverlay.SetActive(false);
+            base.Init(heroSpec);
+            var isValid = heroSpec.IsValid();
+            StrName.gameObject.SetActive(isValid);
+            TxtLevel.gameObject.SetActive(isValid);
+            if (isValid == false) return;
+            var avatarId = $"{heroSpec.Origin.DetailInformation.Id}-{heroSpec.Class.Id}";
+            if (_avatarDatabase.CacheLookupTable.ContainsKey(avatarId) == false) return;
+            _avatar.gameObject.SetActive(true);
+            _avatarOpHandle = _avatar.LoadSpriteAndSet(_avatarDatabase.CacheLookupTable[avatarId]);
         }
 
-        public void Clear()
+        protected override void Reset()
         {
-            _emptyOverlay.SetActive(true);
+            base.Reset();
+            _avatar.gameObject.SetActive(false);
+            MarkAsInteracting(false);
+            if (_avatarOpHandle.IsValid()) Addressables.Release(_avatarOpHandle);
         }
+
+        public void MarkAsInteracting(bool isInteracting = true) => _interactingIndicator.SetActive(isInteracting);
     }
 }
