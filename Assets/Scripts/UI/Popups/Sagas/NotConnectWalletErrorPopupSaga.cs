@@ -5,14 +5,14 @@ using UnityEngine.Localization;
 
 namespace CryptoQuest.UI.Popups.Sagas
 {
-    public class ServerErrorPopup : ActionBase { }
+    public class NotConnectWalletErrorPopup : ActionBase { }
 
-    public class ServerErrorPopupSaga : SagaBase<ServerErrorPopup>
+    public class NotConnectWalletErrorPopupSaga : SagaBase<NotConnectWalletErrorPopup>
     {
         [SerializeField] private LocalizedString _errorMessage;
         [SerializeField] private LocalizedStringEventChannelSO _localizedErrorPopupEventSO;
         
-        protected override void HandleAction(ServerErrorPopup ctx)
+        protected override void HandleAction(NotConnectWalletErrorPopup ctx)
         {
             _localizedErrorPopupEventSO.RaiseEvent(_errorMessage);
         }

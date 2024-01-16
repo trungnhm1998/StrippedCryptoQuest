@@ -51,7 +51,6 @@ namespace CryptoQuest.Ranch.Sagas
             ActionDispatcher.Dispatch(new ShowLoading(false));
 
             ActionDispatcher.Dispatch(new BeastUpgradeFailed());
-            ActionDispatcher.Dispatch(new ServerErrorPopup());
         }
     }
 }

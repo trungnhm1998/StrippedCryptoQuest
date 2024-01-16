@@ -3,15 +3,19 @@ using IndiGames.Core.Events;
 using UnityEngine;
 using UnityEngine.Localization;
 
-public class ClientErrorPopup : ActionBase { }
 
-public class ClientErrorPopupSaga : SagaBase<ClientErrorPopup>
+namespace CryptoQuest.UI.Popups.Sagas
 {
-    [SerializeField] private LocalizedString _errorMessage;
-    [SerializeField] private LocalizedStringEventChannelSO _localizedErrorPopupEventSO;
-    
-    protected override void HandleAction(ClientErrorPopup ctx)
+    public class ClientErrorPopup : ActionBase { }
+
+    public class ClientErrorPopupSaga : SagaBase<ClientErrorPopup>
     {
-        _localizedErrorPopupEventSO.RaiseEvent(_errorMessage);
+        [SerializeField] private LocalizedString _errorMessage;
+        [SerializeField] private LocalizedStringEventChannelSO _localizedErrorPopupEventSO;
+        
+        protected override void HandleAction(ClientErrorPopup ctx)
+        {
+            _localizedErrorPopupEventSO.RaiseEvent(_errorMessage);
+        }
     }
 }
