@@ -26,7 +26,7 @@ namespace CryptoQuest.System.SaveSystem.Loaders
             yield return op;
 
             var stonesResponse = op.Result.data.stones;
-            
+            _inventory.MagicStones.Clear();
             var converter = ServiceProvider.GetService<IMagicStoneResponseConverter>();
             foreach (var stoneResponse in stonesResponse)
             {
