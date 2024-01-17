@@ -5,7 +5,7 @@ namespace CryptoQuest.Character.MonoBehaviours
 {
     public class SingleEntityInteractionManager : MonoBehaviour, IInteractionManager
     {
-        private readonly List<IInteractable> _interactions = new();
+        private Dictionary<IInteractable, float> _interactions = new Dictionary<IInteractable, float>();
 
         private void OnDisable() => _interactions.Clear();
 
@@ -26,8 +26,12 @@ namespace CryptoQuest.Character.MonoBehaviours
         {
             var canInteract = go.TryGetComponent<IInteractable>(out var currentInteraction);
 
+            Vector2 thisColliderPosition = transform.position;
+            Vector2 otherColliderPosition = go.transform.position;
+            float distance = Vector2.Distance(thisColliderPosition, otherColliderPosition);
+
             if (!canInteract) return;
-            _interactions.Add(currentInteraction);
+            _interactions.Add(currentInteraction, distance);
         }
 
         private void RemovePotentialInteraction(GameObject go)
@@ -40,7 +44,23 @@ namespace CryptoQuest.Character.MonoBehaviours
 
         public void Interact()
         {
-            foreach (var go in _interactions) go?.Interact();
+            KeyValuePair<IInteractable, float> smallestDistancePair = FindSmallestDistancePair();
+            smallestDistancePair.Key?.Interact();
+        }
+
+        private KeyValuePair<IInteractable, float> FindSmallestDistancePair()
+        {
+            KeyValuePair<IInteractable, float> smallestDistancePair =
+                new KeyValuePair<IInteractable, float>(null, float.MaxValue);
+
+            foreach (var pair in _interactions)
+            {
+                if (pair.Value < smallestDistancePair.Value)
+                {
+                    smallestDistancePair = pair;
+                }
+            }
+            return smallestDistancePair;
         }
     }
 }
