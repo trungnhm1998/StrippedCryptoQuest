@@ -1,3 +1,6 @@
+using System.Collections.Generic;
+using System.Linq;
+using CryptoQuest.Beast;
 using CryptoQuest.Input;
 using IndiGames.Core.Events;
 using TinyMessenger;
@@ -21,6 +24,9 @@ namespace CryptoQuest.Ranch.State.BeastUpgrade
         {
             _stateController = StateMachine.GetComponent<RanchStateController>();
             _input = _stateController.Controller.Input;
+            _stateController.Controller.ShowWalletEventChannel
+                .EnableSouls(false)
+                .Show();
 
             _getDataSucceed = ActionDispatcher.Bind<GetBeastSucceeded>(InitResult);
 
@@ -36,14 +42,15 @@ namespace CryptoQuest.Ranch.State.BeastUpgrade
 
         private void InitResult(ActionBase _)
         {
-            var beast = _stateController.UpgradePresenter.BeastToUpgrade;
+            IBeast beastToUpgrade = _stateController.UpgradePresenter.BeastToUpgrade;
+            IBeast firstBeast = _stateController.BeastInventory.GetBeast(beastToUpgrade.Id);
 
-            var firstBeast = _stateController.BeastInventory.GetBeast(beast.Id);
+            List<IBeast> ownedBeasts = _stateController.BeastInventory.OwnedBeasts;
 
-            _stateController.UpgradePresenter.InitBeast(_stateController.BeastInventory.OwnedBeasts);
+            _stateController.UpgradePresenter.InitBeast(ownedBeasts);
             _stateController.UpgradePresenter.ResultBeast.Show(firstBeast);
             _stateController.UpgradePresenter.LeftPanel.SetActive(false);
-            _stateController.UpgradePresenter.UiBeastUpgradeDetail.gameObject.SetActive(false);
+            _stateController.UpgradePresenter.ActiveBeastDetail(false);
         }
 
         private void BackToUpgradeState() => StateMachine.Play(UpgradeState);
@@ -52,6 +59,10 @@ namespace CryptoQuest.Ranch.State.BeastUpgrade
         {
             ActionDispatcher.Unbind(_getDataSucceed);
 
+            List<IBeast> ownedBeasts = _stateController.BeastInventory.OwnedBeasts;
+            bool isValid = ownedBeasts.Any(beast => beast.Level < beast.MaxLevel);
+
+            _stateController.UpgradePresenter.ActiveBeastDetail(isValid);
             _stateController.UpgradePresenter.ResultBeast.Hide();
 
             _input.CancelEvent -= BackToUpgradeState;

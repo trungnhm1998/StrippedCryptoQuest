@@ -12,18 +12,17 @@ namespace CryptoQuest.Ranch.Upgrade.UI
 {
     public class UIConfigBeastUpgradePresenter : MonoBehaviour
     {
-        [Header("Dependencies")]
-        [SerializeField] private WalletSO _wallet;
+        [Header("Dependencies")] [SerializeField]
+        private WalletSO _wallet;
 
         [SerializeField] private CurrencySO _currencySO;
 
-        [Header("Event")]
-        [SerializeField] private BeastUpgradeCostDatabase _costDatabase;
+        [Header("Event")] [SerializeField] private BeastUpgradeCostDatabase _costDatabase;
 
         [SerializeField] private CalculatorBeastStatsSO _calculatorBeastStatsSo;
 
-        [Header("Components")]
-        [SerializeField] private UIConfigBeastUpgradeDetail _beastUpgradeDetail;
+        [Header("Components")] [SerializeField]
+        private UIConfigBeastUpgradeDetail _beastUpgradeDetail;
 
         [SerializeField] private UpgradePresenter _upgradePresenter;
         [SerializeField] private UIBeastUpgradeDetail _uiBeastUpgradeDetail;
@@ -69,6 +68,12 @@ namespace CryptoQuest.Ranch.Upgrade.UI
             if (dir == 0) return;
 
             SetLevelToUpgrade(dir);
+        }
+
+        public void UpdateGold()
+        {
+            var currentGold = _wallet[_currencySO].Amount;
+            _wallet[_currencySO].SetAmount(currentGold - GoldNeeded);
         }
 
         private void SetLevelToUpgrade(int value = 0)

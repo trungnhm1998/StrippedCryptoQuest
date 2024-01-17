@@ -143,6 +143,15 @@ namespace CryptoQuest.Ranch.Evolve.Presenters
             _uiResultTitle.ShowResultTitle(localized);
         }
 
+        public void UpdateCurrency(IBeastEvolvableInfo info)
+        {
+            var currentGold = _wallet[_goldCurrencySO].Amount;
+            var currentMetad = _wallet[_diamondCurrencySO].Amount;
+
+            _wallet[_goldCurrencySO].SetAmount(currentGold - info.Gold);
+            _wallet[_diamondCurrencySO].SetAmount(currentMetad - info.Metad);
+        }
+
         private IEnumerator UpdateResultStats(int beastId)
         {
             yield return new WaitUntil(() => _uiBeastResultStats.gameObject.activeInHierarchy);

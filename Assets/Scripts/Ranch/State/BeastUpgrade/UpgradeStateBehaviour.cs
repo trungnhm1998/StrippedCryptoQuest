@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using CryptoQuest.Beast;
 using CryptoQuest.Input;
 using CryptoQuest.UI.Dialogs.Dialogue;
@@ -26,15 +28,27 @@ namespace CryptoQuest.Ranch.State.BeastUpgrade
             _dialogue = _stateController.DialogController.NormalDialogue;
             _stateController.UIBeastUpgrade.Contents.SetActive(true);
 
+            _stateController.Controller.ShowWalletEventChannel
+                .EnableSouls(false)
+                .Show();
+
             _input.CancelEvent += CancelBeastUpgradeState;
             _input.SubmitEvent += SelectBeastLevel;
             _dialogue.SetMessage(_welcomeMessage).Show();
 
-            _stateController.UpgradePresenter.InitBeast(_stateController.BeastInventory.OwnedBeasts);
+            List<IBeast> ownedBeasts = _stateController.BeastInventory.OwnedBeasts;
+            bool isValid = ownedBeasts.Any(beast => beast.Level < beast.MaxLevel);
+
+            _stateController.UpgradePresenter.InitBeast(ownedBeasts);
+            _stateController.UpgradePresenter.ActiveBeastDetail(isValid);
         }
 
         private void SelectBeastLevel()
         {
+            List<IBeast> ownedBeasts = _stateController.BeastInventory.OwnedBeasts;
+            bool isValid = ownedBeasts.Any(beast => beast.Level < beast.MaxLevel);
+            if (!isValid) return;
+
             StateMachine.Play(SelectLevelState);
         }
 

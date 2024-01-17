@@ -22,6 +22,10 @@ namespace CryptoQuest.Ranch.State.BeastEvolve
             _controller.Controller.Input.CancelEvent += CancelBeastEvolveState;
             _controller.Controller.Input.SubmitEvent += ChangeConfirmState;
             _getDataSucceed = ActionDispatcher.Bind<GetBeastSucceeded>(UpdateResultStats);
+
+            _controller.Controller.ShowWalletEventChannel
+                .EnableSouls(false)
+                .Show();
         }
 
         protected override void OnExit()
