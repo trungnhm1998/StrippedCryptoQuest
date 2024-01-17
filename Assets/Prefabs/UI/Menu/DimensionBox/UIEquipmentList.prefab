@@ -63,7 +63,7 @@ RectTransform:
   m_GameObject: {fileID: 296551296362188200}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.8, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1470123726886977645}
@@ -146,9 +146,9 @@ RectTransform:
   m_Father: {fileID: 1470123726886977645}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: -17, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &3633427959276713470
 CanvasRenderer:
@@ -297,7 +297,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Content: {fileID: 4587975038467308991}
   m_Horizontal: 0
-  m_Vertical: 0
+  m_Vertical: 1
   m_MovementType: 2
   m_Elasticity: 0.1
   m_Inertia: 1
@@ -307,7 +307,7 @@ MonoBehaviour:
   m_HorizontalScrollbar: {fileID: 0}
   m_VerticalScrollbar: {fileID: 6293708464550377825}
   m_HorizontalScrollbarVisibility: 1
-  m_VerticalScrollbarVisibility: 2
+  m_VerticalScrollbarVisibility: 0
   m_HorizontalScrollbarSpacing: -3
   m_VerticalScrollbarSpacing: -3
   m_OnValueChanged:
@@ -332,7 +332,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5406205723316060612}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 86522a7bd44e429e9884d6e05ea420cc, type: 3}
   m_Name: 
@@ -655,7 +655,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _scrollView: {fileID: 5980077535446397239}
-  _equipmentPrefab: {fileID: 7556614621654538182, guid: b07f045c3d89719478b2d87c57986e45, type: 3}
+  _instantiatePrefab: {fileID: 7556614621654538182, guid: b07f045c3d89719478b2d87c57986e45, type: 3}
 --- !u!1 &7136965606052655887
 GameObject:
   m_ObjectHideFlags: 0
@@ -683,7 +683,7 @@ RectTransform:
   m_GameObject: {fileID: 7136965606052655887}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: -1, z: 1}
+  m_LocalScale: {x: 0.8, y: -1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1470123726886977645}
