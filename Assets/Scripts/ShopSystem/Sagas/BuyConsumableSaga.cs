@@ -37,20 +37,26 @@ namespace CryptoQuest.ShopSystem.Sagas
         protected override void HandleAction(BuyConsumableAction ctx)
         {
             var restClient = ServiceProvider.GetService<IRestClient>();
-            restClient
+            restClient.WithoutDispactError()
                 .WithBody(new Body
                 {
                     ItemId = ctx.Item.Data.ID,
                     Quantity = ctx.Item.Quantity
                 })
                 .Post<CommonResponse>(API.BUY)
-                .Subscribe(_ => BuySuccess(ctx.Item));
+                .Subscribe(_ => BuySuccess(ctx.Item), OnError);
         }
 
         private void BuySuccess(ConsumableInfo item)
         {
             ActionDispatcher.Dispatch(new AddConsumableAction(item.Data, item.Quantity));
             ActionDispatcher.Dispatch(new FetchProfileAction());
+            ActionDispatcher.Dispatch(new TransactionSucceedAction());
+        }
+
+        private void OnError(Exception exception)
+        {
+            ActionDispatcher.Dispatch(new TransactionFailedAction());
         }
     }
 }

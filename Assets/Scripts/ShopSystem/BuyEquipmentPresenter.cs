@@ -61,12 +61,10 @@ namespace CryptoQuest.ShopSystem
         {
             ActionDispatcher.Dispatch(new BuyEquipmentAction(item.Info));
 
-            _resultPanel
-                .AddHideCallback(() =>
+            _resultPanel.AddHideCallback(() =>
                 {
                     EventSystem.current.SetSelectedGameObject(item.gameObject);
-                })
-                .ShowSuccess();
+                });
         }
     }
 }

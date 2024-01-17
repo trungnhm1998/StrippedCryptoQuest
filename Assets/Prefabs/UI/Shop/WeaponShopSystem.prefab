@@ -106,6 +106,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5381851250520908608}
   - component: {fileID: 3725511713242163320}
+  - component: {fileID: 5812634050607641749}
+  - component: {fileID: 7136393020920352336}
   m_Layer: 0
   m_Name: BuyResultPanel
   m_TagString: Untagged
@@ -192,6 +194,32 @@ MonoBehaviour:
   references:
     version: 2
     RefIds: []
+--- !u!114 &5812634050607641749
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2469247360575441502}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d59da50539d5cd45a44e0d6bc8e8f35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _resultPanel: {fileID: 3725511713242163320}
+--- !u!114 &7136393020920352336
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2469247360575441502}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bbdd901e8d507a41a5e0fa6ace24fae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _resultPanel: {fileID: 3725511713242163320}
 --- !u!1 &3144985905725463612
 GameObject:
   m_ObjectHideFlags: 0
@@ -242,7 +270,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showTooltipEvent: {fileID: 11400000, guid: 12c0a43b61f69a04c9b5dac153020518, type: 2}
-  _autoReleaseTime: 5
   _toolTipGameObject: {fileID: 6142069056581988901}
 --- !u!1 &4099720703106647029
 GameObject:

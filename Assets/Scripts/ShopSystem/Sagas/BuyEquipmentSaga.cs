@@ -33,13 +33,13 @@ namespace CryptoQuest.ShopSystem.Sagas
         protected override void HandleAction(BuyEquipmentAction ctx)
         {
             var restClient = ServiceProvider.GetService<IRestClient>();
-            restClient
+            restClient.WithoutDispactError()
                 .WithBody(new Body
                 {
                     ItemId = ctx.Item.Data.ID
                 })
                 .Post<BuyResponse>(API.BUY)
-                .Subscribe(response => BuySuccess(response, ctx.Item));
+                .Subscribe(response => BuySuccess(response, ctx.Item), OnError);
         }
 
         private void BuySuccess(BuyResponse response, IEquipment item)
@@ -53,6 +53,12 @@ namespace CryptoQuest.ShopSystem.Sagas
             };
             ActionDispatcher.Dispatch(new AddEquipmentAction(equipment));
             ActionDispatcher.Dispatch(new FetchProfileAction());
+            ActionDispatcher.Dispatch(new TransactionSucceedAction());
+        }
+
+        private void OnError(Exception ex)
+        {
+            ActionDispatcher.Dispatch(new TransactionFailedAction());
         }
     }
 
