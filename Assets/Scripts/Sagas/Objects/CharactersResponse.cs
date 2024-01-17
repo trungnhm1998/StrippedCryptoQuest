@@ -113,5 +113,7 @@ namespace CryptoQuest.Sagas.Objects
         public int isNFT;
         public object[] beasts;
         public object[] equipments;
+        public int transferring;
+        public bool IsTransferring => transferring == 1;
     }
 }

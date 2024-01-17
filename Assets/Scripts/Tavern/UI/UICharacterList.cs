@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using CryptoQuest.Character.Hero;
-using CryptoQuest.Gameplay.PlayerParty;
+using CryptoQuest.Sagas.Character;
+using CryptoQuest.UI.Extensions;
+using IndiGames.Core.Common;
 using UnityEngine;
-using UnityEngine.Pool;
 using UnityEngine.UI;
 using Obj = CryptoQuest.Sagas.Objects;
 
@@ -10,92 +10,53 @@ namespace CryptoQuest.Tavern.UI
 {
     public class UICharacterList : MonoBehaviour
     {
-        [SerializeField] private PartySO _party;
+        [SerializeField] private ScrollRect _scrollRect;
+        [SerializeField] private UICharacterListItem _itemPrefab;
 
-        [SerializeField] protected Transform _scrollRectContent;
-        [SerializeField] protected UITavernItem _itemPrefab;
-
-        private IObjectPool<UITavernItem> _pool;
-        private List<UITavernItem> _items = new();
-
-        private void Awake()
+        public void Init(List<Obj.Character> characterResponses)
         {
-            _pool ??= new ObjectPool<UITavernItem>(OnCreate, OnGet, OnRelease, OnDestroyPool);
-        }
-
-        public void SetData(List<HeroSpec> data)
-        {
-            ReleaseAllItemInPool();
-            foreach (var heroData in data)
+            _scrollRect.content.DestroyAllChildrenImmediately();
+            var responseConverter = ServiceProvider.GetService<IHeroResponseConverter>();
+            foreach (var characterResponse in characterResponses)
             {
-                UITavernItem item = _pool.Get();
-                item.SetItemInfo(heroData);
-                IdentifyItemParent(item);
+                var heroSpec = responseConverter.Convert(characterResponse);
+                if (heroSpec.Origin == null) continue;
+                var uiItem = Instantiate(_itemPrefab, _scrollRect.content);
+                uiItem.Init(heroSpec);
             }
+
+            SetupNavigationAndTag(characterResponses);
         }
 
-        public void HandleInPartyHeroes()
+        private void SetupNavigationAndTag(List<Obj.Character> characterResponses)
         {
-            foreach (var partySlot in _party.GetParty())
+            var buttons = _scrollRect.content.GetComponentsInChildren<Button>();
+            for (var index = 0; index < buttons.Length; index++)
             {
-                if (partySlot.IsValid() == false) continue;
-                var isMain = partySlot.Hero.Id == 0;
-                if (isMain) continue;
-                foreach (var heroItem in _items)
+                var button = buttons[index];
+                button.navigation = new Navigation
                 {
-                    if (partySlot.Hero.Id != heroItem.Id) continue;
-                    heroItem.LockInPartyHeroes(true);
-                }
+                    mode = Navigation.Mode.Explicit,
+                    selectOnUp = index > 0 ? buttons[index - 1] : buttons[^1],
+                    selectOnDown = index < buttons.Length - 1 ? buttons[index + 1] : buttons[0]
+                };
+                var transferableComponent = button.GetComponent<UITransferable>();
+                transferableComponent.IsTransferring = characterResponses[index].IsTransferring;
+                if (transferableComponent.IsTransferring) continue;
+                button.onClick.AddListener(() => transferableComponent.TogglePending());
             }
         }
-
-        public void SelectDefault()
+        
+        public List<UICharacterListItem> GetSelectedItems()
         {
-            var firstButton = _scrollRectContent.GetComponentInChildren<Button>();
-            firstButton.Select();
+            var selectedItems = new List<UICharacterListItem>();
+            var transferableItems = _scrollRect.content.GetComponentsInChildren<UITransferable>();
+            foreach (var transferableItem in transferableItems)
+            {
+                if (transferableItem.IsPending) selectedItems.Add(transferableItem.GetComponent<UICharacterListItem>());
+            }
+
+            return selectedItems;
         }
-
-        private void IdentifyItemParent(UITavernItem item) => item.Parent = _scrollRectContent;
-
-        public void SetInteractableAllButtons(bool isEnabled)
-        {
-            foreach (Transform item in _scrollRectContent)
-                item.GetComponent<Button>().enabled = isEnabled;
-        }
-
-        public void UpdateList()
-        {
-            foreach (var item in _items)
-                item.EnablePendingTag(false);
-        }
-
-        #region Pool
-
-        private UITavernItem OnCreate()
-        {
-            var item = Instantiate(_itemPrefab, _scrollRectContent);
-            return item;
-        }
-
-        private void OnGet(UITavernItem item)
-        {
-            item.transform.SetAsLastSibling();
-            item.gameObject.SetActive(true);
-            _items.Add(item);
-        }
-
-        private void OnRelease(UITavernItem item) => item.gameObject.SetActive(false);
-
-        private void OnDestroyPool(UITavernItem item) => Destroy(item.gameObject);
-
-        private void ReleaseAllItemInPool()
-        {
-            foreach (var item in _items)
-                _pool.Release(item);
-
-            _items = new();
-        }
-
-        #endregion
     }
 }

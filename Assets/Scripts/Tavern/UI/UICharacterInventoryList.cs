@@ -63,5 +63,16 @@ namespace CryptoQuest.Tavern.UI
                 item.MarkAsInParty(_party.Exists(item.Spec));
             }
         }
+        
+        public bool HasHeroToRecruit()
+        {
+            foreach (var item in _items)
+            {
+                if (item.IsMarkedAsInParty()) continue;
+                return true;
+            }
+
+            return false;
+        }
     }
 }

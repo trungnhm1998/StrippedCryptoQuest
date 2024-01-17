@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using CryptoQuest.Networking;
 using CryptoQuest.API;
+using CryptoQuest.Networking;
 using CryptoQuest.Sagas.Character;
 using CryptoQuest.Tavern.Objects;
 using CryptoQuest.UI.Actions;
