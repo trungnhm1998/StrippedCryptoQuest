@@ -77,7 +77,7 @@ namespace CryptoQuest.Tests.Editor.Beast
         [TestCase(true)]
         public void IsEquipped_WithBeast_EquipTagActiveIsCorrect(bool isEquipped)
         {
-            _uiBeast.EnableEquippedTag(isEquipped);
+            _uiBeast.MarkedForEquipped = isEquipped;
 
             GameObject equipTag = _uiBeast.transform.Find("EquippedTag").gameObject;
 

@@ -2,6 +2,8 @@ using System;
 using CryptoQuest.Beast;
 using CryptoQuest.Beast.ScriptableObjects;
 using CryptoQuest.Menu;
+using CryptoQuest.Sagas.Objects;
+using IndiGames.Core.Common;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -14,8 +16,7 @@ namespace CryptoQuest.Menus.Beast.UI
     {
         public static Action<UIBeast> OnBeastSelected;
 
-        [Header("UI")]
-        [SerializeField] private Image _beastIcon;
+        [Header("UI")] [SerializeField] private Image _beastIcon;
 
         [SerializeField] private MultiInputButton _beastButton;
         [SerializeField] private LocalizeStringEvent _beastName;
@@ -23,44 +24,36 @@ namespace CryptoQuest.Menus.Beast.UI
         [SerializeField] private GameObject _equippedTag;
         [SerializeField] private Color _disableColor;
 
-        [Header("Events")]
-        [SerializeField] private ShowBeastDetailsTrigger _showBeastDetailsTrigger;
+        [Header("Events")] [SerializeField] private ShowBeastDetailsTrigger _showBeastDetailsTrigger;
 
         [SerializeField] private CalculatorBeastStatsSO _calculatorBeastStatsSo;
 
-        private Color _normalColor;
-        private IBeast _beast = NullBeast.Instance;
-
         public IBeast Beast => _beast;
+        private IBeast _beast = NullBeast.Instance;
 
         public bool Interactable
         {
             set => _beastButton.interactable = value;
         }
 
-        private void Awake()
+        public bool MarkedForEquipped
         {
-            _normalColor = _beastNameText.color;
+            get => _equippedTag.activeSelf;
+            set => _equippedTag.SetActive(value);
         }
-
-        public void EnableEquippedTag(bool value) => _equippedTag.SetActive(value);
 
         public void Init(IBeast beast)
         {
             _beast = beast;
-            _beastName.StringReference = beast.LocalizedName;
-            _beastIcon.sprite = beast.Elemental.Icon;
+
+            _beastName.StringReference = _beast.LocalizedName;
+            _beastIcon.sprite = _beast.Elemental.Icon;
             _showBeastDetailsTrigger.Initialize(this);
         }
 
         public void OnPressButton()
         {
             OnBeastSelected?.Invoke(this);
-        }
-
-        private void SetDisable(bool value)
-        {
-            _beastNameText.color = value ? _disableColor : _normalColor;
         }
 
         public void OnSelect(BaseEventData eventData)

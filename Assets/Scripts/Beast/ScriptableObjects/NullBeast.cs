@@ -1,4 +1,5 @@
-﻿using CryptoQuest.AbilitySystem.Abilities;
+﻿using System;
+using CryptoQuest.AbilitySystem.Abilities;
 using CryptoQuest.AbilitySystem.Attributes;
 using CryptoQuest.Character;
 using CryptoQuest.Gameplay;
@@ -6,6 +7,7 @@ using UnityEngine.Localization;
 
 namespace CryptoQuest.Beast.ScriptableObjects
 {
+    [Serializable]
     public class NullBeast : IBeast
     {
         private static NullBeast _instance;

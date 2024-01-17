@@ -118,10 +118,12 @@ namespace CryptoQuest.Sagas.Objects
         public int consumeFuel;
         public string imageFileName;
         public string imageURL;
+        public int equip;
         public int nft;
         public float maxHpAtMaxLv;
         public float maxMpAtMaxLv;
         public bool IsTransferring => transferring == 1;
+        public bool IsEquipped => equip == 1;
     }
 
     
