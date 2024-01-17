@@ -13,6 +13,7 @@ namespace CryptoQuest.Battle.Audio
         [SerializeField] private AudioCueEventChannelSO _sfxEventChannel;
 
         private TinyMessageSubscriptionToken _sfxPlayedToken;
+        private Coroutine _coroutine;
 
         private void OnDisable()
         {
@@ -21,8 +22,16 @@ namespace CryptoQuest.Battle.Audio
 
         public void StopAndPlayAudio(AudioCueSO sfx, AudioCueSO bgm)
         {
+            StopPlayCoroutine();
+            _coroutine = StartCoroutine(CoPlayAudio(sfx, bgm));
+        }
+
+        public void StopPlayCoroutine()
+        {
             _musicEventChannel.StopAudio(null);
-            StartCoroutine(CoPlayAudio(sfx, bgm));
+            if (_coroutine == null) return;
+            OnDisable();
+            StopCoroutine(_coroutine);
         }
 
         // Because intro bgm and main bgm need to connect so I wait a little faster

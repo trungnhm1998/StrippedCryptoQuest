@@ -9,11 +9,12 @@ namespace CryptoQuest.Battle.States
     /// <summary>
     /// This also update characters effects/buffs and debuffs on their turns
     /// </summary>
-    public class ExecuteCharactersActions : IState
+    public class ExecuteCharactersActions : MonoBehaviour, IState
     {
-        private BattlePresenter _presenter;
-        private BattleContext _battleContext;
-        private BattleStateMachine _stateMachine;
+        [SerializeField] private ResultSO _result;
+        [SerializeField] private BattlePresenter _presenter;
+        [SerializeField] private BattleContext _battleContext;
+        [SerializeField] private BattleStateMachine _stateMachine;
 
         private bool _isBattleEnded;
         private int _roundCount;
@@ -24,13 +25,8 @@ namespace CryptoQuest.Battle.States
 
         public void OnEnter(BattleStateMachine stateMachine)
         {
-            _stateMachine = stateMachine;
-            _battleContext = stateMachine.GetComponent<BattleContext>();
-            _presenter = stateMachine.BattlePresenter;
             _presenter.CommandPanel.SetActive(false);
-
             _retreatSucceedEvent = BattleEventBus.SubscribeEvent<RetreatSucceedEvent>(OnRetreatSuccess);
-
             ExecuteCharactersCommands();
         }
 
@@ -89,13 +85,13 @@ namespace CryptoQuest.Battle.States
         {
             if (IsLost())
             {
-                BattleEventBus.RaiseEvent(new TurnLostEvent());
+                _result.State = ResultSO.EState.Lose;
                 return;
             }
 
             if (IsWon())
             {
-                BattleEventBus.RaiseEvent(new TurnWonEvent());
+                _result.State = ResultSO.EState.Win;
                 return;
             }
         }
@@ -110,7 +106,8 @@ namespace CryptoQuest.Battle.States
         /// </summary>
         public void OnEndBattle()
         {
-            BattleEventBus.RaiseEvent(new RetreatedEvent());
+            _isBattleEnded = true;
+            _result.State = ResultSO.EState.Retreat;
         }
 
         private void OnRetreatSuccess(RetreatSucceedEvent retreatSucceedEvent)

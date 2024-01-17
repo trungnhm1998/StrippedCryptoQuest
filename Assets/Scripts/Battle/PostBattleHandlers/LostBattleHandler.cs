@@ -2,62 +2,42 @@
 using CryptoQuest.Battle.Components;
 using CryptoQuest.Battle.Events;
 using CryptoQuest.Gameplay.PlayerParty;
+using CryptoQuest.Inventory.Actions;
+using CryptoQuest.Inventory.Currency;
+using CryptoQuest.Inventory.ScriptableObjects;
 using CryptoQuest.Map.CheckPoint;
-using CryptoQuest.System;
 using IndiGames.Core.Common;
-using IndiGames.Core.SceneManagementSystem;
-using IndiGames.Core.SceneManagementSystem.ScriptableObjects;
-using TinyMessenger;
+using IndiGames.Core.Events;
 using UnityEngine;
 
 namespace CryptoQuest.Battle.PostBattleHandlers
 {
     public class LostBattleHandler : PostBattleManager
     {
+        [SerializeField] private WalletSO _wallet;
+        [SerializeField] private CurrencySO _gold;
         [SerializeField] private BattleResultEventSO _battleLostEvent;
-        [SerializeField] private int _divideGold = 2;
         [SerializeField] private AttributeWithMaxCapped[] _resetAttributes;
-        private TinyMessageSubscriptionToken _lostToken;
 
-        private void Awake()
+        protected override ResultSO.EState ResultState => ResultSO.EState.Lose;
+
+        protected override void HandleResult()
         {
-            _lostToken = BattleEventBus.SubscribeEvent<BattleLostEvent>(HandleLost);
-        }
-
-        private void OnDestroy()
-        {
-            if (_lostToken != null) BattleEventBus.UnsubscribeEvent(_lostToken);
-        }
-
-        private BattleLostEvent _context;
-
-        private void HandleLost(BattleLostEvent lostContext)
-        {
-            _context = lostContext;
-            _battleLostEvent.RaiseEvent(lostContext.Battlefield);
+            TeleportToClosestTownAfterSceneUnloaded();
+            _battleLostEvent.RaiseEvent(_battleBus.CurrentBattlefield);
             DecreaseGold();
             RestoreCharacter();
-            AdditiveGameSceneLoader.SceneUnloaded += TeleportToClosestTownAfterSceneUnloaded;
-            UnloadBattleScene();
-            
         }
 
-        private void TeleportToClosestTownAfterSceneUnloaded(SceneScriptableObject scene)
+        private void TeleportToClosestTownAfterSceneUnloaded()
         {
-            AdditiveGameSceneLoader.SceneUnloaded -= TeleportToClosestTownAfterSceneUnloaded;
-            if (scene != BattleSceneSO) return;
-
             var checkPointController = ServiceProvider.GetService<ICheckPointController>();
             checkPointController.BackToCheckPoint();
-        }   
-        
+        }
+
         private void DecreaseGold()
         {
-            // TODO: REFACTOR GOLD
-            // var inventoryController = ServiceProvider.GetService<IInventoryController>();
-            // var wallet = inventoryController.Inventory.WalletController.Wallet;
-            // var newGold = Mathf.FloorToInt(wallet.Gold.Amount / _divideGold);
-            // wallet.Gold.SetCurrencyAmount(newGold);
+            ActionDispatcher.Dispatch(new UpdateGoldAction(Mathf.FloorToInt(_wallet[_gold].Amount / 2)));
         }
 
         private void RestoreCharacter()

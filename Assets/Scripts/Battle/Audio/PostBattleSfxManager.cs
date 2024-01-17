@@ -10,6 +10,7 @@ namespace CryptoQuest.Battle.Audio
     // Play bgm of last scene after unload battle
     public class PostBattleSfxManager : MonoBehaviour
     {
+        [SerializeField] private ResultSO _result;
         [field: SerializeField] private AudioCueSO _winSfx;
         [field: SerializeField] private AudioCueSO _winBgm;
         [field: SerializeField] private AudioCueSO _retreatSfx;
@@ -18,24 +19,30 @@ namespace CryptoQuest.Battle.Audio
         [SerializeField] private AudioCueEventChannelSO _sfxEventChannel;
 
         private TinyMessageSubscriptionToken _wonToken;
-        private TinyMessageSubscriptionToken _retreatToken;
 
         private void OnEnable()
         {
-            _wonToken = BattleEventBus.SubscribeEvent<BattleWonEvent>(OnBattleWon);
-            _retreatToken = BattleEventBus.SubscribeEvent<RetreatedEvent>(
-                _ => _sfxEventChannel.PlayAudio(_retreatSfx));
+            _wonToken = BattleEventBus.SubscribeEvent<UnloadingEvent>(_ =>
+            {
+                if (_result.State == ResultSO.EState.Retreat)
+                {
+                    _sfxEventChannel.PlayAudio(_retreatSfx);
+                }
+                else if (_result.State == ResultSO.EState.Win)
+                {
+                    PlayBattleWonSfx();
+                }
+            });
         }
 
         private void OnDisable()
         {
             ActionDispatcher.Unbind(_wonToken);
-            ActionDispatcher.Unbind(_retreatToken);
         }
 
-        private void OnBattleWon(BattleWonEvent ctx)
+        private void PlayBattleWonSfx()
         {
-            if (ctx.Loots.Count <= 0)
+            if (_result.Loots.Count <= 0)
             {
                 ActionDispatcher.Dispatch(new PlayCachedBgmAction());
                 _sfxEventChannel.PlayAudio(_winSfx);

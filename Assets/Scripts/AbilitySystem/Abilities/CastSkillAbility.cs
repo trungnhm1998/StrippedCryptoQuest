@@ -54,9 +54,7 @@ namespace CryptoQuest.AbilitySystem.Abilities
         private readonly CastSkillAbility _def;
         public CastSkillAbility Def => _def;
         private AbilitySystemBehaviour[] _targets;
-        private TinyMessageSubscriptionToken _wonEvent;
-        private TinyMessageSubscriptionToken _lostEvent;
-        private TinyMessageSubscriptionToken _retreatEvent;
+        private TinyMessageSubscriptionToken _battleEndedEvent;
         private Battle.Components.Character _character;
         protected AbilitySystemBehaviour[] Targets => _targets;
 
@@ -200,9 +198,7 @@ namespace CryptoQuest.AbilitySystem.Abilities
 
         protected void RegisterBattleEndedEvents()
         {
-            _wonEvent = BattleEventBus.SubscribeEvent<BattleWonEvent>(CleanupAbility);
-            _lostEvent = BattleEventBus.SubscribeEvent<BattleLostEvent>(CleanupAbility);
-            _retreatEvent = BattleEventBus.SubscribeEvent<BattleRetreatedEvent>(CleanupAbility);
+            _battleEndedEvent = BattleEventBus.SubscribeEvent<UnloadingEvent>(CleanupAbility);
         }
 
         private bool IsTargetEvaded(AbilitySystemBehaviour target)
@@ -215,11 +211,9 @@ namespace CryptoQuest.AbilitySystem.Abilities
 
         protected abstract void InternalExecute(AbilitySystemBehaviour target);
 
-        private void CleanupAbility(BattleEndedEvent ctx)
+        private void CleanupAbility(UnloadingEvent _)
         {
-            BattleEventBus.UnsubscribeEvent(_wonEvent);
-            BattleEventBus.UnsubscribeEvent(_lostEvent);
-            BattleEventBus.UnsubscribeEvent(_retreatEvent);
+            BattleEventBus.UnsubscribeEvent(_battleEndedEvent);
             Cleanup();
         }
 

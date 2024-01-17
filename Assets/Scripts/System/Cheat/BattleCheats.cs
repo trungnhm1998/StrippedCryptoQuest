@@ -1,4 +1,5 @@
 ﻿using CommandTerminal;
+using CryptoQuest.Battle;
 using CryptoQuest.Battle.Events;
 using UnityEngine;
 
@@ -6,6 +7,8 @@ namespace CryptoQuest.System.Cheat
 {
     public class BattleCheats : MonoBehaviour, ICheatInitializer
     {
+        [SerializeField] private ResultSO _result;
+        
         public void InitCheats()
         {
             Debug.Log($"BattleCheats.InitCheats()");
@@ -16,22 +19,34 @@ namespace CryptoQuest.System.Cheat
             Terminal.Shell.AddCommand("bat.retreat", InstantlyRetreat, 0, 0, "Instantly retreat current battle");
         }
 
+        private BattleStateMachine _battleStateMachine;
+        private bool _isBattleMachineValid => _battleStateMachine != null && _battleStateMachine.gameObject != null;
+        private BattleStateMachine _stateMachine
+        {
+            get
+            {
+                if (_isBattleMachineValid) return _battleStateMachine;
+                _battleStateMachine = FindObjectOfType<BattleStateMachine>();
+                return _battleStateMachine;
+            }
+        }
+
         private void TriggerLoseBattle(CommandArg[] obj)
         {
-            BattleEventBus.RaiseEvent(new TurnLostEvent());
-            BattleEventBus.RaiseEvent(new FinishedPresentingEvent());
+            _result.State = ResultSO.EState.Lose;
+            _stateMachine.ChangeState(_stateMachine.ResultChecker);
         }
 
         private void TriggerWinBattle(CommandArg[] obj)
         {
-            BattleEventBus.RaiseEvent(new TurnWonEvent());
-            BattleEventBus.RaiseEvent(new FinishedPresentingEvent());
+            _result.State = ResultSO.EState.Win;
+            _stateMachine.ChangeState(_stateMachine.ResultChecker);
         }
 
         private void InstantlyRetreat(CommandArg[] obj)
         {
-            BattleEventBus.RaiseEvent(new RetreatedEvent());
-            BattleEventBus.RaiseEvent(new FinishedPresentingEvent());
+            _result.State = ResultSO.EState.Retreat;
+            _stateMachine.ChangeState(_stateMachine.ResultChecker);
         }
     }
 }

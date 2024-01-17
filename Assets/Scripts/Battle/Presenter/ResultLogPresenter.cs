@@ -1,28 +1,21 @@
+using System;
 using System.Collections;
 using CryptoQuest.Battle.Presenter.Commands;
-using CryptoQuest.UI.Dialogs.BattleDialog;
-using UnityEngine;
-using UnityEngine.Localization;
 
 namespace CryptoQuest.Battle.Presenter
 {
     public class ResultLogPresenter : IPresentCommand
     {
-        private PresentBattleResultLog _logPresenter;
-        private LocalizedString _message;
-        private UIGenericDialog _dialog;
+        private Func<IEnumerator> _coShowLog;
 
-        public ResultLogPresenter(PresentBattleResultLog presenter, LocalizedString message, UIGenericDialog dialog)
+        public ResultLogPresenter(Func<IEnumerator> coShowLog)
         {
-            _logPresenter = presenter;
-            _message = message;
-            _dialog = dialog;
+            _coShowLog = coShowLog;
         }
 
         public IEnumerator Present()
         {
-            yield return _logPresenter.CoShowLog(_message);
-            yield return new WaitUntil(() => _dialog.Content.activeSelf == false);
+            yield return _coShowLog();
         }
     }
 }
