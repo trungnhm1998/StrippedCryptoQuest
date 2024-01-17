@@ -222,14 +222,13 @@ namespace CryptoQuest.Networking
 
         public void HandleError(Exception exception)
         {
+            if (IsDispactError)
+                ActionDispatcher.Dispatch(new ResponseWithError(exception));
+
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
             Debug.LogWarning(exception);
 #endif
             Observer.OnError(exception);
-
-            if (!IsDispactError) return;
-            
-            ActionDispatcher.Dispatch(new ResponseWithError(exception));
         }
     }
 }
