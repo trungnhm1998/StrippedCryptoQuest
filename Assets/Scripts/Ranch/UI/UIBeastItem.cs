@@ -42,6 +42,9 @@ namespace CryptoQuest.Ranch.UI
             MarkedForTransfer = false;
             Response = beast;
 
+            _inGameTag.SetActive(Response.IsEquipped);
+            _transferringTag.SetActive(Response.IsTransferring || Response.mintStatus != 2);
+
             _beast = ServiceProvider.GetService<IBeastResponseConverter>().Convert(beast);
             _name.text = $"{Id}.{Response.name}";
             _level.text = $"Lv.{_beast.Level}";
@@ -49,7 +52,7 @@ namespace CryptoQuest.Ranch.UI
 
         public void OnSelectToTransfer()
         {
-            if (_inGameTag.activeSelf || _transferringTag.activeSelf) return;
+            if (_inGameTag.activeSelf) return;
             MarkedForTransfer = !MarkedForTransfer;
             Pressed?.Invoke(this);
         }

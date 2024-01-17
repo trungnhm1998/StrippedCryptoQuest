@@ -1,8 +1,10 @@
 using System.Collections.Generic;
 using CryptoQuest.Beast;
 using CryptoQuest.Beast.ScriptableObjects;
+using CryptoQuest.Menus.Beast.Sagas;
 using CryptoQuest.UI.Common;
 using CryptoQuest.UI.Utilities;
+using IndiGames.Core.Events;
 using UnityEngine;
 using UnityEngine.Pool;
 using UnityEngine.UI;
@@ -15,8 +17,8 @@ namespace CryptoQuest.Menus.Beast.UI
 
         [SerializeField] private BeastProvider _beastProvider;
 
-        [Header("Scroll View Configs")]
-        [SerializeField] private ScrollRect _scrollRect;
+        [Header("Scroll View Configs")] [SerializeField]
+        private ScrollRect _scrollRect;
 
         [SerializeField] private GameObject _upArrow;
         [SerializeField] private GameObject _downArrow;
@@ -58,13 +60,14 @@ namespace CryptoQuest.Menus.Beast.UI
                     ? ui.Beast
                     : NullBeast.Instance;
 
+            ActionDispatcher.Dispatch(new UpdateBeastEquippedAction(ui.Beast));
             Refresh();
         }
 
         private void Refresh()
         {
             foreach (var beastUi in _beastUIs)
-                beastUi.EnableEquippedTag(beastUi.Beast.Id == _beastProvider.EquippingBeast.Id);
+                beastUi.MarkedForEquipped = beastUi.Beast.Id == _beastProvider.EquippingBeast.Id;
         }
 
 
@@ -79,18 +82,13 @@ namespace CryptoQuest.Menus.Beast.UI
             {
                 var beastUI = BeastUIPool.Get();
                 beastUI.Init(beast);
-
-                beastUI.EnableEquippedTag(beastUI.Beast.Id == _beastProvider.EquippingBeast.Id);
+                beastUI.MarkedForEquipped = beastUI.Beast.Id == _beastProvider.EquippingBeast.Id;
             }
         }
 
         private void CleanUpScrollView()
         {
-            foreach (var ui in _beastUIs)
-            {
-                BeastUIPool.Release(ui);
-            }
-
+            _beastUIs.ForEach(ui => BeastUIPool.Release(ui));
             _beastUIs.Clear();
         }
 
