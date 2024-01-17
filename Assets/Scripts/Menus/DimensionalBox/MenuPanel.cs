@@ -24,11 +24,11 @@ namespace CryptoQuest.Menus.DimensionalBox
         private void OnEnable()
         {
             _stateMachine.Init();
-            
-           Input.MenuNavigateEvent += _stateMachine.Navigate;
-           Input.MenuCancelEvent += _stateMachine.Cancel;
-           Input.MenuExecuteEvent += _stateMachine.Execute;
-           Input.MenuResetEvent += _stateMachine.Reset;
+
+            Input.MenuNavigateEvent += _stateMachine.Navigate;
+            Input.MenuCancelEvent += _stateMachine.Cancel;
+            Input.MenuExecuteEvent += _stateMachine.Execute;
+            Input.MenuResetEvent += _stateMachine.Reset;
         }
 
         private void OnDisable()

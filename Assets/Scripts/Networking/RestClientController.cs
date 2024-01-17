@@ -176,7 +176,12 @@ namespace CryptoQuest.Networking
                 EnableDebug = true,
 #endif
             };
+            
 
+#if DEVELOPMENT_BUILD || UNITY_EDITOR
+            if (!string.IsNullOrEmpty(bodyString)) Debug.Log($"<color=white>RestClientController::GenerateRequest::Request With Body</color>:: {bodyString}");
+            Debug.Log($"<color=white>RestClientController::GenerateRequest::Request With Header</color>:: {SerializeObject(mergeHeaders)}");
+#endif
             _params = null;
             _body = null;
             _headers = null;

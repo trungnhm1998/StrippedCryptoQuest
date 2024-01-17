@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using CryptoQuest.Input;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Localization;
 using UnityEngine.UI;
@@ -15,7 +16,7 @@ namespace CryptoQuest.UI.Dialogs.BattleDialog
         [Header("UI")]
         [SerializeField] private Text _dialogText;
 
-        [SerializeField] private GameObject _nextMark;
+        [SerializeField] private Image _nextMark;
 
         private bool _requireInput;
 
@@ -98,7 +99,8 @@ namespace CryptoQuest.UI.Dialogs.BattleDialog
 
         private void InternalShow()
         {
-            _nextMark.SetActive(false);
+            _nextMark.DOFade(0, 0.5f).From(1f).SetLoops(-1, LoopType.Yoyo);
+            
             _dialogText.text = _message;
             if (_requireInput) _inputMediator.EnableDialogueInput();
 
@@ -119,6 +121,8 @@ namespace CryptoQuest.UI.Dialogs.BattleDialog
 
             _requireInput = false;
             Clear();
+            
+            _nextMark.enabled = false;
         }
 
         private float _autoHideDuration;
@@ -126,6 +130,12 @@ namespace CryptoQuest.UI.Dialogs.BattleDialog
         public UIGenericDialog WithAutoHide(float duration)
         {
             _autoHideDuration = duration;
+            return this;
+        }
+        
+        public UIGenericDialog WithNextMark()
+        {
+            _nextMark.enabled = true;
             return this;
         }
 

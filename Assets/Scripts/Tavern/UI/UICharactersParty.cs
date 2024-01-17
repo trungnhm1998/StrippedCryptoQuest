@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using CryptoQuest.Character.Hero;
 using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.Merchant;
@@ -10,7 +11,8 @@ namespace CryptoQuest.Tavern.UI
 {
     public class UICharactersParty : MonoBehaviour
     {
-        [SerializeField] private Animator _stateMachine;
+        public event Action Closed;
+
         [SerializeField] private MerchantInput _input;
         [SerializeField] private PartySO _partySO;
         [SerializeField] private UICharacterInfo[] _characterInfos;
@@ -29,6 +31,7 @@ namespace CryptoQuest.Tavern.UI
 
         private void OnEnable()
         {
+            _input.CancelEvent += OnClose;
             foreach (var uiCharacterInfo in _characterInfos) uiCharacterInfo.Init(new HeroSpec());
 
             var uiIndex = 0;
@@ -39,10 +42,29 @@ namespace CryptoQuest.Tavern.UI
             }
         }
 
+        private void OnDisable()
+        {
+            _input.CancelEvent -= OnClose;
+            _input.CancelEvent -= CancelAddHeroToParty;
+        }
+
+        private void OnClose()
+        {
+            _input.CancelEvent -= OnClose;
+            Closed?.Invoke();
+        }
+
         private void RemoveHeroFromParty(UICharacterInfo uiSlot)
         {
             var selectedHero = uiSlot.Spec;
-            if (selectedHero.IsValid() == false)
+            var isSlotEmpty = selectedHero.IsValid() == false;
+            if (isSlotEmpty && !_uiCharacterInventoryList.HasHeroToRecruit())
+            {
+                Debug.Log("Use transfer to add more heroes");
+                return;
+            }
+            
+            if (isSlotEmpty)
             {
                 AddingHeroToParty(uiSlot);
                 return;
@@ -63,12 +85,12 @@ namespace CryptoQuest.Tavern.UI
 
         private void AddingHeroToParty(UICharacterInfo uiSlot)
         {
+            _input.CancelEvent -= OnClose;
+            _input.CancelEvent += CancelAddHeroToParty;
             _interactingSlot = uiSlot;
             _interactingSlot.MarkAsInteracting();
             _uiCharacterInventoryList.GetComponentInChildren<Selectable>().Select();
             _uiCharacterInventoryList.ItemSelected += AddHeroToParty;
-            _input.CancelEvent += CancelAddHeroToParty;
-            _stateMachine.Play("AddingHeroIntoParty");
         }
 
         /// <summary>
@@ -76,6 +98,7 @@ namespace CryptoQuest.Tavern.UI
         /// </summary>
         private void AddHeroToParty(UICharacterListItem uiListItem)
         {
+            _input.CancelEvent += OnClose;
             _uiCharacterInventoryList.ItemSelected -= AddHeroToParty;
             _input.CancelEvent -= CancelAddHeroToParty;
             var heroSpec = uiListItem.Spec;
@@ -83,19 +106,19 @@ namespace CryptoQuest.Tavern.UI
             FocusLastInteractedSlot();
             PartySlotSpec[] newParty = new PartySlotSpec[_partySO.Count + 1];
             _partySO.GetParty().CopyTo(newParty, 0);
-            newParty[^1] = new PartySlotSpec {Hero = heroSpec};
+            newParty[^1] = new PartySlotSpec { Hero = heroSpec };
             _partySO.SetParty(newParty);
         }
 
         private void CancelAddHeroToParty()
         {
             _input.CancelEvent -= CancelAddHeroToParty;
+            _input.CancelEvent += OnClose;
             FocusLastInteractedSlot();
         }
 
         private void FocusLastInteractedSlot()
         {
-            _stateMachine.Play("OrganizeParty");
             EventSystem.current.SetSelectedGameObject(_interactingSlot.gameObject);
             _interactingSlot.MarkAsInteracting(false);
             _interactingSlot = null;
