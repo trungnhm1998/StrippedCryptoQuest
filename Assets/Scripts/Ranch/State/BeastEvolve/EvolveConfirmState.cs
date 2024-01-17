@@ -40,6 +40,9 @@ namespace CryptoQuest.Ranch.State.BeastEvolve
 
         private void HandleEvolveSuccess(BeastEvolveRespond ctx)
         {
+            var info = _controller.EvolvePresenter.BeastEvolvableInfos.First(f =>
+                f.BeforeStars == ctx.RequestContext.Base.Stars);
+            _controller.EvolvePresenter.UpdateCurrency(info);
             SetBeastID(ctx);
         }
 

@@ -47,7 +47,11 @@ namespace CryptoQuest.Ranch.State.BeastUpgrade
 
         private void OnUpgradeFailed(ActionBase _) => _input.SubmitEvent += BackToUpgradeState;
 
-        private void OnUpgradeSucceed(ActionBase _) => StateMachine.Play(ResultState);
+        private void OnUpgradeSucceed(ActionBase _)
+        {
+            _config.UpdateGold();
+            StateMachine.Play(ResultState);
+        }
 
         private void InputOnNavigateEvent(Vector2 handleNavigation) => _config.HandleNavigation(handleNavigation);
 

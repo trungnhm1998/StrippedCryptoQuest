@@ -53,5 +53,10 @@ namespace CryptoQuest.Ranch.Upgrade.Presenters
             Interactable = true;
             UiBeastUpgradeDetail.gameObject.SetActive(true);
         }
+        
+        public void ActiveBeastDetail(bool value)
+        {
+            UiBeastUpgradeDetail.gameObject.SetActive(value);
+        }
     }
 }
