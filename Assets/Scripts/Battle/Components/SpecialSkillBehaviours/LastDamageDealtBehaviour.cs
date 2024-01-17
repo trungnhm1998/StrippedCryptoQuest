@@ -1,4 +1,6 @@
 ﻿using CryptoQuest.AbilitySystem.Executions;
+using CryptoQuest.Battle.Events;
+using TinyMessenger;
 using UnityEngine;
 
 namespace CryptoQuest.Battle.Components.SpecialSkillBehaviours
@@ -10,6 +12,7 @@ namespace CryptoQuest.Battle.Components.SpecialSkillBehaviours
     public class LastDamageDealtBehaviour : CharacterComponentBase
     {
         [SerializeField] private DealingDamageEvent _dealtDamageEvent;
+        private TinyMessageSubscriptionToken _turnEndedEvent;
 
         public float LastDamageDealt { get; private set; }
         public Character DamageReceiver { get; private set; }
@@ -17,11 +20,19 @@ namespace CryptoQuest.Battle.Components.SpecialSkillBehaviours
         private void Awake()
         {
             _dealtDamageEvent.DamageDealt += SetLastDamageDealt;
+            _turnEndedEvent = BattleEventBus.SubscribeEvent<TurnEndedEvent>(OnTurnEndedEvent);
         }
 
         private void OnDestroy()
         {
             _dealtDamageEvent.DamageDealt -= SetLastDamageDealt;
+            BattleEventBus.UnsubscribeEvent(_turnEndedEvent);
+        }
+
+        private void OnTurnEndedEvent(TurnEndedEvent obj)
+        {
+            LastDamageDealt = 0;
+            DamageReceiver = null;
         }
 
         private void SetLastDamageDealt(Character dealer, Character receiver, float damage)
