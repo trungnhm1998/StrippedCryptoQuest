@@ -78,8 +78,7 @@ namespace CryptoQuest.ShopSystem.Buy.Consumable
             var consumableInfo = new ConsumableInfo(item.Info.Data, selectedQuantity);
             ActionDispatcher.Dispatch(new BuyConsumableAction(consumableInfo));
             _resultPanel
-                .AddHideCallback(() => { EventSystem.current.SetSelectedGameObject(item.gameObject); })
-                .ShowSuccess();
+                .AddHideCallback(() => { EventSystem.current.SetSelectedGameObject(item.gameObject); });
         }
     }
 }

@@ -25,6 +25,16 @@ namespace CryptoQuest.ShopSystem
 
         public void ShowSuccess()
         {
+            ShowDialog(_strSuccess);
+        }
+
+        public void ShowFailed()
+        {
+            ShowDialog(_strFailed);
+        }
+
+        private void ShowDialog(LocalizedString message)
+        {
             GenericDialogController.Instance.InstantiateAsync(dialog =>
             {
                 dialog
@@ -39,25 +49,7 @@ namespace CryptoQuest.ShopSystem
                         _merchantInput.EnableInput();
                     })
                     .RequireInput()
-                    .WithMessage(_strSuccess)
-                    .Show();
-                _showing?.Invoke();
-            });
-        }
-
-        public void ShowFailed()
-        {
-            GenericDialogController.Instance.InstantiateAsync(dialog =>
-            {
-                dialog
-                    .WithHideCallback(() =>
-                    {
-                        _hiding?.Invoke();
-                        _hiding?.RemoveAllListeners();
-                        _merchantInput.EnableInput();
-                    })
-                    .RequireInput()
-                    .WithMessage(_strFailed)
+                    .WithMessage(message)
                     .Show();
                 _showing?.Invoke();
             });
