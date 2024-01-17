@@ -14,6 +14,7 @@ namespace CryptoQuest.Battle
 
     public class BattleStateMachine : MonoBehaviour
     {
+        [SerializeField] private ResultSO _result;
         [SerializeField] private GameStateSO _gameState;
         [field: SerializeField] public BattleInput BattleInput { get; private set; }
 
@@ -25,13 +26,13 @@ namespace CryptoQuest.Battle
         #endregion
 
         #region State management
-        public IState HandleActions { get; private set; } // I want this state to have it owns state-state
+        [field: SerializeField] public ExecuteCharactersActions HandleActions { get; private set; }
+        [field: SerializeField] public ResultChecker ResultChecker { get; private set; }
 
         private IState _currentState;
 
         private void Awake()
         {
-            HandleActions = new ExecuteCharactersActions();
             SceneLoadedEvent.EventRaised += GotoLoadingState;
         }
 
@@ -41,7 +42,7 @@ namespace CryptoQuest.Battle
         /// </summary>
         private void OnDisable() => Unload();
 
-        public void Unload()
+        private void Unload()
         {
             SceneLoadedEvent.EventRaised -= GotoLoadingState;
             _currentState?.OnExit(this);
@@ -50,6 +51,7 @@ namespace CryptoQuest.Battle
 
         private void GotoLoadingState()
         {
+            _result.State = ResultSO.EState.None;
             _gameState.UpdateGameState(EGameState.Battle);
             ChangeState(new Loading());
         }

@@ -15,27 +15,29 @@ namespace CryptoQuest.Battle.Audio
     {
         [SerializeField] private AudioCueSO[] _ignoredCues;
         [SerializeField] private GameStateSO _gameState;
+        [SerializeField] private ResultSO _result;
         [Header("Raise on")] [SerializeField] private AudioCueEventChannelSO _musicEventChannel;
 
         private AudioCueSO _lastAudioCue;
 
-        private TinyMessageSubscriptionToken _retreatToken;
-        private TinyMessageSubscriptionToken _loseToken;
+        private TinyMessageSubscriptionToken _battleUnloadEvent;
 
         protected override void OnEnable()
         {
             base.OnEnable();
             _musicEventChannel.AudioPlayRequested += CacheLastAudio;
-            _retreatToken = BattleEventBus.SubscribeEvent<BattleRetreatedEvent>(_ => PlayLastCachedAudio());
-            _loseToken = BattleEventBus.SubscribeEvent<BattleLostEvent>(_ => PlayLastCachedAudio());
+            _battleUnloadEvent = BattleEventBus.SubscribeEvent<UnloadingEvent>(_ =>
+            {
+                if (_result.State == ResultSO.EState.Win) return;
+                PlayLastCachedAudio();
+            });
         }
 
         protected override void OnDisable()
         {
             base.OnDisable();
             _musicEventChannel.AudioPlayRequested -= CacheLastAudio;
-            ActionDispatcher.Unbind(_retreatToken);
-            ActionDispatcher.Unbind(_loseToken);
+            ActionDispatcher.Unbind(_battleUnloadEvent);
         }
 
         private void CacheLastAudio(AudioCueSO cue)

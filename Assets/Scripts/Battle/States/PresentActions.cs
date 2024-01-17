@@ -6,9 +6,11 @@ namespace CryptoQuest.Battle.States
     public class PresentActions : IState
     {
         private TinyMessageSubscriptionToken _finishedPresentingActionsEvent;
+        private BattleStateMachine _stateMachine;
 
         public void OnEnter(BattleStateMachine stateMachine)
         {
+            _stateMachine = stateMachine;
             _finishedPresentingActionsEvent =
                 BattleEventBus.SubscribeEvent<FinishedPresentingActionsEvent>(ToNextState);
             BattleEventBus.RaiseEvent(new StartPresentingEvent());
@@ -32,6 +34,7 @@ namespace CryptoQuest.Battle.States
              * PostRoundHandler will change the state to SelectHeroesActions if only cached result is null.
              */
             BattleEventBus.RaiseEvent(new FinishedPresentingEvent());
+            _stateMachine.ChangeState(_stateMachine.ResultChecker);
         }
     }
 }

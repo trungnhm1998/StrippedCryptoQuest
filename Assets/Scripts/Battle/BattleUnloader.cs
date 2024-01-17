@@ -28,7 +28,6 @@ namespace CryptoQuest.Battle
         private void UnloadBattle()
         {
             BattleEventBus.RaiseEvent(new UnloadingEvent());
-            _battleStateMachine.Unload();
             BattleEventBus.RaiseEvent(new BattleCleanUpFinishedEvent());
         }
     }
