@@ -934,6 +934,67 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1140828950
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1140828952}
+  - component: {fileID: 1140828951}
+  - component: {fileID: 1140828953}
+  m_Layer: 0
+  m_Name: ApplyMagicStonePassive
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1140828951
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1140828950}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68a5e6fd21304821aa7887242f142b18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _stoneInventory: {fileID: 11400000, guid: dac3b863c8895c7408d0d03a95d1d969, type: 2}
+  _partyManager: {fileID: 710327799}
+--- !u!4 &1140828952
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1140828950}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 121.77247, y: -81.29882, z: -0.119621724}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1140828953
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1140828950}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 595eada20c81468993cebb44b96a2c42, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _stoneInventory: {fileID: 11400000, guid: dac3b863c8895c7408d0d03a95d1d969, type: 2}
+  _partyManager: {fileID: 710327799}
 --- !u!224 &1151039738 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6721803573782577146, guid: 45cd4103d1ead61499ced2d31ca51328, type: 3}
@@ -4248,7 +4309,6 @@ SceneRoots:
   - {fileID: 1347141786}
   - {fileID: 306938148}
   - {fileID: 9097698521837777684}
-  - {fileID: 7675938425134422455}
   - {fileID: 710327798}
   - {fileID: 1254590495}
   - {fileID: 4666794548151461261}
@@ -4277,3 +4337,5 @@ SceneRoots:
   - {fileID: 1085037627}
   - {fileID: 1886942109}
   - {fileID: 2727126237550906536}
+  - {fileID: 1140828952}
+  - {fileID: 7675938425134422455}

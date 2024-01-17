@@ -49,6 +49,16 @@ namespace CryptoQuest.Sagas.Equipment
                 EquipmentID = _equipmentID,
                 StoneIDs = _stoneIDs
             });
+            foreach (var equipmentResponse in response.data.equipments)
+            {
+                if (_equipmentID != equipmentResponse.id || equipmentResponse.attachId == 0) continue;
+                ActionDispatcher.Dispatch(new RemoveStonePassiveRequest()
+                {
+                    EquipmentID = _equipmentID,
+                    StoneIDs = _stoneIDs,
+                    CharacterID = equipmentResponse.attachId
+                });
+            }
         }
 
         private void OnError(Exception error)
