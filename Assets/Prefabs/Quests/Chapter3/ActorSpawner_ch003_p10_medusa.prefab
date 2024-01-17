@@ -107,7 +107,7 @@ MonoBehaviour:
   _onSceneLoadedEventChannel: {fileID: 11400000, guid: b8b96e43d21a7bf4c96df4cb83c2b764, type: 2}
   _spawnPoint: {fileID: 8852560181119278097}
   _actorDef: {fileID: 11400000, guid: 5bd9b82eaa1f4d94eb22ed563a9c2d19, type: 2}
-  _actorSpawnSettingSO: {fileID: 0}
+  _actorSpawnSettingSO: {fileID: 11400000, guid: 03f816c99ee7aa648a1751f602d0cb55, type: 2}
   _actorDeSpawnSettingSO: {fileID: 11400000, guid: 04ea8efa262f4984f936a05ce2824369, type: 2}
 --- !u!1001 &5004742323327933634
 PrefabInstance:
@@ -173,6 +173,30 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6746964905341171565, guid: eefa8369b8be35d418a47f39a741b904, type: 3}
+      propertyPath: _trackNames.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6746964905341171565, guid: eefa8369b8be35d418a47f39a741b904, type: 3}
+      propertyPath: _trackNames.Array.data[1]
+      value: HeroPos
+      objectReference: {fileID: 0}
+    - target: {fileID: 6746964905341171565, guid: eefa8369b8be35d418a47f39a741b904, type: 3}
+      propertyPath: _objectsToBindTags.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6746964905341171565, guid: eefa8369b8be35d418a47f39a741b904, type: 3}
+      propertyPath: _objectsToBindTags.Array.data[1]
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 8239929161965676886, guid: eefa8369b8be35d418a47f39a741b904, type: 3}
+      propertyPath: m_SceneBindings.Array.size
+      value: 56
+      objectReference: {fileID: 0}
+    - target: {fileID: 8239929161965676886, guid: eefa8369b8be35d418a47f39a741b904, type: 3}
+      propertyPath: m_SceneBindings.Array.data[55].key
+      value: 
+      objectReference: {fileID: -8131780064516800157, guid: c5f29e0ec36f19a4ea051103059d737a, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
