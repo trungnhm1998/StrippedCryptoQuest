@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using CryptoQuest.Input;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -15,6 +16,7 @@ namespace CryptoQuest.UI.Popups
         // Disable this to prevent user can still navigate or confirm while popup is showing
         [SerializeField] private InputSystemUIInputModule _inputSystemModule;
         [SerializeField] private InputMediatorSO _inputSO;
+        [SerializeField] private string[] _ignoredActionMaps;
         private string _previouslyEnabledInputMap = "";
 
         private void OnEnable()
@@ -24,8 +26,8 @@ namespace CryptoQuest.UI.Popups
 
         private void EnableLastEnabledActionMap()
         {
-            if (string.IsNullOrEmpty(_previouslyEnabledInputMap) == false)
-                _inputSO.EnableInputMap(_previouslyEnabledInputMap);
+            if (string.IsNullOrEmpty(_previouslyEnabledInputMap)) return;
+            _inputSO.EnableInputMap(_previouslyEnabledInputMap);
         }
 
         private void CacheLastEnabledActionMap()
@@ -33,7 +35,7 @@ namespace CryptoQuest.UI.Popups
             var assetActionMaps = _inputSO.InputActions.asset.actionMaps;
             foreach (var actionMap in assetActionMaps)
             {
-                if (actionMap.enabled && actionMap.name != POPUP_ACTION_MAP_NAME)
+                if (actionMap.enabled && !_ignoredActionMaps.Contains(actionMap.name))
                 {
                     _previouslyEnabledInputMap = actionMap.name;
                     break;
