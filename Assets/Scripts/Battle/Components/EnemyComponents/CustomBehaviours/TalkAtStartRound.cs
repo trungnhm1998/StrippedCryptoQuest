@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using CryptoQuest.Battle.Events;
+using CryptoQuest.Input;
 using CryptoQuest.UI.Dialogs.DialogWithCharacterName;
 using TinyMessenger;
 using UnityEngine;
@@ -21,6 +22,8 @@ namespace CryptoQuest.Battle.Components.EnemyComponents.CustomBehaviours
             public LocalizedString[] DialogMessages;
         }
 
+        [SerializeField] private BattleInput _battleInput;
+        [SerializeField] private float _autoHideDuration = 3f;
         [SerializeField] private TurnDialog[] _turnDialogs;
         private TinyMessageSubscriptionToken _startRoundToken;
         private Dictionary<int, LocalizedString[]> _turnDialogsMap = new();
@@ -67,7 +70,7 @@ namespace CryptoQuest.Battle.Components.EnemyComponents.CustomBehaviours
             foreach (var dialog in dialogs)
             {
                 BattleEventBus.RaiseEvent<EnqueuePresentCommandEvent>(new EnqueuePresentCommandEvent(
-                    new PresentDialogCommand(_dialog, dialog)));
+                    new PresentDialogCommand(_dialog, dialog, _battleInput, _autoHideDuration)));
             }
         }
     }
