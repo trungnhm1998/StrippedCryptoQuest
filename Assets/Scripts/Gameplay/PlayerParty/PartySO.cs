@@ -19,7 +19,7 @@ namespace CryptoQuest.Gameplay.PlayerParty
         public bool IsValid() => Hero != null && Hero.IsValid();
     }
 
-    public class PartySO : ScriptableObject, IEnumerable<PartySlotSpec>
+    public class PartySO : ScriptableObject, IEnumerable<PartySlotSpec>, IPartyProvider
     {
         [SerializeField] private PartySlotSpec[] _heroSpecs;
         public PartySlotSpec[] GetParty() => _heroSpecs;

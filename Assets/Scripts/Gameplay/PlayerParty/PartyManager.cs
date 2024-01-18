@@ -37,13 +37,12 @@ namespace CryptoQuest.Gameplay.PlayerParty
 
         public int Size => _size;
         private int _size;
-        private IPartyProvider _partyProvider;
-        public IPartyProvider PartyProvider => _partyProvider ??= GetComponent<IPartyProvider>();
+        [SerializeField] private PartySO _partySO;
 
         public List<HeroBehaviour> OrderedAliveMembers =>
             (from slot in _partySlots
-             where slot.IsValid() && slot.HeroBehaviour.IsValidAndAlive()
-             select slot.HeroBehaviour).ToList();
+                where slot.IsValid() && slot.HeroBehaviour.IsValidAndAlive()
+                select slot.HeroBehaviour).ToList();
 
         private void OnValidate()
         {
@@ -51,6 +50,7 @@ namespace CryptoQuest.Gameplay.PlayerParty
             {
                 Array.Resize(ref _partySlots, PartyConstants.MAX_PARTY_SIZE);
             }
+
             _partySlots = GetComponentsInChildren<PartySlot>();
         }
 
@@ -61,6 +61,16 @@ namespace CryptoQuest.Gameplay.PlayerParty
 
         private void Start() => Init();
 
+        private void OnEnable()
+        {
+            _partySO.Changed += Init;
+        }
+
+        private void OnDisable()
+        {
+            _partySO.Changed -= Init;
+        }
+
         /// <summary>
         /// Init party members stats at run time
         /// and bind the mono behaviour to the <see cref="CharacterSpec._characterComponent"/>
@@ -68,7 +78,7 @@ namespace CryptoQuest.Gameplay.PlayerParty
         public void Init()
         {
             foreach (var partySlot in _partySlots) partySlot.Reset();
-            var heroes = PartyProvider.GetParty();
+            var heroes = _partySO.GetParty();
             _size = heroes.Length;
             var partySlotIndex = 0;
             for (int i = 0; i < heroes.Length; i++)
@@ -129,7 +139,7 @@ namespace CryptoQuest.Gameplay.PlayerParty
                 if (slot.IsValid())
                     heroes.Add(slot.Spec);
 
-            PartyProvider.SetParty(heroes.ToArray());
+            _partySO.SetParty(heroes.ToArray());
             return true;
         }
 
