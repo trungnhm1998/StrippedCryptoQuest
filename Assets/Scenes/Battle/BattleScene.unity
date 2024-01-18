@@ -761,125 +761,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _avatarDatabase: {fileID: 11400000, guid: eab65875271cb4b44b2c7ce5a51159a4, type: 2}
---- !u!1 &1180603470
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1180603472}
-  - component: {fileID: 1180603471}
-  - component: {fileID: 1180603475}
-  - component: {fileID: 1180603478}
-  - component: {fileID: 1180603477}
-  m_Layer: 0
-  m_Name: ResultManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1180603471
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1180603470}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b10ed43445f14c6494ddd02372a7a818, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _battleInput: {fileID: 11400000, guid: d0c44063c591fb8489bc8e1087c0999e, type: 2}
-  _fadeController: {fileID: 11400000, guid: 37179aade8654f24db045354ca36f205, type: 2}
-  _battleStateMachine: {fileID: 7116505576077580197}
-  _showDialogDelay: 1
---- !u!4 &1180603472
+--- !u!4 &1180603472 stripped
 Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 7818944783029088882, guid: 134640e195404e54ca799f06450f2732, type: 3}
+  m_PrefabInstance: {fileID: 5767836069839595728}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1180603470}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 7116505576077580195}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1180603475
+--- !u!114 &1180603475 stripped
 MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 8596318967674645047, guid: 134640e195404e54ca799f06450f2732, type: 3}
+  m_PrefabInstance: {fileID: 5767836069839595728}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1180603470}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 37372975d02141741a9abaae0e17a349, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _lootManager: {fileID: 104468364}
-  _unloader: {fileID: 1180603471}
-  _result: {fileID: 11400000, guid: ded6db40addf2da4d87924b4e114da54, type: 2}
-  _resultHandlers:
-  - rid: 8154416223360385302
-  - rid: 8154416223360385303
-  - rid: 8154416223360385305
-  - rid: 8154416246035054602
-  references:
-    version: 2
-    RefIds:
-    - rid: 8154416223360385302
-      type: {class: HandleNoResult, ns: CryptoQuest.Battle.States, asm: IndiGames.CryptoQuest}
-      data:
-        _stateMachine: {fileID: 7116505576077580197}
-    - rid: 8154416223360385303
-      type: {class: HandleWin, ns: CryptoQuest.Battle.States, asm: IndiGames.CryptoQuest}
-      data:
-        _lootManager: {fileID: 104468364}
-        _result: {fileID: 11400000, guid: ded6db40addf2da4d87924b4e114da54, type: 2}
-    - rid: 8154416223360385305
-      type: {class: HandleRetreat, ns: CryptoQuest.Battle.States, asm: IndiGames.CryptoQuest}
-      data: 
-    - rid: 8154416246035054602
-      type: {class: HandleLose, ns: CryptoQuest.Battle.States, asm: IndiGames.CryptoQuest}
-      data: 
---- !u!114 &1180603477
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1180603470}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0db2ea724a124764936bb3469cb89c56, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _result: {fileID: 11400000, guid: ded6db40addf2da4d87924b4e114da54, type: 2}
-  _battleBus: {fileID: 11400000, guid: 2290057e7f48d1046b5e0a6c3f6dc910, type: 2}
-  _roundEventsPresenter: {fileID: 891665762}
---- !u!114 &1180603478
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1180603470}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c4001522a3b8477c939bb1ebcf612c93, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _result: {fileID: 11400000, guid: ded6db40addf2da4d87924b4e114da54, type: 2}
-  _battleBus: {fileID: 11400000, guid: 2290057e7f48d1046b5e0a6c3f6dc910, type: 2}
-  _roundEventsPresenter: {fileID: 891665762}
 --- !u!114 &1343290373 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5949446545983247603, guid: d0eacd5a881766b4ca08ec4b770526a2, type: 3}
@@ -1652,6 +1549,87 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1001 &5767836069839595728
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 7116505576077580195}
+    m_Modifications:
+    - target: {fileID: 4204799961214223810, guid: 134640e195404e54ca799f06450f2732, type: 3}
+      propertyPath: m_Name
+      value: ResultManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 5881167723045828508, guid: 134640e195404e54ca799f06450f2732, type: 3}
+      propertyPath: _roundEventsPresenter
+      value: 
+      objectReference: {fileID: 891665762}
+    - target: {fileID: 7818944783029088882, guid: 134640e195404e54ca799f06450f2732, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7818944783029088882, guid: 134640e195404e54ca799f06450f2732, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7818944783029088882, guid: 134640e195404e54ca799f06450f2732, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7818944783029088882, guid: 134640e195404e54ca799f06450f2732, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7818944783029088882, guid: 134640e195404e54ca799f06450f2732, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7818944783029088882, guid: 134640e195404e54ca799f06450f2732, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7818944783029088882, guid: 134640e195404e54ca799f06450f2732, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7818944783029088882, guid: 134640e195404e54ca799f06450f2732, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7818944783029088882, guid: 134640e195404e54ca799f06450f2732, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7818944783029088882, guid: 134640e195404e54ca799f06450f2732, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8033957580411224034, guid: 134640e195404e54ca799f06450f2732, type: 3}
+      propertyPath: _battleStateMachine
+      value: 
+      objectReference: {fileID: 7116505576077580197}
+    - target: {fileID: 8209729744524619564, guid: 134640e195404e54ca799f06450f2732, type: 3}
+      propertyPath: _roundEventsPresenter
+      value: 
+      objectReference: {fileID: 891665762}
+    - target: {fileID: 8596318967674645047, guid: 134640e195404e54ca799f06450f2732, type: 3}
+      propertyPath: _lootManager
+      value: 
+      objectReference: {fileID: 104468364}
+    - target: {fileID: 8596318967674645047, guid: 134640e195404e54ca799f06450f2732, type: 3}
+      propertyPath: managedReferences[8154416223360385303]._lootManager
+      value: 
+      objectReference: {fileID: 104468364}
+    - target: {fileID: 8596318967674645047, guid: 134640e195404e54ca799f06450f2732, type: 3}
+      propertyPath: managedReferences[8154416223360385302]._stateMachine
+      value: 
+      objectReference: {fileID: 7116505576077580197}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 134640e195404e54ca799f06450f2732, type: 3}
 --- !u!114 &6217317452887572703 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8488669432326234745, guid: d0eacd5a881766b4ca08ec4b770526a2, type: 3}

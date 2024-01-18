@@ -13,12 +13,10 @@ namespace CryptoQuest.Battle.PostBattleHandlers
         [SerializeField] private SceneScriptableObject _battleSceneSO;
         [SerializeField] private GameStateSO _gameState;
         [SerializeField] private UnloadSceneEventChannelSO _unloadSceneEvent;
-        [SerializeField] protected BattleBus _battleBus;
 
         public IEnumerator UnloadBattle()
         {
             _unloadSceneEvent.RequestUnload(_battleSceneSO);
-            _battleBus.CurrentBattlefield = null;
             _fadeController.OnFadeOut();
             yield return new WaitForSeconds(_fadeController.Duration);
             _gameState.UpdateGameState(EGameState.Field);

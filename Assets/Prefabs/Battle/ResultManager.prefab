@@ -1,0 +1,125 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4204799961214223810
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7818944783029088882}
+  - component: {fileID: 8033957580411224034}
+  - component: {fileID: 8596318967674645047}
+  - component: {fileID: 5881167723045828508}
+  - component: {fileID: 8209729744524619564}
+  m_Layer: 0
+  m_Name: ResultManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7818944783029088882
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4204799961214223810}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8033957580411224034
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4204799961214223810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b10ed43445f14c6494ddd02372a7a818, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _battleInput: {fileID: 11400000, guid: d0c44063c591fb8489bc8e1087c0999e, type: 2}
+  _fadeController: {fileID: 11400000, guid: 37179aade8654f24db045354ca36f205, type: 2}
+  _battleStateMachine: {fileID: 0}
+  _showDialogDelay: 1
+--- !u!114 &8596318967674645047
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4204799961214223810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37372975d02141741a9abaae0e17a349, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _lootManager: {fileID: 0}
+  _unloader: {fileID: 8033957580411224034}
+  _result: {fileID: 11400000, guid: ded6db40addf2da4d87924b4e114da54, type: 2}
+  _resultHandlers:
+  - rid: 8154416223360385302
+  - rid: 8154416223360385303
+  - rid: 8154416223360385305
+  - rid: 8154416246035054602
+  - rid: 8154416246035054604
+  references:
+    version: 2
+    RefIds:
+    - rid: 8154416223360385302
+      type: {class: HandleNoResult, ns: CryptoQuest.Battle.States, asm: IndiGames.CryptoQuest}
+      data:
+        _stateMachine: {fileID: 0}
+    - rid: 8154416223360385303
+      type: {class: HandleWin, ns: CryptoQuest.Battle.States, asm: IndiGames.CryptoQuest}
+      data:
+        _lootManager: {fileID: 0}
+        _result: {fileID: 11400000, guid: ded6db40addf2da4d87924b4e114da54, type: 2}
+    - rid: 8154416223360385305
+      type: {class: HandleRetreat, ns: CryptoQuest.Battle.States, asm: IndiGames.CryptoQuest}
+      data: 
+    - rid: 8154416246035054602
+      type: {class: HandleLose, ns: CryptoQuest.Battle.States, asm: IndiGames.CryptoQuest}
+      data: 
+    - rid: 8154416246035054604
+      type: {class: HandleLostInQuest, ns: CryptoQuest.Battle.States, asm: IndiGames.CryptoQuest}
+      data: 
+--- !u!114 &5881167723045828508
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4204799961214223810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4001522a3b8477c939bb1ebcf612c93, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _result: {fileID: 11400000, guid: ded6db40addf2da4d87924b4e114da54, type: 2}
+  _battleBus: {fileID: 11400000, guid: 2290057e7f48d1046b5e0a6c3f6dc910, type: 2}
+  _roundEventsPresenter: {fileID: 0}
+--- !u!114 &8209729744524619564
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4204799961214223810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0db2ea724a124764936bb3469cb89c56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _result: {fileID: 11400000, guid: ded6db40addf2da4d87924b4e114da54, type: 2}
+  _battleBus: {fileID: 11400000, guid: 2290057e7f48d1046b5e0a6c3f6dc910, type: 2}
+  _roundEventsPresenter: {fileID: 0}
