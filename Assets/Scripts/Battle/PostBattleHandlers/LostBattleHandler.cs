@@ -17,7 +17,6 @@ namespace CryptoQuest.Battle.PostBattleHandlers
         [SerializeField] private WalletSO _wallet;
         [SerializeField] private CurrencySO _gold;
         [SerializeField] private BattleResultEventSO _battleLostEvent;
-        [SerializeField] private AttributeWithMaxCapped[] _resetAttributes;
 
         protected override ResultSO.EState ResultState => ResultSO.EState.Lose;
 
@@ -42,26 +41,7 @@ namespace CryptoQuest.Battle.PostBattleHandlers
 
         private void RestoreCharacter()
         {
-            var party = ServiceProvider.GetService<IPartyController>();
-
-            foreach (var character in party.Slots)
-            {
-                if (character.IsValid())
-                {
-                    ResetAttributeValue(character.HeroBehaviour);
-                }
-            }
-        }
-
-        private void ResetAttributeValue(HeroBehaviour hero)
-        {
-            for (int i = 0; i < _resetAttributes.Length; i++)
-            {
-                var attributeToReset = _resetAttributes[i];
-                if (!hero.AttributeSystem.TryGetAttributeValue(attributeToReset.CappedAttribute,
-                        out var cappedAttributeValue)) continue;
-                hero.AttributeSystem.SetAttributeBaseValue(attributeToReset, cappedAttributeValue.CurrentValue);
-            }
+            ActionDispatcher.Dispatch(new RestorePartyAction());
         }
     }
 }

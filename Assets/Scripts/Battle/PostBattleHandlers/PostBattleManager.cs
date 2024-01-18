@@ -43,6 +43,7 @@ namespace CryptoQuest.Battle.PostBattleHandlers
             if (_resultSO.State != ResultState) yield break;
             yield return _unloadHandler.UnloadBattle();
             HandleResult();
+            _battleBus.CurrentBattlefield = null;
         }
 
         protected virtual void HandleResult() { }

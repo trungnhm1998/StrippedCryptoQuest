@@ -15,7 +15,8 @@ namespace CryptoQuest.Battle
             None = 0,
             Win = 1,
             Lose = 2,
-            Retreat = 3
+            Retreat = 3,
+            LoseInQuest = 4,
         }
         
         [SerializeField] private EState _state;

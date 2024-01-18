@@ -54,4 +54,10 @@ namespace CryptoQuest.Battle.States
             return true;
         }
     }
+
+    [Serializable]
+    public class HandleLostInQuest : DoNothingThenEnd
+    {
+        public override ResultSO.EState ResultState => ResultSO.EState.LoseInQuest;
+    }
 }
