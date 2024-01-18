@@ -150,6 +150,10 @@ PrefabInstance:
       propertyPath: m_SortingLayerID
       value: 1569843687
       objectReference: {fileID: 0}
+    - target: {fileID: -7898460065770395597, guid: 141ebc83560da1c46a44ad8ef2cb4308, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: -5245313925001408043, guid: 141ebc83560da1c46a44ad8ef2cb4308, type: 3}
       propertyPath: m_SortingLayer
       value: 3
@@ -221,6 +225,10 @@ PrefabInstance:
     - target: {fileID: 6953904192856289773, guid: 141ebc83560da1c46a44ad8ef2cb4308, type: 3}
       propertyPath: m_Name
       value: 46_map
+      objectReference: {fileID: 0}
+    - target: {fileID: 6982889230333648526, guid: 141ebc83560da1c46a44ad8ef2cb4308, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -962,6 +970,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5012429026323054320}
+  - {fileID: 7667698137563106791}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1804654819
@@ -1074,6 +1083,63 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6189815595880854741, guid: 141ebc83560da1c46a44ad8ef2cb4308, type: 3}
   m_PrefabInstance: {fileID: 88433741}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &904492047624614294
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1789470846}
+    m_Modifications:
+    - target: {fileID: 571125264800567821, guid: 47e70c8a7a485d441b1c7054d205a9c0, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -10.471851
+      objectReference: {fileID: 0}
+    - target: {fileID: 571125264800567821, guid: 47e70c8a7a485d441b1c7054d205a9c0, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 10.504038
+      objectReference: {fileID: 0}
+    - target: {fileID: 571125264800567821, guid: 47e70c8a7a485d441b1c7054d205a9c0, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.6913774
+      objectReference: {fileID: 0}
+    - target: {fileID: 571125264800567821, guid: 47e70c8a7a485d441b1c7054d205a9c0, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 571125264800567821, guid: 47e70c8a7a485d441b1c7054d205a9c0, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 571125264800567821, guid: 47e70c8a7a485d441b1c7054d205a9c0, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 571125264800567821, guid: 47e70c8a7a485d441b1c7054d205a9c0, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 571125264800567821, guid: 47e70c8a7a485d441b1c7054d205a9c0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 571125264800567821, guid: 47e70c8a7a485d441b1c7054d205a9c0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 571125264800567821, guid: 47e70c8a7a485d441b1c7054d205a9c0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4319660022376305014, guid: 47e70c8a7a485d441b1c7054d205a9c0, type: 3}
+      propertyPath: m_Name
+      value: ActorSpawner_ch6_confirmation_shrine
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 47e70c8a7a485d441b1c7054d205a9c0, type: 3}
 --- !u!4 &5012429026323054320 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2570688625227181545, guid: af73b99e298649f438a176243aa0e9f7, type: 3}
@@ -1225,19 +1291,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: ActorSpawner_ch6_shrine_to_DemonCastle_shrine
       objectReference: {fileID: 0}
-    - target: {fileID: 3170002066722628009, guid: af73b99e298649f438a176243aa0e9f7, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7280069422509570416, guid: af73b99e298649f438a176243aa0e9f7, type: 3}
-      propertyPath: _actorSpawnSettingSO
-      value: 
-      objectReference: {fileID: 11400000, guid: bef37088ff4df1d4ebba24fae784a7b8, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: af73b99e298649f438a176243aa0e9f7, type: 3}
+--- !u!4 &7667698137563106791 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 571125264800567821, guid: 47e70c8a7a485d441b1c7054d205a9c0, type: 3}
+  m_PrefabInstance: {fileID: 904492047624614294}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
