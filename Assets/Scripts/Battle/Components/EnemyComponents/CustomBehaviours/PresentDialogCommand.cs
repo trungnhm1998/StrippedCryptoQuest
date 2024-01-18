@@ -1,5 +1,6 @@
 using System.Collections;
 using CryptoQuest.Battle.Presenter.Commands;
+using CryptoQuest.Input;
 using CryptoQuest.UI.Dialogs.DialogWithCharacterName;
 using UnityEngine;
 using UnityEngine.Localization;
@@ -8,17 +9,19 @@ namespace CryptoQuest.Battle.Components.EnemyComponents.CustomBehaviours
 {
     public class PresentDialogCommand : IPresentCommand
     {
-        // Match with battle auto hide
-        private const float AUTO_HIDE_DURATION = 2f;
-
+        private BattleInput _battleInput;
         private LocalizedString _localizedMessage;
         private UICharacterNamedDialog _dialog;
+        private float _autoHideDuration;
         private bool _isHidden;
 
-        public PresentDialogCommand(UICharacterNamedDialog dialog, LocalizedString message)
+        public PresentDialogCommand(UICharacterNamedDialog dialog, LocalizedString message,
+            BattleInput battleInput, float autoHideDuration=3f)
         {
             _localizedMessage = message;
             _dialog = dialog;
+            _autoHideDuration = autoHideDuration;
+            _battleInput = battleInput;
         }
 
         public PresentDialogCommand(LocalizedString message)
@@ -36,7 +39,8 @@ namespace CryptoQuest.Battle.Components.EnemyComponents.CustomBehaviours
             _dialog
                 .WithHeader(splitedStrings[0])
                 .WithMessage(splitedStrings[1])
-                .WithAutoHide(AUTO_HIDE_DURATION)
+                .WithAutoHide(_autoHideDuration)
+                .RequireInput()
                 .WithHideCallback(HideDialog)
                 .Show();
             yield return new WaitUntil(() => _isHidden);
@@ -45,6 +49,7 @@ namespace CryptoQuest.Battle.Components.EnemyComponents.CustomBehaviours
         private void HideDialog()
         {
             _isHidden = true;
+            _battleInput.EnableBattleInput();
         }
     }
 }
