@@ -13,13 +13,18 @@ MonoBehaviour:
   m_Name: ch001_q001_e002_present
   m_EditorClassIdentifier: 
   _guid: cfb6607ac604d764292ca3ec91cdb9a0
-  <QuestID>k__BackingField: 
   <QuestName>k__BackingField: ch001_q001_e002_present
-  <EventID>k__BackingField: 
-  <EventName>k__BackingField: ch001_q001_e002_present
   <EventDescription>k__BackingField: 
   <NextAction>k__BackingField: {fileID: 0}
-  _rewards: []
+  _rewards:
+  - RewardItem:
+      rid: 4561836777123610626
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 4561836777123610626
+      type: {class: ConsumableLootInfo, ns: CryptoQuest.Gameplay.Loot, asm: IndiGames.CryptoQuest}
+      data:
+        _item:
+          Data: {fileID: 11400000, guid: 332cc0df41750b84999f821d3a1dcceb, type: 2}
+          _quantity: 5
