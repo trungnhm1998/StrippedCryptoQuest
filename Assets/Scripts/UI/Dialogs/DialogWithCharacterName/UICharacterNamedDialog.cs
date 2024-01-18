@@ -17,6 +17,12 @@ namespace CryptoQuest.UI.Dialogs.DialogWithCharacterName
             return this;
         }
 
+        public UIGenericDialog WithHeader(string characterName)
+        {
+            _characterText.text = characterName;
+            return this;
+        }
+
         public override void Clear()
         {
             base.Clear();

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1845437177735005846}
   - component: {fileID: 1845437177735005849}
   - component: {fileID: 1845437177735005848}
+  - component: {fileID: 3524532447825154913}
   m_Layer: 0
   m_Name: 112_HadesFront
   m_TagString: Untagged
@@ -26,13 +27,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1845437177735005850}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.13, y: 1.13, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &1845437177735005846
 MeshFilter:
@@ -124,3 +125,76 @@ MonoBehaviour:
   _animationName: animation
   loop: 1
   timeScale: 1
+--- !u!114 &3524532447825154913
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1845437177735005850}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e0d8a008fbdd5e4e838db6ff478ec6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _behaviours:
+  - rid: 8154416246035054605
+  - rid: 8154416246035054606
+  references:
+    version: 2
+    RefIds:
+    - rid: 8154416246035054605
+      type: {class: TalkAtStartRound, ns: CryptoQuest.Battle.Components.EnemyComponents.CustomBehaviours, asm: IndiGames.CryptoQuest}
+      data:
+        _turnDialogs:
+        - Turn: 1
+          DialogMessages:
+          - m_TableReference:
+              m_TableCollectionName: GUID:7d58d14c754ed3c4abada55aff2b3e4c
+            m_TableEntryReference:
+              m_KeyId: 1026283793416192
+              m_Key: 
+            m_FallbackState: 0
+            m_WaitForCompletion: 0
+            m_LocalVariables:
+            - name: 0
+              variable:
+                rid: 8154416246035054620
+        - Turn: 2
+          DialogMessages:
+          - m_TableReference:
+              m_TableCollectionName: GUID:7d58d14c754ed3c4abada55aff2b3e4c
+            m_TableEntryReference:
+              m_KeyId: 1026283814387712
+              m_Key: 
+            m_FallbackState: 0
+            m_WaitForCompletion: 0
+            m_LocalVariables: []
+        - Turn: 3
+          DialogMessages:
+          - m_TableReference:
+              m_TableCollectionName: GUID:7d58d14c754ed3c4abada55aff2b3e4c
+            m_TableEntryReference:
+              m_KeyId: 1026283814387713
+              m_Key: 
+            m_FallbackState: 0
+            m_WaitForCompletion: 0
+            m_LocalVariables: []
+        - Turn: 4
+          DialogMessages:
+          - m_TableReference:
+              m_TableCollectionName: GUID:7d58d14c754ed3c4abada55aff2b3e4c
+            m_TableEntryReference:
+              m_KeyId: 1026283814387714
+              m_Key: 
+            m_FallbackState: 0
+            m_WaitForCompletion: 0
+            m_LocalVariables: []
+    - rid: 8154416246035054606
+      type: {class: NoActionUntilRound, ns: CryptoQuest.Battle.Components.EnemyComponents.CustomBehaviours, asm: IndiGames.CryptoQuest}
+      data:
+        _roundNumber: 4
+    - rid: 8154416246035054620
+      type: {class: NestedVariablesGroup, ns: UnityEngine.Localization.SmartFormat.PersistentVariables, asm: Unity.Localization}
+      data:
+        m_Value: {fileID: 11400000, guid: 485ec8f60e1b08a43bfd52c618cf8d9b, type: 2}
