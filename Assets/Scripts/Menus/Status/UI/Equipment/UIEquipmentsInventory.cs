@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Linq;
 using CryptoQuest.Battle.Components;
+using CryptoQuest.Inventory.Helper;
 using CryptoQuest.Inventory.ScriptableObjects;
 using CryptoQuest.Item.Equipment;
 using CryptoQuest.Menu;
@@ -152,20 +153,8 @@ namespace CryptoQuest.Menus.Status.UI.Equipment
             equipmentItem.Init(equipment);
             equipmentItem.EquipItem += EquipEquipment;
 
-            _hero.TryGetComponent(out LevelSystem levelSystem);
-            var equipmentAllowedClasses = prefab.EquipmentType.AllowedClasses;
-            if (equipment.Data.RequiredCharacterLevel > levelSystem.Level)
-            {
-                Debug.LogWarning("Character level is not enough");
+            if (!equipment.CanEquipByHero(_hero))
                 equipmentItem.DeactivateButton();
-                yield break;
-            }
-
-            if (!Array.Exists(equipmentAllowedClasses, allowedClass => allowedClass == _hero.Class))
-            {
-                Debug.LogWarning("Character class is not allowed");
-                equipmentItem.DeactivateButton();
-            }
         }
 
         private UIEquipmentItem _equippingItemToBeRemoveFromInventory;

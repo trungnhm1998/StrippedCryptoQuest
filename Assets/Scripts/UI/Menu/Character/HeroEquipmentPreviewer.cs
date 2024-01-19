@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using CryptoQuest.Battle.Components;
 using CryptoQuest.Character.Hero;
 using CryptoQuest.Gameplay.PlayerParty;
+using CryptoQuest.Inventory.Helper;
 using CryptoQuest.Item.Equipment;
 using CryptoQuest.UI.Character;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
@@ -62,6 +63,7 @@ namespace CryptoQuest.UI.Menu.Character
             ResetPreview();
 
             if (!_clonedHero.IsValid() || equipment == null || !equipment.IsValid()) return;
+            if (!equipment.CanEquipByHero(_clonedHero)) return;
             if (!_clonedHero.TryGetComponent<EquipmentsController>(out var equipmentController))
                 return;
 
@@ -77,6 +79,7 @@ namespace CryptoQuest.UI.Menu.Character
             ResetPreview();
 
             if (!_clonedHero.IsValid() || equipment == null || !equipment.IsValid()) return;
+            if (!equipment.CanEquipByHero(_clonedHero)) return;
             if (!_clonedHero.TryGetComponent<EquipmentsController>(out var equipmentController))
                 return;
 
