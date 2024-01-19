@@ -45,5 +45,14 @@ namespace CryptoQuest.Quest
 
             Changed?.Invoke();
         }
+        
+        public void RemoveCompleteQuest(string guid)
+        {
+            if (CompletedQuests.Contains(guid))
+            {
+                CompletedQuests.Remove(guid);
+                Changed?.Invoke();
+            }
+        }
     }
 }
