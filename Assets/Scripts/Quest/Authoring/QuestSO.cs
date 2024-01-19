@@ -20,7 +20,6 @@ namespace CryptoQuest.Quest.Authoring
 
     public abstract class QuestSO : SerializableScriptableObject
     {
-        public Action OnQuestCompleted;
         public Action<List<LootInfo>> OnRewardReceived;
 
         [field: SerializeField] public string QuestName { get; private set; }

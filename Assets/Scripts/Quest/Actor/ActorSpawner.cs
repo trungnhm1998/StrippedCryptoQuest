@@ -112,7 +112,6 @@ namespace CryptoQuest.Quest.Actor
             if (setting == null) return;
 
             setting.OnConfigure += configureAction;
-            setting.Subscribe();
         }
 
         private void UnsubscribeSetting(ActorSettingInfo setting, Action activateAction)
@@ -120,7 +119,6 @@ namespace CryptoQuest.Quest.Actor
             if (setting == null) return;
 
             setting.OnQuestCompleted -= activateAction;
-            setting.Unsubscribe();
         }
 
         #endregion

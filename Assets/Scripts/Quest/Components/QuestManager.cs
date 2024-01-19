@@ -182,7 +182,6 @@ namespace CryptoQuest.Quest.Components
             {
                 if (progressQuestInfo != data.Guid) continue;
                 UpdateQuestProgress(progressQuestInfo);
-                _questConfigure.CompleteQuest(progressQuestInfo);
                 break;
             }
 
