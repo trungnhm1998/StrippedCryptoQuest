@@ -21,6 +21,7 @@ namespace CryptoQuest.UI.Menu.Character
     {
         private Dictionary<AttributeScriptableObject, AttributeUIValue> _cachedAttributes = new();
 
+        private HeroBehaviour _baseHero;
         private HeroBehaviour _clonedHero;
         public bool IsValid => _clonedHero != null;
         public HeroBehaviour ClonedHero => _clonedHero;
@@ -28,7 +29,7 @@ namespace CryptoQuest.UI.Menu.Character
         private void OnEnable()
         {
             if (_clonedHero == null) return;
-            _clonedHero.Init(new PartySlotSpec() { Hero = _clonedHero.Spec });
+            InitSpec();
             _clonedHero.gameObject.SetActive(true);
         }
 
@@ -100,18 +101,30 @@ namespace CryptoQuest.UI.Menu.Character
 
         private void Clone(HeroBehaviour hero)
         {
+            _baseHero = hero;
+
             if (_clonedHero != null)
             {
                 Destroy(_clonedHero.gameObject);
             }
 
             _clonedHero = Instantiate(hero, transform);
+
+            // Remove this so equip/unequip wont affect server or inventory
+            RemoveComponent<EquipmentsNetworkController>();
+            RemoveComponent<InventoryEquipmentsController>();
+
+            InitSpec();
+        }
+
+        private void InitSpec()
+        {
             var cloneSpec = new PartySlotSpec()
             {
-                Hero = _clonedHero.Spec
+                Hero = _baseHero.Spec
             };
 
-            foreach (var slotItem in _clonedHero.GetEquipments().Slots)
+            foreach (var slotItem in _baseHero.GetEquipments().Slots)
             {
                 cloneSpec.EquippingItems.Slots.Add(new EquipmentSlot()
                 {
@@ -119,11 +132,6 @@ namespace CryptoQuest.UI.Menu.Character
                     Equipment = slotItem.Equipment
                 });
             }
-
-            // Remove this so equip/unequip wont affect server or inventory
-            RemoveComponent<EquipmentsNetworkController>();
-            RemoveComponent<InventoryEquipmentsController>();
-            
             _clonedHero.Init(cloneSpec);
         }
 

@@ -83,18 +83,17 @@ namespace CryptoQuest.Menus.Status.UI
         {
             if (_equipmentController == null) return;
             _equipmentController.Equipped += InitCurrentHero;
-            _equipmentController.Removed += UnequipEquipment;
+            _equipmentController.Removed += InitCurrentHero;
         }
 
         private void UnregistEvents()
         {
             if (_equipmentController == null) return;
             _equipmentController.Equipped -= InitCurrentHero;
-            _equipmentController.Removed -= UnequipEquipment;
+            _equipmentController.Removed -= InitCurrentHero;
         }
 
         private void InitCurrentHero(IEquipment _) => InitPreviewer(_hero);
-        private void UnequipEquipment(IEquipment _) =>InitPreviewer(_hero);
 
         private void PreviewEquip()
         {
