@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using CryptoQuest.Gameplay.Loot;
 using CryptoQuest.Quest.Components;
-using CryptoQuest.System;
 using IndiGames.Core.Common;
-using Newtonsoft.Json;
 using UnityEngine;
 
 namespace CryptoQuest.Quest.Authoring
@@ -39,12 +34,14 @@ namespace CryptoQuest.Quest.Authoring
 
         public override void TriggerQuest()
         {
-            Debug.Log($"QuestSystem::Start Quest: <color=green>[{Data.QuestName}] - [{Data.EventName}]</color>");
+            Debug.Log($"<color=green>QuestSystem:</color>" +
+                      $":Start Quest: Chapter: [{Data.Chapter}] -  [{Data.QuestName}]");
         }
 
         public override void FinishQuest()
         {
-            Debug.Log($"QuestSystem::Finish Quest: <color=green>[{Data.QuestName}] - [{Data.EventName}]</color>");
+            Debug.Log($"<color=green>QuestSystem:</color>" +
+                      $":Finish Quest: Chapter: [{Data.Chapter}] -[{Data.QuestName}] ");
             var questManager = ServiceProvider.GetService<IQuestManager>();
 
             Data.OnQuestCompleted?.Invoke();
@@ -53,7 +50,8 @@ namespace CryptoQuest.Quest.Authoring
 
         public override void GiveQuest()
         {
-            Debug.Log($"QuestSystem::Give Quest: <color=green>[{Data.QuestName}] - [{Data.EventName}]</color>");
+            Debug.Log($"<color=green>QuestSystem:</color>" +
+                      $":Give Quest: Chapter: [{Data.Chapter}] -[{Data.QuestName}] ");
         }
 
         public override bool IsValid() => Data != null;
