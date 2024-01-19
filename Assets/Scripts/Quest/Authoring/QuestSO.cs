@@ -24,12 +24,13 @@ namespace CryptoQuest.Quest.Authoring
         public Action<List<LootInfo>> OnRewardReceived;
 
         [field: SerializeField] public string QuestName { get; private set; }
+        [field: SerializeField, Range(-1, 10)] public int Chapter { get; private set; }
 
-        [field: SerializeField] public string EventName => QuestName;
         [field: SerializeField, TextArea] public string EventDescription { get; private set; }
 
         [field: Header("Optional")]
-        [field: SerializeReference] public NextAction NextAction { get; protected set; }
+        [field: SerializeReference]
+        public NextAction NextAction { get; protected set; }
 
         [SerializeField] private QuestReward[] _rewards = Array.Empty<QuestReward>();
         public QuestReward[] Rewards => _rewards;

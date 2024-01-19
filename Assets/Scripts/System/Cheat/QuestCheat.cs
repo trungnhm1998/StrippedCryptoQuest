@@ -47,11 +47,23 @@ namespace CryptoQuest.System.Cheat
             Terminal.Shell.AddCommand("quest.delete.all", RequestDeleteAllCompletedQuests, 0, 0,
                 "quest.delete.all, to delete all completed quests");
 
+            Terminal.Shell.AddCommand("quest.complete.chapter", RequestCompleteQuestByChapter, 1, 1,
+                "quest.complete.chapter <chapter>, to complete all quest in chapter");
+
             foreach (var questSo in _allQuest)
             {
                 _questDict.Add(questSo.Guid, questSo);
                 Terminal.Autocomplete.Register(questSo.Guid);
             }
+        }
+
+        private void RequestCompleteQuestByChapter(CommandArg[] args)
+        {
+            int chapter = args[0].Int;
+            if (chapter is 0 or -1) return;
+
+            List<QuestSO> quests = _allQuest.Where(quest => quest.Chapter == chapter).ToList();
+            quests.ForEach(quest => _saveData.AddCompleteQuest(quest.Guid));
         }
 
         private void RequestDeleteAllCompletedQuests(CommandArg[] args)
