@@ -58,7 +58,7 @@ namespace CryptoQuest.ShopSystem.Sagas
 
         private void OnError(Exception ex)
         {
-            ActionDispatcher.Dispatch(new TransactionFailedAction());
+            ActionDispatcher.Dispatch(new NotEnoughGoldAction());
         }
     }
 

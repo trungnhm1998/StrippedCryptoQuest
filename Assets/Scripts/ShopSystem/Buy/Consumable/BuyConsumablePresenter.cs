@@ -1,4 +1,6 @@
 ﻿using System.Collections;
+using CryptoQuest.Inventory.Currency;
+using CryptoQuest.Inventory.ScriptableObjects;
 using CryptoQuest.Item.Consumable;
 using CryptoQuest.ShopSystem.Helpers;
 using CryptoQuest.ShopSystem.Sagas;
@@ -15,6 +17,8 @@ namespace CryptoQuest.ShopSystem.Buy.Consumable
     public class BuyConsumablePresenter : MonoBehaviour
     {
         [SerializeField] private int _maxQuantityToBuyPerOp = 99;
+        [SerializeField] private WalletSO _walletSO;
+        [SerializeField] private CurrencySO _goldSO;
         [SerializeField] private UIQuantityDialog _quantityConfigDialog;
         [SerializeField] private BuyConsumableModel _model;
         [SerializeField] private UIBuyConsumableList _uiBuyableList;
@@ -76,9 +80,16 @@ namespace CryptoQuest.ShopSystem.Buy.Consumable
         {
             var selectedQuantity = _quantityConfigDialog.CurrentQuantity;
             var consumableInfo = new ConsumableInfo(item.Info.Data, selectedQuantity);
-            ActionDispatcher.Dispatch(new BuyConsumableAction(consumableInfo));
             _resultPanel
                 .AddHideCallback(() => { EventSystem.current.SetSelectedGameObject(item.gameObject); });
+
+            if (_walletSO[_goldSO].Amount > item.Price * selectedQuantity)
+            {
+                ActionDispatcher.Dispatch(new BuyConsumableAction(consumableInfo));
+                return;
+            }
+
+            ActionDispatcher.Dispatch(new NotEnoughGoldAction());
         }
     }
 }

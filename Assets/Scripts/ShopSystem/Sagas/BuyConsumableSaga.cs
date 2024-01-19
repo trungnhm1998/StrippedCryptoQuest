@@ -56,7 +56,7 @@ namespace CryptoQuest.ShopSystem.Sagas
 
         private void OnError(Exception exception)
         {
-            ActionDispatcher.Dispatch(new TransactionFailedAction());
+            ActionDispatcher.Dispatch(new MaximumQuantityExceedAction());
         }
     }
 }

@@ -49,7 +49,7 @@ namespace CryptoQuest.ShopSystem.Sagas
 
             var sellingItem = ctx.ItemInfo;
 
-            ActionDispatcher.Dispatch(new RemoveEquipmentAction(ctx.ItemInfo));
+            ActionDispatcher.Dispatch(new RemoveEquipmentAction(sellingItem));
             var restClient = ServiceProvider.GetService<IRestClient>();
             restClient
                 .WithBody(body)
@@ -65,7 +65,7 @@ namespace CryptoQuest.ShopSystem.Sagas
 
         private void SellFailed(Exception ex, IEquipment sellingItem)
         {
-            // TODO: add item back to inventory
+            ActionDispatcher.Dispatch(new AddEquipmentAction(sellingItem));
         }
     }
 }

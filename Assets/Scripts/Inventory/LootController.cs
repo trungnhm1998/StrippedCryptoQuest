@@ -4,6 +4,7 @@ using CryptoQuest.Gameplay.Loot;
 using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.Inventory.Actions;
 using CryptoQuest.Inventory.Currency;
+using CryptoQuest.Inventory.LootAPI;
 using CryptoQuest.Item.MagicStone.Sagas;
 using IndiGames.Core.Events;
 using UnityEngine;
@@ -28,7 +29,7 @@ namespace CryptoQuest.Inventory
 
         public void Visit(ConsumableLootInfo loot)
         {
-            ActionDispatcher.Dispatch(new AddConsumableAction(loot.Item.Data, loot.Item.Quantity));
+            ActionDispatcher.Dispatch(new AddConsumableToServerAction(loot.Item.Data, loot.Item.Quantity));
         }
 
         public void Visit(CurrencyLootInfo loot)

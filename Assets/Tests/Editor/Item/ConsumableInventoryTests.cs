@@ -88,5 +88,18 @@ namespace CryptoQuest.Tests.Editor.Item
         {
             Assert.IsFalse(_inventory.Contains(_consumable));
         }
+
+        [Test]
+        public void Add_IncreasesQuantityMoreThanMax_QuantityIsMax()
+        {
+            _inventory.Add(_consumable, _inventory.MaximumQuantity + 2);
+
+            Assert.AreEqual(_inventory.MaximumQuantity, _inventory.Items[0].Quantity);
+
+            _inventory.Remove(_consumable, 1);
+            _inventory.Add(_consumable, 2);
+            
+            Assert.AreEqual(_inventory.MaximumQuantity, _inventory.Items[0].Quantity);
+        }
     }
 }
