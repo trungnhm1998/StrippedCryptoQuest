@@ -44,7 +44,6 @@ namespace CryptoQuest.Quest.Authoring
                       $":Finish Quest: Chapter: [{Data.Chapter}] -[{Data.QuestName}] ");
             var questManager = ServiceProvider.GetService<IQuestManager>();
 
-            Data.OnQuestCompleted?.Invoke();
             questManager?.OnQuestCompleted?.Invoke(Data);
         }
 
