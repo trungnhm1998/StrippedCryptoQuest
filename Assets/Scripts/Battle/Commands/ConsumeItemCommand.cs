@@ -42,7 +42,7 @@ namespace CryptoQuest.Battle.Commands
 
             if (ableToUseOnAtLeastOneHero)
             {
-                ActionDispatcher.Dispatch(new RemoveConsumableAction(_selectedItem.Data));
+                ActionDispatcher.Dispatch(new ItemConsumed(_selectedItem.Data));
                 return;
             }
 

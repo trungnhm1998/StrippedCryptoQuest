@@ -33,7 +33,7 @@ namespace CryptoQuest.ShopSystem
             ShowDialog(_strFailed);
         }
 
-        private void ShowDialog(LocalizedString message)
+        public void ShowDialog(LocalizedString message)
         {
             GenericDialogController.Instance.InstantiateAsync(dialog =>
             {

@@ -61,7 +61,7 @@ namespace CryptoQuest.ShopSystem.Sagas
         
         private void SellFailed(Exception exception, SellConsumableAction ctx)
         {
-            // TODO: add item back to inventory
+            ActionDispatcher.Dispatch(new AddConsumableAction(ctx.Item, ctx.Quantity));
         }
     }
 }

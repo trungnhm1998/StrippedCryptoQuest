@@ -291,6 +291,7 @@ GameObject:
   - component: {fileID: 9149178870228945514}
   - component: {fileID: 5119115862095709604}
   - component: {fileID: 3999292738814647714}
+  - component: {fileID: 4262297591998680047}
   m_Layer: 0
   m_Name: BuyResultPanel
   m_TagString: Untagged
@@ -403,6 +404,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _resultPanel: {fileID: 9149178870228945514}
+--- !u!114 &4262297591998680047
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4910111375013769529}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96dc68dcbd6f49c49968d40b4ef11e0c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maximumExceedMessage:
+    m_TableReference:
+      m_TableCollectionName: GUID:797efb245e165b7468b295e62cb3c0b5
+    m_TableEntryReference:
+      m_KeyId: 59758843276099584
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  _resultPanel: {fileID: 9149178870228945514}
+  references:
+    version: 2
+    RefIds: []
 --- !u!1 &5729937401069377803
 GameObject:
   m_ObjectHideFlags: 0
@@ -2302,6 +2328,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxQuantityToBuyPerOp: 99
+  _walletSO: {fileID: 11400000, guid: e349636f15671994ba195728c42a551b, type: 2}
+  _goldSO: {fileID: 11400000, guid: 16b3f6e09fc22d240be1b324116eeb79, type: 2}
   _quantityConfigDialog: {fileID: 5011768067499119524}
   _model: {fileID: 2006631368860577480}
   _uiBuyableList: {fileID: 8797387602459007373}

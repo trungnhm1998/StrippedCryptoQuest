@@ -3,13 +3,13 @@ using UnityEngine;
 
 namespace CryptoQuest.ShopSystem.Sagas
 {
-    public class TransactionFailedAction : ActionBase { }
+    public class NotEnoughGoldAction : ActionBase { }
 
-    public class TransactionFailedSaga : SagaBase<TransactionFailedAction>
+    public class NotEnoughGoldSaga : SagaBase<NotEnoughGoldAction>
     {
         [SerializeField] private TransactionResultPanel _resultPanel;
 
-        protected override void HandleAction(TransactionFailedAction ctx)
+        protected override void HandleAction(NotEnoughGoldAction ctx)
         {
             _resultPanel.ShowFailed();
         }

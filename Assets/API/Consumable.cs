@@ -2,7 +2,7 @@
 {
     public static class Consumable
     {
-        public const string ITEMS = "crypto/Items";
-        public const string CONSUME = "crypto/Items/consume";
+        public const string ITEMS = "crypto/items";
+        public const string CONSUME = "crypto/items/consume";
     }
 }
