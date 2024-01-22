@@ -11,6 +11,8 @@ namespace CryptoQuest.Events
         [SerializeField] private VoidEventChannelSO _saveFinishedEventChannel;
         [SerializeField, Tooltip("Seconds")] private float _saveInterval = 10f;
 
+        private bool _isUploading;
+
         private void Start()
         {
             ApplicationEventHandler.RegisterOnBeforeUnloadEventCallback(gameObject.name, nameof(OnBeforeUnloaded));
@@ -57,17 +59,20 @@ namespace CryptoQuest.Events
             Debug.Log("ApplicationEventListener::UploadGameSave() - Uploading profile...");
 
             var timeToCheck = _lastUploadTime.AddSeconds(_saveInterval);
-            if (DateTime.Compare(timeToCheck, DateTime.Now) > 0)
+            if (DateTime.Compare(timeToCheck, DateTime.Now) > 0 || _isUploading)
             {
                 Debug.Log("ApplicationEventListener::UploadGameSave() - Uploading aborted!");
                 return;
             }
+
+            _isUploading = true;
 
             _forceSaveEvent.RaiseEvent();
         }
 
         private void SaveFinished()
         {
+            _isUploading = false;
             _lastUploadTime = DateTime.Now;
         }
     }

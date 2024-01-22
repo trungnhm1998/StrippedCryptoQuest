@@ -5,6 +5,8 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.Pool;
+using IndiGames.Core.Events.ScriptableObjects;
+using UnityEngine.Events;
 
 namespace CryptoQuest.UI.Popups
 {
@@ -14,6 +16,7 @@ namespace CryptoQuest.UI.Popups
         [SerializeField] private Transform _popupParent;
         [SerializeField] private AssetReference _prefab;
         [SerializeField] private float _autoReleaseTimeout = 120f;
+        [SerializeField] private UnityEvent _closedAllPopupsEvent;
 
         private AsyncOperationHandle<GameObject> _handler;
         // I used pool because there might be many popup show at the same time
@@ -57,7 +60,11 @@ namespace CryptoQuest.UI.Popups
         {
             _popupPool.Release(popup);
 
-            if (IsPopupsEmpty) _inputManager.DisableInput();
+            if (IsPopupsEmpty)
+            {
+                _closedAllPopupsEvent.Invoke();
+                _inputManager.DisableInput();
+            }
         }
 
         private void ReleaseAssets()

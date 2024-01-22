@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 3670221026963837772}
   - component: {fileID: 6096472964018569420}
   - component: {fileID: 8263197708719909122}
-  - component: {fileID: 8809125883922446164}
   m_Layer: 5
   m_Name: ErrorPopupController
   m_TagString: Untagged
@@ -62,6 +61,9 @@ MonoBehaviour:
     m_SubObjectType: 
     m_EditorAssetChanged: 0
   _autoReleaseTimeout: 120
+  _closedAllPopupsEvent:
+    m_PersistentCalls:
+      m_Calls: []
   _errorPopupEventSO: {fileID: 11400000, guid: 0d7e6a0c26be8e94580548fbb7ccb903, type: 2}
   _localizedErrorPopupEventSO: {fileID: 11400000, guid: e802a1060ed3bcc40a826d27e9df51e5, type: 2}
   _header:
@@ -157,7 +159,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfc18fc95fc61944bbab8a7aabdf3155, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _autoHideDelay: 2
+  _autoHideDelay: 3
   _hidePopupEvent:
     m_PersistentCalls:
       m_Calls:
@@ -174,18 +176,6 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   _showPopupEventChannel: {fileID: 11400000, guid: e802a1060ed3bcc40a826d27e9df51e5, type: 2}
---- !u!114 &8809125883922446164
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3113176336876976255}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 14cf5fcac022440e84535c18d3eb5aa4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &5207506354665276701
 GameObject:
   m_ObjectHideFlags: 0
