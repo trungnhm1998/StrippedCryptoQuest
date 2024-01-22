@@ -10,12 +10,12 @@ namespace CryptoQuest.System.SaveSystem.Savers
 
         private void Start()
         {
-            InvokeRepeating(nameof(ForceSaveGame), 0, _saveInterval);
+            InvokeRepeating(nameof(ForceSaveGame), _saveInterval, _saveInterval);
         }
 
         private void OnDisable()
         {
-            CancelInvoke(nameof(ForceSaveGame));
+            CancelInvoke();
         }
 
         private void ForceSaveGame()
