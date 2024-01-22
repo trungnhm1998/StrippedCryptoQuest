@@ -10,9 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8890472395542659390}
   - component: {fileID: 7790816439198956347}
-  - component: {fileID: 3602120340213884719}
-  - component: {fileID: 9109209186265024296}
-  - component: {fileID: -1766650742127612985}
+  - component: {fileID: 779570723721215504}
   m_Layer: 0
   m_Name: ProgressionManagers
   m_TagString: Untagged
@@ -32,8 +30,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1224422906309416162}
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7790816439198956347
@@ -48,9 +45,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d10d8b2e7f31fdb408fb9e4118ea5511, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _saveInterval: 300
-  _saveSystem: {fileID: 11400000, guid: 660bab7c7e2db6946b3a03dc73ffe40f, type: 2}
---- !u!114 &3602120340213884719
+  _saveInterval: 30
+  _forceSaveEvent: {fileID: 11400000, guid: 210ba320e842f7444818cae9e426a5a8, type: 2}
+--- !u!114 &779570723721215504
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -59,83 +56,39 @@ MonoBehaviour:
   m_GameObject: {fileID: 2778439153741272122}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 18cef716d313dec468887fe768f3891e, type: 3}
+  m_Script: {fileID: 11500000, guid: 97f5d0390033bf44387d97d1077df776, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _audioSetting: {fileID: 11400000, guid: d52bbf0b92f08de4b8bc3cd5b8270cb8, type: 2}
-  _languageSetting: {fileID: 11400000, guid: be5a91d1f7a553f4597eaae6d1d12e2d, type: 2}
+  _credentials: {fileID: 11400000, guid: 3bc0ee02274acb749913af55e08d1158, type: 2}
   _saveSystem: {fileID: 11400000, guid: 660bab7c7e2db6946b3a03dc73ffe40f, type: 2}
---- !u!114 &9109209186265024296
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2778439153741272122}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9dfb1c3079a74f9190ba4a87f7022025, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _questSave: {fileID: 11400000, guid: 03445ebfc72acfc499a1e02a30488822, type: 2}
-  _saveSystem: {fileID: 11400000, guid: 660bab7c7e2db6946b3a03dc73ffe40f, type: 2}
---- !u!114 &-1766650742127612985
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2778439153741272122}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5612fbea4856f09418a52aa09da292e0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _shipBus: {fileID: 11400000, guid: 312b6b19365a1864b9390012b99f669d, type: 2}
-  _saveSystem: {fileID: 11400000, guid: 660bab7c7e2db6946b3a03dc73ffe40f, type: 2}
---- !u!1 &5892449644959162828
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1224422906309416162}
-  - component: {fileID: 123801177619755512}
-  m_Layer: 0
-  m_Name: SaveSceneWhenEntered
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1224422906309416162
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5892449644959162828}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 8890472395542659390}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &123801177619755512
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5892449644959162828}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 28c09327eeb544e2bb0dd8796819022a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _saveSystem: {fileID: 11400000, guid: 660bab7c7e2db6946b3a03dc73ffe40f, type: 2}
-  _loadMap: {fileID: 11400000, guid: 932ea26428d5f4c4f8bdfd48ebc80873, type: 2}
+  _progressionSavers:
+  - rid: 8154416336514056337
+  - rid: 8154416336514056339
+  - rid: 8154416336514056341
+  - rid: 8154416336514056340
+  - rid: 8154416336514056342
+  _saveFinishedEventChannel: {fileID: 11400000, guid: 0afeefb323956c94e93e98830d67ab90, type: 2}
+  references:
+    version: 2
+    RefIds:
+    - rid: 8154416336514056337
+      type: {class: ForceSaver, ns: CryptoQuest.System.SaveSystem.Savers, asm: IndiGames.CryptoQuest}
+      data:
+        _forceSaveEvent: {fileID: 11400000, guid: 210ba320e842f7444818cae9e426a5a8, type: 2}
+    - rid: 8154416336514056339
+      type: {class: SettingsSaver, ns: CryptoQuest.System.SaveSystem.Savers, asm: IndiGames.CryptoQuest}
+      data:
+        _audioSetting: {fileID: 11400000, guid: d52bbf0b92f08de4b8bc3cd5b8270cb8, type: 2}
+        _languageSetting: {fileID: 11400000, guid: be5a91d1f7a553f4597eaae6d1d12e2d, type: 2}
+    - rid: 8154416336514056340
+      type: {class: ShipSaver, ns: CryptoQuest.System.SaveSystem.Savers, asm: IndiGames.CryptoQuest}
+      data:
+        _shipBus: {fileID: 11400000, guid: 312b6b19365a1864b9390012b99f669d, type: 2}
+    - rid: 8154416336514056341
+      type: {class: QuestProgressionSaver, ns: CryptoQuest.System.SaveSystem.Savers, asm: IndiGames.CryptoQuest}
+      data:
+        _questSave: {fileID: 11400000, guid: 03445ebfc72acfc499a1e02a30488822, type: 2}
+    - rid: 8154416336514056342
+      type: {class: SceneSaver, ns: CryptoQuest.System.SaveSystem.Savers, asm: IndiGames.CryptoQuest}
+      data:
+        _loadMap: {fileID: 11400000, guid: 932ea26428d5f4c4f8bdfd48ebc80873, type: 2}

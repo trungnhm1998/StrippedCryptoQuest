@@ -1,21 +1,21 @@
-﻿using CryptoQuest.Quest;
-using CryptoQuest.SaveSystem;
+﻿using System;
+using CryptoQuest.Quest;
 using Newtonsoft.Json;
 using UnityEngine;
 
 namespace CryptoQuest.System.SaveSystem.Savers
 {
-    public class QuestProgressionSaver : MonoBehaviour
+    [Serializable]
+    public class QuestProgressionSaver : SaverBase
     {
         [SerializeField] private QuestSaveSO _questSave;
-        [SerializeField] private SaveSystemSO _saveSystem;
 
-        private void OnEnable()
+        public override void RegistEvents()
         {
             _questSave.Changed += SaveQuestProgression;
         }
 
-        private void OnDisable()
+        public override void UnregistEvents()
         {
             _questSave.Changed -= SaveQuestProgression;
         }
@@ -23,7 +23,7 @@ namespace CryptoQuest.System.SaveSystem.Savers
         private void SaveQuestProgression()
         {
             _saveSystem.SaveData[_questSave.name] = JsonConvert.SerializeObject(_questSave);
-            _saveSystem.Save();
+            _saveHandler.Save();
         }
     }
 }
