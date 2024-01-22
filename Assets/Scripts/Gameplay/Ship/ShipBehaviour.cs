@@ -35,6 +35,7 @@ namespace CryptoQuest.Gameplay.Ship
         {
             gameObject.SetActive(false);
             SailedShip?.Invoke(this);
+            _shipBus.CurrentSailState = ESailState.Sailing;
         }
 
         public bool IsValid() => gameObject != null;
@@ -47,7 +48,7 @@ namespace CryptoQuest.Gameplay.Ship
                 return;
             SetFacingDirection(facingBehaviour.FacingDirection);
             _shipBus.LastPosition = new SerializableVector2(transform.position);
-            _shipBus.HasSailed = true;
+            _shipBus.CurrentSailState = ESailState.Landed;
         }
     }
 

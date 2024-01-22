@@ -3,14 +3,23 @@ using UnityEngine;
 
 namespace CryptoQuest.Gameplay.Ship
 {
+    public enum ESailState
+    {
+        [Tooltip("All ship are available")]
+        NotSail = 0,
+        [Tooltip("Only one ship is available and it is sailing")]
+        Sailing = 1,
+        [Tooltip("Only one ship is available and it is landed in LastPosition.")]
+        Landed = 2
+    }
+
     public class ShipBus : ScriptableObject
     {
         public event Action Changed;
 
         [SerializeField] private SerializableVector2 _lastPosition;
 
-        [Tooltip("There only one ship spawn in LastPosition if this is true.")]
-        [SerializeField] private bool _hasSailed;
+        [SerializeField] private ESailState _currentSailState;
         
         [Tooltip("The ships will not spawn if this is false.")]
         [SerializeField] private bool _isShipActivated;
@@ -25,17 +34,18 @@ namespace CryptoQuest.Gameplay.Ship
                 Changed?.Invoke();
             }
         }
-
-        public bool HasSailed 
+        
+        public ESailState CurrentSailState 
         {
-            get => _hasSailed;
+            get => _currentSailState;
             set
             {
-                if (_hasSailed == value) return;
-                _hasSailed = value;
+                if (_currentSailState == value) return;
+                _currentSailState = value;
                 Changed?.Invoke();
             }
         }
+
         public bool IsShipActivated 
         {
             get => _isShipActivated;

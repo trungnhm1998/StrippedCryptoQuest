@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5672734593827946196}
   - component: {fileID: -492031326990229184}
   - component: {fileID: 4169631085437515413}
+  - component: {fileID: 6062177518723154243}
   m_Layer: 0
   m_Name: ShipManager
   m_TagString: Untagged
@@ -64,3 +65,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _shipPrefab: {fileID: 7560750830605519576, guid: ad94315eff35e0a40b721f2f7c2f01a8, type: 3}
   _spawnShipAtPositionEvent: {fileID: 11400000, guid: c1d0e0433dc7f094fa37c1283e68ac0d, type: 2}
+--- !u!114 &6062177518723154243
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5475774293256501253}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ed460409bc80d74392975724f80034e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _shipSpawner: {fileID: 4169631085437515413}

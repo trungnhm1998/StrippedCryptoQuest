@@ -16,7 +16,7 @@ namespace CryptoQuest.System.SaveSystem.Loaders
         {
 #if UNITY_EDITOR
             _shipBus.IsShipActivated = false;
-            _shipBus.HasSailed = false;
+            _shipBus.CurrentSailState = ESailState.NotSail;
 #endif
             if (_progressionSystem.SaveData.TryGetValue(_shipBus.name, out var json))
                 JsonConvert.PopulateObject(json, _shipBus);
