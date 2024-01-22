@@ -187,8 +187,8 @@ namespace CryptoQuest.Quest.Components
 
             _questCompletionHandler.GrantCompletionRewards(data);
             _questCompletionHandler.HandleNextAction(data);
-
             ActionDispatcher.Dispatch(new QuestTriggeredAction(data));
+            ActionDispatcher.Dispatch(new QuestFinishRequestAction(data.QuestName));
         }
 
         private bool IsQuestTriggered(QuestSO questSo)

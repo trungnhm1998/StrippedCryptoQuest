@@ -13,7 +13,17 @@ using UnityEngine;
 
 namespace CryptoQuest.Inventory.LootAPI
 {
-    public class AddDiamondRequest : SagaBase<AddDiamonds>
+    public class AddDiamondsToServerAction : ActionBase
+    {
+        public int Amount { get; }
+
+        public AddDiamondsToServerAction(int amount)
+        {
+            Amount = amount;
+        }
+    }
+
+    public class AddDiamondRequest : SagaBase<AddDiamondsToServerAction>
     {
         [SerializeField] private WalletSO _wallet;
         [SerializeField] private CurrencySO _diamond;
@@ -21,11 +31,10 @@ namespace CryptoQuest.Inventory.LootAPI
 
         private class Body
         {
-            [JsonProperty("diamond")]
-            public long Diamond;
+            [JsonProperty("diamond")] public long Diamond;
         }
 
-        protected override void HandleAction(AddDiamonds ctx)
+        protected override void HandleAction(AddDiamondsToServerAction ctx)
         {
             var currentDiamondAmount = _wallet[_diamond].Amount;
             var diamondToUpdate = currentDiamondAmount + ctx.Amount;

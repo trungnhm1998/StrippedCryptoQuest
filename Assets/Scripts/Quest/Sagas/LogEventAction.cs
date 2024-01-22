@@ -22,4 +22,14 @@ namespace CryptoQuest.Quest.Sagas
             QuestData = quest;
         }
     }
+
+    public class QuestFinishRequestAction : ActionBase
+    {
+        public string QuestName;
+
+        public QuestFinishRequestAction(string quest)
+        {
+            QuestName = quest;
+        }
+    }
 }

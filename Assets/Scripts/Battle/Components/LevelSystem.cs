@@ -69,8 +69,6 @@ namespace CryptoQuest.Battle.Components
             var addedExp = expToAdd * expBuffValue.CurrentValue;
             _expProvider.Exp += addedExp;
 
-            ActionDispatcher.Dispatch(new UpdateCharacterExpAction(_character.Spec.Id, _expProvider.Exp));
-
             CalculateCurrentLevel();
         }
 
