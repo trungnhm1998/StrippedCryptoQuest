@@ -1,6 +1,4 @@
-﻿using System;
-using CryptoQuest.Utils;
-using CryptoQuest.Gameplay.Ship;
+﻿using CryptoQuest.Gameplay.Ship;
 using UnityEngine;
 
 namespace CryptoQuest.Character.MonoBehaviours

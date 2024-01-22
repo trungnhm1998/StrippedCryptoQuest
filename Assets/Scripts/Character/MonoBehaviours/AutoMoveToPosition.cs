@@ -45,5 +45,10 @@ namespace CryptoQuest.Character.MonoBehaviours
             _facingBehaviour.enabled = !isAutoMoving;
             _collider.isTrigger = isAutoMoving;
         }
+
+        private void OnDestroy()
+        {
+            DOTween.Kill(transform);
+        }
     }
 }

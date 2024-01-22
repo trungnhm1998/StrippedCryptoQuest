@@ -1,7 +1,6 @@
 using UnityEngine;
 using IndiGames.Core.Events.ScriptableObjects;
 using System.Collections.Generic;
-using CryptoQuest.Events;
 
 namespace CryptoQuest.Gameplay.Ship
 {
@@ -40,20 +39,20 @@ namespace CryptoQuest.Gameplay.Ship
 
         private void RequestSpawnShip()
         {
-            if (!_shipBus.IsShipActivated) return;
             _shipSpawner.enabled = _shipBus.IsShipActivated;
+            if (!_shipBus.IsShipActivated || _shipBus.CurrentSailState == ESailState.Sailing) return;
 
             if (TrySpawnShipAtLastPosition()) return;
 
             _spawnAllShipsEvent.RaiseEvent();
-            _shipBus.HasSailed = false;
+            _shipBus.CurrentSailState = ESailState.NotSail;
         }
 
         private bool TrySpawnShipAtLastPosition()
         {
-            if (!_shipBus.HasSailed)
+            if (_shipBus.CurrentSailState != ESailState.Landed)
             {
-                Debug.LogWarning($"There is no sailing ship.");
+                Debug.LogWarning($"There is no landed ship to spawn at LastPosition.");
                 return false;
             }
 
@@ -64,7 +63,7 @@ namespace CryptoQuest.Gameplay.Ship
         private void SetShipActivated()
         {
             _shipBus.IsShipActivated = true;
-            _shipBus.HasSailed = false;
+            _shipBus.CurrentSailState = ESailState.NotSail;
             _shipSpawner.enabled = _shipBus.IsShipActivated;
         }
 
@@ -98,7 +97,7 @@ namespace CryptoQuest.Gameplay.Ship
 
         private void OnSpawnAllShip()
         {
-            _shipBus.HasSailed = false;
+            _shipBus.CurrentSailState = ESailState.NotSail;
             DestroySailedShip();
         }
 
