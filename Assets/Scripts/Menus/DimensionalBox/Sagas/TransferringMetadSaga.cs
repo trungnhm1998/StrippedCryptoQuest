@@ -57,6 +57,7 @@ namespace CryptoQuest.Menus.DimensionalBox.Sagas
 
         private void TransferFailed(Exception response)
         {
+            HideLoading();
             Debug.LogWarning($"TransferringMetadSaga::TransferFailed [{response}]");
             ActionDispatcher.Dispatch(new TransferringMetadFailed());
         }
