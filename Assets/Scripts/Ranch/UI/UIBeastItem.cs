@@ -43,7 +43,6 @@ namespace CryptoQuest.Ranch.UI
             Response = beast;
 
             _inGameTag.SetActive(Response.IsEquipped);
-            _transferringTag.SetActive(Response.IsTransferring || Response.mintStatus != 2);
 
             _beast = ServiceProvider.GetService<IBeastResponseConverter>().Convert(beast);
             _name.text = $"{Id}.{Response.name}";
