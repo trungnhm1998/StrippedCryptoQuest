@@ -13,7 +13,17 @@ using UnityEngine;
 
 namespace CryptoQuest.Inventory.LootAPI
 {
-    public class AddGoldRequest : SagaBase<AddGoldAction>
+    public class AddGoldToServerAction : ActionBase
+    {
+        public int Amount { get; }
+
+        public AddGoldToServerAction(int amount)
+        {
+            Amount = amount;
+        }
+    }
+
+    public class AddGoldRequest : SagaBase<AddGoldToServerAction>
     {
         [SerializeField] private WalletSO _wallet;
         [SerializeField] private CurrencySO _gold;
@@ -22,11 +32,10 @@ namespace CryptoQuest.Inventory.LootAPI
 
         private struct Body
         {
-            [JsonProperty("gold")]
-            public int Gold;
+            [JsonProperty("gold")] public int Gold;
         }
 
-        protected override void HandleAction(AddGoldAction ctx)
+        protected override void HandleAction(AddGoldToServerAction ctx)
         {
             var currentGoldAmount = _wallet[_gold].Amount;
             var goldToUpdate = currentGoldAmount + ctx.Amount;

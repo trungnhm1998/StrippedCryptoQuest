@@ -18,8 +18,8 @@ namespace CryptoQuest.Inventory
         [SerializeField] private CurrencySO _diamond;
         [SerializeField] private CurrencySO _soul;
 
-        [Header("Listening to")]
-        [SerializeField] private LootEventChannelSO _addLootRequestEventChannel;
+        [Header("Listening to")] [SerializeField]
+        private LootEventChannelSO _addLootRequestEventChannel;
 
         protected void OnEnable() => _addLootRequestEventChannel.EventRaised += AddLoot;
 
@@ -36,10 +36,10 @@ namespace CryptoQuest.Inventory
         {
             var amount = (int)loot.Item.Amount;
             if (loot.Item.Data == _gold)
-                ActionDispatcher.Dispatch(new AddGoldAction(amount));
+                ActionDispatcher.Dispatch(new AddGoldToServerAction(amount));
 
             if (loot.Item.Data == _diamond)
-                ActionDispatcher.Dispatch(new AddDiamonds(amount));
+                ActionDispatcher.Dispatch(new AddDiamondsToServerAction(amount));
 
             if (loot.Item.Data == _soul)
                 ActionDispatcher.Dispatch(new AddSouls(amount));
@@ -58,11 +58,12 @@ namespace CryptoQuest.Inventory
 
         public void Visit(ExpLoot loot)
         {
+            ActionDispatcher.Dispatch(new AddExpToPartyAction(loot.Exp));
             foreach (var slot in _partyManager.Slots)
             {
                 if (!slot.HeroBehaviour.IsValidAndAlive()) continue;
-                var levelSystem = slot.HeroBehaviour.GetComponent<LevelSystem>();
-                levelSystem.AddExp(loot.Exp);
+                var expProvider = slot.HeroBehaviour.GetComponent<IExpProvider>();
+                ActionDispatcher.Dispatch(new UpdateCharacterExpAction(slot.HeroBehaviour.Spec.Id, expProvider.Exp));
             }
         }
     }
