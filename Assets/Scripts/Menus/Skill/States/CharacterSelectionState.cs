@@ -41,6 +41,7 @@ namespace CryptoQuest.Menus.Skill.States
 
         private void ShowHeroSkills(Vector2 direction)
         {
+            if (_skillPanel.SelectingHero == null) return;
             _skillPanel.SkillListPanel.TryShowSkillForHero(_skillPanel.SelectingHero.Hero);
         }
 
