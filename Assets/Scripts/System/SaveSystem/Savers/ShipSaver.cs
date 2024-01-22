@@ -1,21 +1,22 @@
-﻿using CryptoQuest.Gameplay.Ship;
+﻿using System;
+using CryptoQuest.Gameplay.Ship;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 using UnityEngine;
 
 namespace CryptoQuest.System.SaveSystem.Savers
 {
-    public class ShipSaver : MonoBehaviour
+    [Serializable]
+    public class ShipSaver : SaverBase
     {
         [SerializeField] private ShipBus _shipBus;
-        [SerializeField] private SaveSystemSO _saveSystem;
 
-        private void OnEnable()
+
+        public override void RegistEvents()
         {
             _shipBus.Changed += SaveShipProgression;
         }
 
-        private void OnDisable()
+        public override void UnregistEvents()
         {
             _shipBus.Changed -= SaveShipProgression;
         }
@@ -24,7 +25,7 @@ namespace CryptoQuest.System.SaveSystem.Savers
         {
             _saveSystem.SaveData[_shipBus.name] = 
                 JsonConvert.SerializeObject(_shipBus);
-            _saveSystem.Save();
+            _saveHandler.Save();
         }
     }
 }

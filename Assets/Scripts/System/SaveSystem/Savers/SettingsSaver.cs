@@ -1,7 +1,6 @@
 using System;
 using CryptoQuest.Audio.Settings;
 using CryptoQuest.Language.Settings;
-using CryptoQuest.SaveSystem;
 using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.Localization;
@@ -15,19 +14,19 @@ namespace CryptoQuest.System.SaveSystem.Savers
         public string Language; // guid
     }
 
-    public class SettingsSaver : MonoBehaviour
+    [Serializable]
+    public class SettingsSaver : SaverBase
     {
         [SerializeField] private AudioSettingSO _audioSetting;
         [SerializeField] private LanguageSettingSO _languageSetting;
-        [SerializeField] private SaveSystemSO _saveSystem;
 
-        protected void OnEnable()
+        public override void RegistEvents()
         {
             _audioSetting.VolumeChanged += VolumeChanged_Save;
             _languageSetting.Changed += LanguageChanged_Save;
         }
 
-        protected void OnDisable()
+        public override void UnregistEvents()
         {
             _audioSetting.VolumeChanged -= VolumeChanged_Save;
             _languageSetting.Changed -= LanguageChanged_Save;
@@ -44,6 +43,9 @@ namespace CryptoQuest.System.SaveSystem.Savers
                 Volume = _audioSetting.Volume,
                 Language = _languageSetting.CurrentLocale.Guid
             });
+
+            // Save locally because change volume create so many request
+            // will be upload to server when force save
             _saveSystem.Save();
         }
     }

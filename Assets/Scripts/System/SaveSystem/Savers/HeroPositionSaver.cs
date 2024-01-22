@@ -14,6 +14,9 @@ namespace CryptoQuest.System.SaveSystem.Savers
         public CharacterBehaviour.EFacingDirection FacingDirection;
     }
 
+    /// <summary>
+    /// This saver will be save interval
+    /// </summary>
     public class HeroPositionSaver : MonoBehaviour
     {
         [SerializeField] private InputMediatorSO _inputMediator;

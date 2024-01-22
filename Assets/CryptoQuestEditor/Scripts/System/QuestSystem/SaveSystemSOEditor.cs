@@ -41,13 +41,13 @@ namespace CryptoQuestEditor.System.QuestSystem
         {
             Target.Save();
             var restClient = ServiceProvider.GetService<IRestClient>();
-            restClient?.WithBody(new IntervalOnlineProgressionSaver.SaveDataBody() { GameData = Target.SaveData })
-                .Post<IntervalOnlineProgressionSaver.SaveDataResult>(Accounts.USER_SAVE_DATA).Subscribe(Saved);
+            restClient?.WithBody(new OnlineProgressionSaver.SaveDataBody() { GameData = Target.SaveData })
+                .Post<OnlineProgressionSaver.SaveDataResult>(Accounts.USER_SAVE_DATA).Subscribe(Saved);
         }
 
-        private void Saved(IntervalOnlineProgressionSaver.SaveDataResult res)
+        private void Saved(OnlineProgressionSaver.SaveDataResult res)
         {
-            Debug.Log($"Saved: {res.code}");
+            Debug.Log($"Saved: {res.Code}");
             EditorUtility.SetDirty(Target);
             AssetDatabase.SaveAssets();
         }
