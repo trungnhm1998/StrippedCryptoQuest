@@ -13,6 +13,7 @@ namespace CryptoQuest.Item.Equipment
         [field: SerializeField] public int Level { get; set; } = 1;
         [field: SerializeField] public bool IsNft { get; set; }
         [field: SerializeField] public EquipmentData Data { get; set; }
+        [field: SerializeField] public int AttachCharacterId { get; set; } = -1;
         public AttributeWithValue[] Stats => Data.Stats;
         public RaritySO Rarity => Data.Rarity;
         public float ValuePerLvl => Data.ValuePerLvl;
@@ -23,12 +24,7 @@ namespace CryptoQuest.Item.Equipment
 
         public PassiveAbility[] Passives => Data.Passives;
         public LocalizedString DisplayName => Data.Prefab.DisplayName;
-        
-        public int AttachCharacterId
-        {
-            get => Data.AttachCharacterId;
-            set => Data.AttachCharacterId = value;
-        }
+
 
         #region Utils
 
@@ -56,7 +52,7 @@ namespace CryptoQuest.Item.Equipment
 
         #endregion
 
-        public virtual bool IsEquipped() => AttachCharacterId != 0;
+        public virtual bool IsEquipped() => AttachCharacterId >= 0;
         public virtual bool IsValid()
             => Data != null && !string.IsNullOrEmpty(Data.ID) && Data.Prefab != null;
     }

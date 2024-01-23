@@ -25,6 +25,7 @@ namespace CryptoQuest.Gameplay.PlayerParty
 
         public override void Load()
         {
+            _partySO.SetParty(Array.Empty<PartySlotSpec>());
             _partySO.SetParty(CreatePartyFromSave());
             _saveSystemSO.Save(); // for new account
         }

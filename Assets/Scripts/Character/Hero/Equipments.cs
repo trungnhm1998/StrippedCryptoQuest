@@ -12,5 +12,7 @@ namespace CryptoQuest.Character.Hero
     public class Equipments
     {
         [field: SerializeField] public List<EquipmentSlot> Slots { get; set; } = new();
+
+        public void Clear() => Slots.Clear();
     }
 }

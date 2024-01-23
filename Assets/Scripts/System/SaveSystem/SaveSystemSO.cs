@@ -53,5 +53,11 @@ namespace CryptoQuest.System.SaveSystem
             _saveData = JsonConvert.DeserializeObject<SaveData>(json);
             return _saveData != null && _version == _saveData.Version;
         }
+
+        public string this[string key]
+        {
+            get => _saveData[key];
+            set => _saveData[key] = value;
+        }
     }
 }
