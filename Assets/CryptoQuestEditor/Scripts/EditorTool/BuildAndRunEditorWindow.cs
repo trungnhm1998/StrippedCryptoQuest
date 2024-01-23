@@ -4,6 +4,7 @@ using UnityEditor;
 using UnityEditor.AddressableAssets.Build;
 using UnityEditor.AddressableAssets.Settings;
 using UnityEditor.Build.Reporting;
+using UnityEngine;
 using Debug = UnityEngine.Debug;
 
 namespace CryptoQuestEditor.CryptoQuestEditor.Scripts.EditorTool
@@ -86,6 +87,8 @@ namespace CryptoQuestEditor.CryptoQuestEditor.Scripts.EditorTool
                 targetGroup = EditorUserBuildSettings.selectedBuildTargetGroup,
             };
 
+            PlayerSettings.SetStackTraceLogType(LogType.Exception, StackTraceLogType.Full);
+
             BuildReport report = BuildPipeline.BuildPlayer(buildPlayerOptions);
             BuildSummary summary = report.summary;
 
@@ -103,6 +106,7 @@ namespace CryptoQuestEditor.CryptoQuestEditor.Scripts.EditorTool
 
         private bool BuildAddressable()
         {
+            AddressableAssetSettings.CleanPlayerContent();
             AddressableAssetSettings.BuildPlayerContent(out AddressablesPlayerBuildResult result);
             bool success = string.IsNullOrEmpty(result.Error);
 
