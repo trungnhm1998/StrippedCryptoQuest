@@ -1,4 +1,5 @@
-﻿using CryptoQuest.Battle.Components;
+﻿using System;
+using CryptoQuest.Battle.Components;
 using CryptoQuest.Character.Hero.AvatarProvider;
 using CryptoQuest.UI.Character;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
@@ -72,14 +73,22 @@ namespace CryptoQuest.Menus.Home.UI.CharacterList
             }
 
             var id = $"{hero.DetailsInfo.Id}-{hero.Class.Id}";
-            var avatar = _avatarDatabase.CacheLookupTable[id];
-            if (avatar.OperationHandle.IsValid())
+            try
             {
-                SetAvatar(avatar.OperationHandle.Result as Sprite);
-                return;
+                var avatar = _avatarDatabase.CacheLookupTable[id];
+                if (avatar.OperationHandle.IsValid())
+                {
+                    SetAvatar(avatar.OperationHandle.Result as Sprite);
+                    return;
+                }
+
+                _handle = avatar.LoadAssetAsync();
+                _handle.Completed += SetAvatarInternal;
             }
-            _handle = avatar.LoadAssetAsync();
-            _handle.Completed += SetAvatarInternal;
+            catch (Exception e)
+            {
+                _avatar.enabled = false;
+            }
         }
 
         private void OnDisable()
