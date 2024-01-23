@@ -21,6 +21,5 @@ namespace CryptoQuest.Item.Equipment
         [field: SerializeField] public PassiveAbility[] Passives { get; set; } = Array.Empty<PassiveAbility>();
         [field: SerializeField] public int StoneSlots { get; set; }
         [field: SerializeField] public List<int> AttachStones { get; set; }
-        [field: SerializeField] public int AttachCharacterId { get; set; }
     }
 }

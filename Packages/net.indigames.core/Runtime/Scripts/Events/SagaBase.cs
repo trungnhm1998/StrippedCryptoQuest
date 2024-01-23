@@ -13,4 +13,11 @@ namespace IndiGames.Core.Events
 
         protected abstract void HandleAction(TAction ctx);
     }
+    
+    public abstract class CoSagaBase<TAction> : SagaBase<TAction> where TAction : ActionBase
+    {
+        protected override void HandleAction(TAction ctx) => StartCoroutine(HandleActionCoroutine(ctx));
+
+        protected abstract System.Collections.IEnumerator HandleActionCoroutine(TAction ctx);
+    }
 }

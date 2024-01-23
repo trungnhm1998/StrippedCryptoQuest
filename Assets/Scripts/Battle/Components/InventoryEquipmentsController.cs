@@ -29,7 +29,7 @@ namespace CryptoQuest.Battle.Components
 
         private void RemoveEquipmentAttachId(IEquipment equipment)
         {
-            equipment.AttachCharacterId = 0;
+            equipment.AttachCharacterId = -1;
         }
     }
 }

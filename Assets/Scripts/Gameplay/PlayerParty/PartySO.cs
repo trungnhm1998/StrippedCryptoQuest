@@ -43,7 +43,7 @@ namespace CryptoQuest.Gameplay.PlayerParty
             }
         }
 
-        public IEnumerator<PartySlotSpec> GetEnumerator() => ((IEnumerable<PartySlotSpec>) _heroSpecs).GetEnumerator();
+        public IEnumerator<PartySlotSpec> GetEnumerator() => ((IEnumerable<PartySlotSpec>)_heroSpecs).GetEnumerator();
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
         public bool Exists(HeroSpec item)

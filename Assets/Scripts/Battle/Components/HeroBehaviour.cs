@@ -16,6 +16,11 @@ namespace CryptoQuest.Battle.Components
     {
         public float Exp { get; set; }
     }
+    
+    public interface IHeroSpecProvider
+    {
+        public HeroSpec Spec { get; set; }
+    }
 
     /// <summary>
     /// To interact with Gameplay Ability System
@@ -25,7 +30,8 @@ namespace CryptoQuest.Battle.Components
         Character,
         IEquipmentsProvider, 
         IExpProvider, 
-        IStatsConfigProvider
+        IStatsConfigProvider,
+        IHeroSpecProvider
     {
         public Origin.Information DetailsInfo => Spec.Origin.DetailInformation;
         public StatsDef Stats => Spec.Stats;

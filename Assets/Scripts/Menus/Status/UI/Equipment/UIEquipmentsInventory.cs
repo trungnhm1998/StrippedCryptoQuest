@@ -8,7 +8,6 @@ using CryptoQuest.Item.Equipment;
 using CryptoQuest.Menu;
 using CryptoQuest.UI.Common;
 using CryptoQuest.UI.Utilities;
-using IndiGames.Core.Common;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -131,7 +130,6 @@ namespace CryptoQuest.Menus.Status.UI.Equipment
         /// <param name="equipment"></param>
         private void RemoveCurrentlyEquipping(IEquipment equipment)
         {
-            if (equipment.IsValid() && equipment != _currentlyEquippingItem.Equipment) return;
             _currentlyEquippingItem.gameObject.SetActive(false);
             _currentlyEquippingItem.Reset();
 

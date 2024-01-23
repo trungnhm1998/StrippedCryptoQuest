@@ -66,8 +66,7 @@ namespace CryptoQuest.Sagas.Equipment
                 ValuePerLvl = response.valuePerLv,
                 Stats = GetStats(response),
                 StoneSlots = response.slot,
-                AttachStones = response.attachStones.Select(stone => stone.id).ToList(),
-                AttachCharacterId = response.attachId
+                AttachStones = response.attachStones.Select(stone => stone.id).ToList()
             };
 
             _prefabDatabase.LoadDataByIdAsync(response.equipmentIdForeign).Completed += op =>

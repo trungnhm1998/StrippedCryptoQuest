@@ -485,6 +485,21 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4768439691846810225, guid: a7e34595eb289074e82e3c473c69226a, type: 3}
   m_PrefabInstance: {fileID: 568567565}
   m_PrefabAsset: {fileID: 0}
+--- !u!115 &568990012
+MonoScript:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  serializedVersion: 7
+  m_DefaultReferences: {}
+  m_Icon: {fileID: 0}
+  m_Type: 0
+  m_ExecutionOrder: 0
+  m_ClassName: StaticCoroutine/CoroutineHolder
+  m_Namespace: Proyecto26
+  m_AssemblyName: RestClient
 --- !u!1 &597479587 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7025888911609246116, guid: 7d6c35d654339cb489dfbf91416939fe, type: 3}
@@ -724,6 +739,7 @@ MonoBehaviour:
   - rid: 3779421944645943390
   - rid: 8439353519459795380
   - rid: 2752090048681213959
+  - rid: 8439353704550761468
   references:
     version: 2
     RefIds:
@@ -822,6 +838,12 @@ MonoBehaviour:
         _party: {fileID: 11400000, guid: 197a08cf381438a48875f05c90e104fb, type: 2}
         _defaultMainClass: {fileID: 11400000, guid: df24061ed8a2b8643b7df406d8114b50, type: 2}
         _trueBraveHeartUnit: {fileID: 11400000, guid: 9282d92220ed8114da6b95522ba3456e, type: 2}
+    - rid: 8439353704550761468
+      type: {class: EquipmentAndCharacterMapsLoader, ns: CryptoQuest.System.SaveSystem.Loaders, asm: IndiGames.CryptoQuest}
+      data:
+        _saveSystem: {fileID: 11400000, guid: 660bab7c7e2db6946b3a03dc73ffe40f, type: 2}
+        _inventory: {fileID: 11400000, guid: 4b4903dbe1c434d418a3afff1b12a3ba, type: 2}
+        _party: {fileID: 11400000, guid: 197a08cf381438a48875f05c90e104fb, type: 2}
 --- !u!1 &1120536256
 GameObject:
   m_ObjectHideFlags: 0
@@ -1332,6 +1354,50 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 2672996068429670175, guid: 85c3fb064c23fee4286a230979b447e6, type: 3}
   m_PrefabInstance: {fileID: 1647131038}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1749522069
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1749522071}
+  - component: {fileID: 1749522070}
+  m_Layer: 0
+  m_Name: Static Coroutine RestClient
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1749522070
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1749522069}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 568990012}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1749522071
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1749522069}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &11645016425568079
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1796,3 +1862,4 @@ SceneRoots:
   - {fileID: 1147492444}
   - {fileID: 1606290891}
   - {fileID: 1346349715}
+  - {fileID: 1749522071}
