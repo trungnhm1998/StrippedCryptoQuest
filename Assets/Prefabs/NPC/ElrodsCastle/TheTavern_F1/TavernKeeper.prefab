@@ -128,7 +128,7 @@ PrefabInstance:
     - target: {fileID: 855496539777480150, guid: efad7a9a1c23aa04aa442ae047f064ea, type: 3}
       propertyPath: _interacted.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
-      objectReference: {fileID: 7835769243085385028}
+      objectReference: {fileID: 7424257347612164978}
     - target: {fileID: 855496539777480150, guid: efad7a9a1c23aa04aa442ae047f064ea, type: 3}
       propertyPath: _interacted.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
       value: 1
@@ -139,11 +139,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 855496539777480150, guid: efad7a9a1c23aa04aa442ae047f064ea, type: 3}
       propertyPath: _interacted.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: TriggerQuest
+      value: ShowDialogue
       objectReference: {fileID: 0}
     - target: {fileID: 855496539777480150, guid: efad7a9a1c23aa04aa442ae047f064ea, type: 3}
       propertyPath: _interacted.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
-      value: CryptoQuest.Quest.Components.QuestTrigger, indi-games.crypto-quest
+      value: CryptoQuest.Character.DialogueProviders.YarnDialogueProvider, IndiGames.CryptoQuest
       objectReference: {fileID: 0}
     - target: {fileID: 1905012349106270483, guid: efad7a9a1c23aa04aa442ae047f064ea, type: 3}
       propertyPath: _actor
@@ -212,14 +212,14 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 7014187444642297253, guid: efad7a9a1c23aa04aa442ae047f064ea, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 7835769243085385028}
+      addedObject: {fileID: 7424257347612164978}
   m_SourcePrefab: {fileID: 100100000, guid: efad7a9a1c23aa04aa442ae047f064ea, type: 3}
 --- !u!1 &3250696166984131494 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7014187444642297253, guid: efad7a9a1c23aa04aa442ae047f064ea, type: 3}
   m_PrefabInstance: {fileID: 5497677580045161987}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &7835769243085385028
+--- !u!114 &7424257347612164978
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -228,12 +228,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 3250696166984131494}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3a8ea04cbd3e4be699f846255fde3b44, type: 3}
+  m_Script: {fileID: 11500000, guid: aa757523e0c144ec8cd33d7fa9a51452, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Quest>k__BackingField: {fileID: 0}
-  _triggerQuestEventChannel: {fileID: 11400000, guid: fdefe5ff6c97c9946a9e874eb074f93f, type: 2}
-  _yarnProjectConfig: {fileID: 11400000, guid: 277ae02c72aa6b340b09c0f7e2ca2c30, type: 2}
+  <YarnProjectConfig>k__BackingField: {fileID: 11400000, guid: 277ae02c72aa6b340b09c0f7e2ca2c30, type: 2}
+  <YarnNodeName>k__BackingField: ch001_q001_e011_in_tavern
 --- !u!4 &4289728840559094003 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8629883176367259376, guid: efad7a9a1c23aa04aa442ae047f064ea, type: 3}

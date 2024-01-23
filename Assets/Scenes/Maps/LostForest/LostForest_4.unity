@@ -445,37 +445,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8535778768834675998, guid: c9938e6f34205b34ab892461eea2f252, type: 3}
   m_PrefabInstance: {fileID: 624549581}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &730614209
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 730614210}
-  m_Layer: 0
-  m_Name: =====CUTSCENES=====
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &730614210
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 730614209}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &879490785
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1279,9 +1248,53 @@ PrefabInstance:
       value: ActorSpawner_Ch2_ChaseThiefForest
       objectReference: {fileID: 0}
     - target: {fileID: 7321532275945160269, guid: 1dc4c07452a21874ab1ee0d5216baa21, type: 3}
+      propertyPath: m_SceneBindings.Array.size
+      value: 179
+      objectReference: {fileID: 0}
+    - target: {fileID: 7321532275945160269, guid: 1dc4c07452a21874ab1ee0d5216baa21, type: 3}
+      propertyPath: m_SceneBindings.Array.data[163].key
+      value: 
+      objectReference: {fileID: 7126732773284114269, guid: 4c6313a8c6cc30b48978947d12fc0e2e, type: 2}
+    - target: {fileID: 7321532275945160269, guid: 1dc4c07452a21874ab1ee0d5216baa21, type: 3}
+      propertyPath: m_SceneBindings.Array.data[164].key
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7321532275945160269, guid: 1dc4c07452a21874ab1ee0d5216baa21, type: 3}
+      propertyPath: m_SceneBindings.Array.data[176].key
+      value: 
+      objectReference: {fileID: -4233680240680100398, guid: 4c6313a8c6cc30b48978947d12fc0e2e, type: 2}
+    - target: {fileID: 7321532275945160269, guid: 1dc4c07452a21874ab1ee0d5216baa21, type: 3}
+      propertyPath: m_SceneBindings.Array.data[177].key
+      value: 
+      objectReference: {fileID: -8849617185279051857, guid: 4c6313a8c6cc30b48978947d12fc0e2e, type: 2}
+    - target: {fileID: 7321532275945160269, guid: 1dc4c07452a21874ab1ee0d5216baa21, type: 3}
+      propertyPath: m_SceneBindings.Array.data[178].key
+      value: 
+      objectReference: {fileID: 1845914110012864668, guid: 4c6313a8c6cc30b48978947d12fc0e2e, type: 2}
+    - target: {fileID: 7321532275945160269, guid: 1dc4c07452a21874ab1ee0d5216baa21, type: 3}
       propertyPath: m_SceneBindings.Array.data[160].value
       value: 
       objectReference: {fileID: 6781508543145278570}
+    - target: {fileID: 7321532275945160269, guid: 1dc4c07452a21874ab1ee0d5216baa21, type: 3}
+      propertyPath: m_SceneBindings.Array.data[163].value
+      value: 
+      objectReference: {fileID: 6651087048253727313}
+    - target: {fileID: 7321532275945160269, guid: 1dc4c07452a21874ab1ee0d5216baa21, type: 3}
+      propertyPath: m_SceneBindings.Array.data[164].value
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7321532275945160269, guid: 1dc4c07452a21874ab1ee0d5216baa21, type: 3}
+      propertyPath: m_SceneBindings.Array.data[176].value
+      value: 
+      objectReference: {fileID: 6651087048253727311}
+    - target: {fileID: 7321532275945160269, guid: 1dc4c07452a21874ab1ee0d5216baa21, type: 3}
+      propertyPath: m_SceneBindings.Array.data[177].value
+      value: 
+      objectReference: {fileID: 6651087048253727312}
+    - target: {fileID: 7321532275945160269, guid: 1dc4c07452a21874ab1ee0d5216baa21, type: 3}
+      propertyPath: m_SceneBindings.Array.data[178].value
+      value: 
+      objectReference: {fileID: 6651087048253727314}
     - target: {fileID: 7321532275945160269, guid: 1dc4c07452a21874ab1ee0d5216baa21, type: 3}
       propertyPath: m_ExposedReferences.m_References.Array.data[7].second
       value: 
@@ -1335,6 +1348,26 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1dc4c07452a21874ab1ee0d5216baa21, type: 3}
+--- !u!1 &6651087048253727311 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7801842280942850050, guid: 1dc4c07452a21874ab1ee0d5216baa21, type: 3}
+  m_PrefabInstance: {fileID: 6651087048253727310}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &6651087048253727312 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 2894023764165070207, guid: 1dc4c07452a21874ab1ee0d5216baa21, type: 3}
+  m_PrefabInstance: {fileID: 6651087048253727310}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6651087048253727313 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1222663639694352378, guid: 1dc4c07452a21874ab1ee0d5216baa21, type: 3}
+  m_PrefabInstance: {fileID: 6651087048253727310}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &6651087048253727314 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 4765325715003553160, guid: 1dc4c07452a21874ab1ee0d5216baa21, type: 3}
+  m_PrefabInstance: {fileID: 6651087048253727310}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6781508543145278568
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1456,5 +1489,4 @@ SceneRoots:
   - {fileID: 303308142}
   - {fileID: 2032345175}
   - {fileID: 276946262}
-  - {fileID: 730614210}
   - {fileID: 596281089}
