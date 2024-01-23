@@ -68,9 +68,7 @@ namespace CryptoQuest.System.Cheat
 
         private void RequestDeleteAllCompletedQuests(CommandArg[] args)
         {
-            _saveData.InProgressQuest.Clear();
-            _saveData.CompletedQuests.Clear();
-
+            _saveData.ClearAll();
             Debug.Log($"<color=green>Deleted all completed quests</color>");
         }
 
