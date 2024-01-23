@@ -23,6 +23,7 @@ namespace CryptoQuest.Battle.Components.EnemyComponents
         [SerializeField] private SkillTargetType _singleHeroChannel;
         [SerializeField] private SkillTargetType _allHeroChannel;
         [SerializeField] private SkillTargetType _allAllyChannel;
+        [SerializeField] private SkillTargetType _targetSelfChannel;
         private CommandExecutor _commandExecutor;
         private IPartyController _heroParty;
         private TinyMessageSubscriptionToken _roundStartedEvent;
@@ -54,6 +55,7 @@ namespace CryptoQuest.Battle.Components.EnemyComponents
             _allHeroChannel.EventRaised += TargetAllHero;
             _singleHeroChannel.EventRaised += TargetSingleHero;
             _allAllyChannel.EventRaised += TargetAllEnemy;
+            _targetSelfChannel.EventRaised += TargetSelf;
         }
 
         private void UnRegistSkillEvents()
@@ -61,6 +63,7 @@ namespace CryptoQuest.Battle.Components.EnemyComponents
             _allHeroChannel.EventRaised -= TargetAllHero;
             _singleHeroChannel.EventRaised -= TargetSingleHero;
             _allAllyChannel.EventRaised -= TargetAllEnemy;
+            _targetSelfChannel.EventRaised -= TargetSelf;
         }
 
         private void TargetAllEnemy(CastSkillAbility skill)
@@ -81,6 +84,12 @@ namespace CryptoQuest.Battle.Components.EnemyComponents
         private void TargetSingleHero(CastSkillAbility skill)
         {
             var castSkillCommand = new CastSkillCommand(_enemyBehaviour, skill, _enemyBehaviour.Targeting.Target);
+            _commandExecutor.SetCommand(castSkillCommand);
+        }
+
+        private void TargetSelf(CastSkillAbility skill)
+        {
+            var castSkillCommand = new CastSkillCommand(_enemyBehaviour, skill, _enemyBehaviour);
             _commandExecutor.SetCommand(castSkillCommand);
         }
     }
