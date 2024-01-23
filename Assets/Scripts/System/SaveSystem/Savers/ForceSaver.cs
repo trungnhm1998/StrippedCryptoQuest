@@ -16,7 +16,7 @@ namespace CryptoQuest.System.SaveSystem.Savers
 
         public override void UnregistEvents()
         {
-            _forceSaveEvent.EventRaised += Save;
+            _forceSaveEvent.EventRaised -= Save;
         }
 
         private void Save()
