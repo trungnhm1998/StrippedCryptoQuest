@@ -54,5 +54,12 @@ namespace CryptoQuest.Quest
                 Changed?.Invoke();
             }
         }
+
+        public void ClearAll()
+        {
+            InProgressQuest.Clear();
+            CompletedQuests.Clear();
+            Changed?.Invoke();
+        }
     }
 }
