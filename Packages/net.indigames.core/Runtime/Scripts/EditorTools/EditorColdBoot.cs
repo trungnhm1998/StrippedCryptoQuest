@@ -10,9 +10,9 @@ namespace IndiGames.Core.EditorTools
 {
     public class EditorColdBoot : MonoBehaviour
     {
-#if UNITY_EDITOR
         public SceneScriptableObject ThisScene => _thisSceneSO;
         [SerializeField] private SceneScriptableObject _thisSceneSO;
+#if UNITY_EDITOR
         [SerializeField] private SceneScriptableObject _globalManagersSO;
         [SerializeField] private SceneAssetReference[] _additionalScenes;
 
