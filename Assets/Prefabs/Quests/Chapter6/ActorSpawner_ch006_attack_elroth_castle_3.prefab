@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1693744066638695113}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -13.577082, y: 18.420395, z: 0.030725086}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -48,8 +48,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _onSceneLoadedEventChannel: {fileID: 11400000, guid: b8b96e43d21a7bf4c96df4cb83c2b764, type: 2}
   _spawnPoint: {fileID: 3666198503789068268}
-  _actorDef: {fileID: 11400000, guid: 66e6d84d022ed1d4da216092042a994d, type: 2}
-  _actorSpawnSettingSO: {fileID: 0}
+  _actorDef: {fileID: 11400000, guid: ea3d3b58cd3a7bd429bc1b069a7c443d, type: 2}
+  _actorSpawnSettingSO: {fileID: 11400000, guid: ca316ac6f0c59f24589c23bd7b6e62c2, type: 2}
   _actorDeSpawnSettingSO: {fileID: 11400000, guid: f3bcfb783c72db049a07b359d4793ef6, type: 2}
 --- !u!1 &8839247970842289669
 GameObject:
@@ -193,6 +193,18 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8239929161965676886, guid: 168f0d1ab484bba4992d10314697410c, type: 3}
+      propertyPath: m_SceneBindings.Array.size
+      value: 339
+      objectReference: {fileID: 0}
+    - target: {fileID: 8239929161965676886, guid: 168f0d1ab484bba4992d10314697410c, type: 3}
+      propertyPath: m_SceneBindings.Array.data[337].key
+      value: 
+      objectReference: {fileID: -7563203805094362772, guid: c79ff3b4505a79a45b04e1f006ba459e, type: 2}
+    - target: {fileID: 8239929161965676886, guid: 168f0d1ab484bba4992d10314697410c, type: 3}
+      propertyPath: m_SceneBindings.Array.data[338].key
+      value: 
+      objectReference: {fileID: -6954361132813157996, guid: c79ff3b4505a79a45b04e1f006ba459e, type: 2}
     - target: {fileID: 8239929161965676886, guid: 168f0d1ab484bba4992d10314697410c, type: 3}
       propertyPath: m_SceneBindings.Array.data[316].value
       value: 
