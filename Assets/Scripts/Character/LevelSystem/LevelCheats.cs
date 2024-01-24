@@ -1,4 +1,5 @@
 using CommandTerminal;
+using CryptoQuest.Battle.Actions;
 using CryptoQuest.Battle.Components;
 using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.System;
@@ -47,6 +48,8 @@ namespace CryptoQuest.Character.LevelSystem
 
             if (!hero.TryGetComponent<LevelSystemBehavior>(out var levelComponent)) return;
             levelComponent.AddExp(expToAdd);
+            
+            ActionDispatcher.Dispatch(new ShowLevelUpAction());
         }
     }
 }
