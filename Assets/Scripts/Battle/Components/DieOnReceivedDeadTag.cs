@@ -9,11 +9,10 @@ namespace CryptoQuest.Battle.Components
 {
     public class DieOnReceivedDeadTag : CharacterComponentBase
     {
-        private TagSystemBehaviour _tagSystem;
+        private TagSystemBehaviour _tagSystem => Character.AbilitySystem.TagSystem;
 
         protected override void OnInit()
         {
-            Character.TryGetComponent(out _tagSystem);
             _tagSystem.TagAdded += DieWhenDeadTagAdded;
         }
 

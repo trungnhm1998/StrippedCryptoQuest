@@ -18,7 +18,10 @@ namespace CryptoQuest.Battle.Components
             Character.TurnEnded += ClearFlags;
         }
 
-        protected override void OnReset() => Character.TurnEnded -= ClearFlags;
+        private void OnDestroy()
+        {
+            Character.TurnEnded -= ClearFlags;
+        }
 
         private void ClearFlags()
         {
