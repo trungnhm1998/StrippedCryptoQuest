@@ -1,4 +1,5 @@
 using System;
+using CryptoQuest.Battle.Actions;
 using CryptoQuest.Character.LevelSystem;
 using CryptoQuest.Inventory.Actions;
 using IndiGames.Core.EditorTools.Attributes.ReadOnlyAttribute;
@@ -37,6 +38,7 @@ namespace CryptoQuest.Battle.Components
         /// I set this to true because If character already have exp      
         /// the hero level is not being updated and UI will not correct
         private bool _needToRecalculateLevel = true;
+        private bool _isAddedExp = false;
 
         private HeroBehaviour _character;
         private AttributeSystemBehaviour _attributeSystem;
@@ -58,6 +60,7 @@ namespace CryptoQuest.Battle.Components
             }
 
             _needToRecalculateLevel = true;
+            _isAddedExp = true;
 
             _attributeSystem.TryGetAttributeValue(_expBuffAttribute, out var expBuffValue);
 
@@ -86,12 +89,18 @@ namespace CryptoQuest.Battle.Components
                 OnCharacterLevelUp();
             }
 
+            _isAddedExp = false;
             _lastLevel = _level;
 
             return _level;
         }
 
-        private void OnCharacterLevelUp() => ActionDispatcher.Dispatch(new HeroLeveledUpAction(_character));
+        private void OnCharacterLevelUp()
+        {
+            ActionDispatcher.Dispatch(new HeroLeveledUpAction(_character));
+            ActionDispatcher.Dispatch(new LevelUpAfterAddExpAction(_character, _isAddedExp));
+        }
+
         private bool IsMaxedLevel => Level == _statsProvider.Stats.MaxLevel;
 
         public int GetNextLevelRequireExp()

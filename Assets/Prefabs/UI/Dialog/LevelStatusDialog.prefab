@@ -32,7 +32,6 @@ RectTransform:
   m_Children:
   - {fileID: 4381432382050142843}
   m_Father: {fileID: 5334501618811952861}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -109,7 +108,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6869750673296193549}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -231,7 +229,6 @@ RectTransform:
   m_Children:
   - {fileID: 710241958827761902}
   m_Father: {fileID: 5334501618811952861}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -320,8 +317,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: CryptoQuest.UIRewardDialog, indi-games.crypto-quest
+      - m_Target: {fileID: 5862169707397844982}
+        m_TargetAssemblyTypeName: CryptoQuest.UI.Dialogs.LevelStatusDialog.UILevelStatusDialog,
+          IndiGames.CryptoQuest
         m_MethodName: OnCloseButtonPressed
         m_Mode: 1
         m_Arguments:
@@ -332,7 +330,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  IsSelected: 0
 --- !u!1 &3426673102168637838
 GameObject:
   m_ObjectHideFlags: 0
@@ -364,7 +361,6 @@ RectTransform:
   - {fileID: 1797910802491009271}
   - {fileID: 2911129901173468591}
   m_Father: {fileID: 8759938187778997364}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -403,7 +399,6 @@ RectTransform:
   m_Children:
   - {fileID: 4327092780162310320}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -425,7 +420,6 @@ MonoBehaviour:
   _inputMediator: {fileID: 11400000, guid: 1fb61cdb72f0a484f8e4db68e2011977, type: 2}
   _defaultSelection: {fileID: 0}
   _currentSelection: {fileID: 0}
-  _mouseSelection: {fileID: 0}
 --- !u!114 &5862169707397844982
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -448,18 +442,6 @@ MonoBehaviour:
   _defaultSelectButton: {fileID: 4899500312240695118}
   _levelStatusTextPrefab: {fileID: 3487835041671616854, guid: 6f497d390471eac45ac4b5e6635c1a19, type: 3}
   _levelStatusesContainerTransform: {fileID: 4381432382050142843}
-  _noLevelUpTargetString:
-    m_TableReference:
-      m_TableCollectionName: GUID:11dbab3c4ff052d48b61c8c89ad19c61
-    m_TableEntryReference:
-      m_KeyId: 0
-      m_Key: 
-    m_FallbackState: 0
-    m_WaitForCompletion: 0
-    m_LocalVariables: []
-  references:
-    version: 2
-    RefIds: []
 --- !u!1 &4582801244802021442
 GameObject:
   m_ObjectHideFlags: 0
@@ -490,7 +472,6 @@ RectTransform:
   m_Children:
   - {fileID: 553360038725695286}
   m_Father: {fileID: 4327092780162310320}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -527,7 +508,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7830829687773181077}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -590,7 +570,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2911129901173468591}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -650,7 +629,6 @@ RectTransform:
   - {fileID: 7830829687773181077}
   - {fileID: 6869750673296193549}
   m_Father: {fileID: 1797910802491009271}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -715,7 +693,6 @@ RectTransform:
   m_Children:
   - {fileID: 5334501618811952861}
   m_Father: {fileID: 4327092780162310320}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}

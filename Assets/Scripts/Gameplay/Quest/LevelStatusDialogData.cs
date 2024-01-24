@@ -9,5 +9,16 @@ namespace CryptoQuest.Gameplay.Quest
     public class LevelStatusDialogData : ScriptableObject
     {
         [field: SerializeField] public List<LocalizedString> TargetTextList { get; private set; }
+        public bool IsValid() => TargetTextList is { Count: > 0 };
+        
+        public void TargetIsLevelUp(LocalizedString target)
+        {
+            TargetTextList.Add(target);
+        }
+
+        public void ClearListTarget()
+        {
+            TargetTextList.Clear();
+        }
     }
 }
