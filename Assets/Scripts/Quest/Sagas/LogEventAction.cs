@@ -32,4 +32,8 @@ namespace CryptoQuest.Quest.Sagas
             QuestName = quest;
         }
     }
+
+    public class QuestCleanAllAction : ActionBase
+    {
+    }
 }

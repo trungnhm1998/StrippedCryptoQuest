@@ -4,6 +4,9 @@ using CommandTerminal;
 using CryptoQuest.Quest;
 using CryptoQuest.Quest.Authoring;
 using CryptoQuest.Quest.Components;
+using CryptoQuest.Quest.Sagas;
+using CryptoQuest.System.SaveSystem;
+using IndiGames.Core.Events;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -14,9 +17,8 @@ namespace CryptoQuest.System.Cheat
     {
         [SerializeField] private QuestManager _questManager;
         [SerializeField] private QuestSaveSO _saveData;
-
-        [FormerlySerializedAs("allQuest")] [SerializeField]
-        private List<QuestSO> _allQuest = new();
+        [SerializeField] private SaveSystemSO _saveSystem;
+        [SerializeField] private List<QuestSO> _allQuest = new();
 
         private Dictionary<string, QuestSO> _questDict = new();
 
@@ -68,7 +70,8 @@ namespace CryptoQuest.System.Cheat
 
         private void RequestDeleteAllCompletedQuests(CommandArg[] args)
         {
-            _saveData.ClearAll();
+            _saveSystem.SaveData.Objects.RemoveAll(keyValue => keyValue.Key == "QuestSave");
+            ActionDispatcher.Dispatch(new QuestCleanAllAction());
             Debug.Log($"<color=green>Deleted all completed quests</color>");
         }
 
