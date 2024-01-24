@@ -15,13 +15,22 @@ namespace CryptoQuest.ChangeClass.State
         {
             _animator = animator;
             _stateController = _animator.GetComponent<ChangeClassStateController>();
-            _stateController.ConfirmMaterial.PreviewData();
             _stateController.DialogController.Dialogue.Hide();
             _stateController.DialogController.ChoiceDialog
                 .SetButtonsEvent(YesButtonPressed, NoButtonPressed)
                 .SetMessage(_message)
                 .Show();
+            ShowPreviewData();
         }
+
+        private void ShowPreviewData()
+        {
+            if (_stateController.ClassBerserkerControllerMaterial.IsValid)
+                _stateController.ConfirmMaterial.PreviewClassBerserkerData();
+            else
+                _stateController.ConfirmMaterial.PreviewData();
+        }
+
         private void YesButtonPressed()
         {
             _stateController.DialogController.ChoiceDialog.Hide();

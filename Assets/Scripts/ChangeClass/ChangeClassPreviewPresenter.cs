@@ -3,19 +3,23 @@ using System.Collections.Generic;
 using CryptoQuest.ChangeClass.API;
 using CryptoQuest.ChangeClass.View;
 using CryptoQuest.Input;
+using IndiGames.Core.Events;
+using TinyMessenger;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
+using NotImplementedException = System.NotImplementedException;
 
 namespace CryptoQuest.ChangeClass
 {
     public class ChangeClassPreviewPresenter : MonoBehaviour
     {
         [SerializeField] private ChangeClassSyncData _syncData;
-        [SerializeField] private MerchantsInputManager _input;
         [SerializeField] private PreviewCharacterAPI _previewCharacterAPI;
         [SerializeField] private ChangeNewClassAPI _changeNewClassAPI;
+        [SerializeField] private ChangeNewClassBerserkerAPI _changeClassBerserkerAPI;
         [SerializeField] private ChangeClassPresenter _changeClassPresenter;
         [SerializeField] private CalculatorCharacterStats _calculatorFirstCharacterStats;
         [SerializeField] private CalculatorCharacterStats _calculatorSecondCharacterStats;
@@ -26,30 +30,41 @@ namespace CryptoQuest.ChangeClass
         [SerializeField] private InitializeNewCharacter _initializeCharacter;
         public UnityAction<UICharacter> FirstClassMaterialEvent;
         public UnityAction<UICharacter> LastClassMaterialEvent;
-        private UICharacter _firstClassMaterial;
-        private UICharacter _lastClassMaterial;
+        public UICharacter BaseUnitId1{ get; private set; }
+        public UICharacter BaseUnitId2{ get; private set; }
+        public UICharacter BerserkerMaterial { get; private set; }
+        private TinyMessageSubscriptionToken _changeClassRequestSuccess;
         public List<int> _materialsId { get; private set; } = new();
 
         private void OnEnable()
         {
             FirstClassMaterialEvent += GetFirstClassMaterial;
             LastClassMaterialEvent += GetLastClassMaterial;
+            _changeClassRequestSuccess = ActionDispatcher.Bind<ChangeNewClassDataRespond>(HandleChangeClassSuccess);
         }
 
         private void OnDisable()
         {
             FirstClassMaterialEvent -= GetFirstClassMaterial;
             LastClassMaterialEvent -= GetLastClassMaterial;
+            ActionDispatcher.Unbind(_changeClassRequestSuccess);
+        }
+
+        private void HandleChangeClassSuccess(ChangeNewClassDataRespond obj)
+        {
+            _syncData.SetNewClassData(obj.ResponseData, _previewNewClassStatus);
+            _initializeCharacter.GetStats(obj.ResponseData);
+            GetDefaultExp(_previewNewClassStatus);
         }
 
         private void GetFirstClassMaterial(UICharacter character)
         {
-            _firstClassMaterial = character;
+            BaseUnitId1 = character;
         }
 
         private void GetLastClassMaterial(UICharacter character)
         {
-            _lastClassMaterial = character;
+            BaseUnitId2 = character;
         }
 
         public void FilterClassMaterial(UICharacter character, UIClassMaterial classMaterial)
@@ -98,23 +113,44 @@ namespace CryptoQuest.ChangeClass
             GetClassMaterialId();
         }
 
+        public void SetBerserkerMaterial(UICharacter classMaterial)
+        {
+            BerserkerMaterial = classMaterial;
+        }
+
+        public void PreviewClassBerserkerData()
+        {
+            StartCoroutine(PreviewClassBerserker());
+        }
+
         private void GetClassMaterialId()
         {
             _materialsId.Clear();
-            _materialsId.Add(_firstClassMaterial.Class.Id);
-            _materialsId.Add(_lastClassMaterial.Class.Id);
+            _materialsId.Add(BaseUnitId1.Class.Id);
+            _materialsId.Add(BaseUnitId2.Class.Id);
         }
 
         private IEnumerator PreviewNewClassData()
         {
-            var avatar = _syncData.Avatar(_firstClassMaterial, _changeClassPresenter.Occupation);
-            _previewCharacterAPI.LoadDataToPreviewCharacter(_firstClassMaterial, _lastClassMaterial);
+            var avatar = _syncData.Avatar(BaseUnitId1, _changeClassPresenter.Occupation);
+            StartCoroutine(_previewCharacterAPI.CoPreviewNewClass(BaseUnitId1, BaseUnitId2));
             CheckElementImage();
             yield return new WaitUntil(() => _previewCharacterAPI.IsFinishFetchData);
-            _previewNewClass.PreviewCharacter(_previewCharacterAPI.Data, _firstClassMaterial, avatar,
+            _previewNewClass.PreviewCharacter(_previewCharacterAPI.Data, BaseUnitId1, avatar,
                 CheckElementImage());
-            _calculatorFirstCharacterStats.CalculatorStats(_firstClassMaterial);
-            _calculatorSecondCharacterStats.CalculatorStats(_lastClassMaterial);
+            _calculatorFirstCharacterStats.CalculatorStats(BaseUnitId1);
+            _calculatorSecondCharacterStats.CalculatorStats(BaseUnitId2);
+            GetDefaultExp(_previewNewClass);
+        }
+
+        private IEnumerator PreviewClassBerserker()
+        {
+            var avatar = _syncData.Avatar(BerserkerMaterial, _changeClassPresenter.Occupation);
+            StartCoroutine(_previewCharacterAPI.CoPreviewClassBerserker(BerserkerMaterial));
+            yield return new WaitUntil(() => _previewCharacterAPI.IsFinishFetchData);
+            _previewNewClass.PreviewCharacter(_previewCharacterAPI.Data, BerserkerMaterial, avatar,
+                true);
+            _calculatorFirstCharacterStats.CalculatorStats(BerserkerMaterial);
             GetDefaultExp(_previewNewClass);
         }
 
@@ -123,25 +159,6 @@ namespace CryptoQuest.ChangeClass
             var requiredExp = _calculatorFirstCharacterStats.GetRequiredExp(0);
             var currentExp = _calculatorFirstCharacterStats.GetCurrentExp(0);
             character.UpdateExpBar(currentExp, requiredExp);
-        }
-
-        public void ChangeClass()
-        {
-            StartCoroutine(ChangeNewClassAPI());
-        }
-
-        private IEnumerator ChangeNewClassAPI()
-        {
-            _input.DisableInput();
-            _changeNewClassAPI.ChangeNewClassData(_firstClassMaterial, _lastClassMaterial,
-                _changeClassPresenter.Occupation);
-            yield return new WaitUntil(() => _changeNewClassAPI.IsFinishFetchData);
-            _input.EnableInput();
-
-            if (_changeNewClassAPI.Data == null) yield break;
-            _syncData.SetNewClassData(_changeNewClassAPI.Data, _previewNewClassStatus);
-            _initializeCharacter.GetStats(_changeNewClassAPI.Data);
-            GetDefaultExp(_previewNewClassStatus);
         }
 
         public void ShowDetail(UICharacter character)
@@ -163,7 +180,7 @@ namespace CryptoQuest.ChangeClass
 
         private bool CheckElementImage()
         {
-            return _firstClassMaterial.Class.Elemental == _lastClassMaterial.Class.Elemental;
+            return BaseUnitId1.Class.Elemental == BaseUnitId2.Class.Elemental;
         }
     }
 }

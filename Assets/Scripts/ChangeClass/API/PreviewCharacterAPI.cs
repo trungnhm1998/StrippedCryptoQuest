@@ -1,8 +1,7 @@
 using System;
-using System.Net;
+using System.Collections;
 using CryptoQuest.ChangeClass.View;
 using CryptoQuest.Networking;
-using CryptoQuest.System;
 using CryptoQuest.UI.Actions;
 using IndiGames.Core.Common;
 using IndiGames.Core.Events;
@@ -24,38 +23,44 @@ namespace CryptoQuest.ChangeClass.API
             public string BaseUnitId2;
         }
 
-        private IRestClient _restAPINetworkController;
+        public struct ClassBerserkerBody
+        {
+            [JsonProperty("baseUnitId1")]
+            public string BaseUnitId;
+        }
+
         public bool IsFinishFetchData { get; private set; }
 
         public PreviewCharacter Data { get; private set; }
 
-        public void LoadDataToPreviewCharacter(UICharacter firstClassMaterial, UICharacter lastClassMaterial)
+        public IEnumerator CoPreviewNewClass(UICharacter firstClassMaterial, UICharacter lastClassMaterial)
         {
             ActionDispatcher.Dispatch(new ShowLoading());
             IsFinishFetchData = false;
-            _restAPINetworkController = ServiceProvider.GetService<IRestClient>();
-            _restAPINetworkController
+            var restClient = ServiceProvider.GetService<IRestClient>();
+            var op = restClient
                 .WithBody(new Body { BaseUnitId1 = firstClassMaterial.Class.Id.ToString(), BaseUnitId2 = lastClassMaterial.Class.Id.ToString() })
                 .Post<PreviewCharacterData>(APIChangeClass.PREVIEW_NEW_CHARACTER)
-                .Subscribe(PreviewNewCharacter, OnGetNewClassFailed, OnGetNewClassSuccess);
-        }
-
-        private void PreviewNewCharacter(PreviewCharacterData response)
-        {
-            if (response.code != (int)HttpStatusCode.OK) return;
-            Data = response.data;
-        }
-
-        private void OnGetNewClassFailed(Exception obj)
-        {
-            Debug.Log($"Preview New Character::Load failed : {obj.Message}");
+                .ToYieldInstruction();
+            yield return op;
+            
+            Data = op.Result.data;
             IsFinishFetchData = true;
             ActionDispatcher.Dispatch(new ShowLoading(false));
         }
 
-        private void OnGetNewClassSuccess()
+        public IEnumerator CoPreviewClassBerserker(UICharacter characterData)
         {
-            Debug.Log($"Preview New Character::Load Success");
+            ActionDispatcher.Dispatch(new ShowLoading());
+            IsFinishFetchData = false;
+            var restClient = ServiceProvider.GetService<IRestClient>();
+            var op = restClient
+                .WithBody(new ClassBerserkerBody { BaseUnitId = characterData.Class.Id.ToString() })
+                .Post<PreviewCharacterData>(APIChangeClass.PREVIEW_CLASS_BERSERKER)
+                .ToYieldInstruction();
+            yield return op;
+            
+            Data = op.Result.data;
             IsFinishFetchData = true;
             ActionDispatcher.Dispatch(new ShowLoading(false));
         }

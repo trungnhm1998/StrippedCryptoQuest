@@ -9,6 +9,7 @@ namespace CryptoQuest.ChangeClass.State
     {
         [field: SerializeField] public ChangeClassDialogController DialogController { get; private set; }
         [field: SerializeField] public ChangeClassPreviewPresenter ConfirmMaterial { get; private set; }
+        [field: SerializeField] public ClassBerserkerController ClassBerserkerControllerMaterial { get; private set; }
         [field: SerializeField] public MerchantsInputManager Input { get; private set; }
         [field: SerializeField] public ChangeClassPresenter Presenter { get; private set; }
         [field: SerializeField] public InitializeNewCharacter Character { get; private set; }

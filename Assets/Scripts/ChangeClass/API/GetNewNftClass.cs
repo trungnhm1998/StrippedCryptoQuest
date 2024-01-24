@@ -1,19 +1,38 @@
+using CryptoQuest.ChangeClass.View;
 using IndiGames.Core.Events;
 
 namespace CryptoQuest.ChangeClass.API
 {
     public class GetNewNftClass : ActionBase
     {
-        public bool ForceRefresh { get; set; } = false;
+        public int BaseUnitId1;
+        public int BaseUnitId2;
+        public UIOccupation Occupation;
+        public GetNewNftClass(int baseUnitId1, int baseUnitId2, UIOccupation occupation)
+        {
+            BaseUnitId1 = baseUnitId1;
+            BaseUnitId2 = baseUnitId2;
+            Occupation = occupation;
+        }
     }
-
-    public class GetMockNftClassData : ActionBase
+    public class GetNewNftClassBerserker : ActionBase
     {
-        public bool ForceRefresh { get; set; } = false;
+        public int BaseUnitId;
+
+        public GetNewNftClassBerserker(int baseId)
+        {
+            BaseUnitId = baseId;
+        }
     }
 
-    public class GetNftClassesSucceed : ActionBase { }
+    public class ChangeNewClassDataRespond : ActionBase
+    {
+        public NewCharacter ResponseData;
 
-    public class GetNftClassesFailed : ActionBase { }
+        public ChangeNewClassDataRespond(NewCharacter response)
+        {
+            ResponseData = response;
+        }
+    }
 
 }

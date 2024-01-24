@@ -28,14 +28,20 @@ namespace CryptoQuest.ChangeClass.State
             _input.CancelEvent += ExitState;
             _input.InteractEvent += ShowDetail;
             _input.NavigateEvent += HideDetail;
-            
-            _firstClassMaterial = _stateController.Presenter.FirstClassMaterials;
-            _secondClassMaterial = _stateController.Presenter.SecondClassMaterials;
-            
-            _stateController.Presenter.EnableClassInteractable(false);
-            _stateController.ConfirmMaterial.EnableButtonInteractable(true, _firstClassMaterial);
+
             _stateController.DialogController.Dialogue
                 .SetMessage(_message).Show();
+            EnableButtonInteractable();
+        }
+
+        private void EnableButtonInteractable()
+        {
+            _firstClassMaterial = _stateController.ClassBerserkerControllerMaterial.IsValid
+                ? _stateController.ClassBerserkerControllerMaterial.BerserkerClassMaterials
+                : _stateController.Presenter.FirstClassMaterials;
+            _secondClassMaterial = _stateController.Presenter.SecondClassMaterials;
+            _stateController.Presenter.EnableClassInteractable(false);
+            _stateController.ConfirmMaterial.EnableButtonInteractable(true, _firstClassMaterial);
         }
 
         private void ShowDetail()
@@ -59,8 +65,15 @@ namespace CryptoQuest.ChangeClass.State
 
         private void SelectedClassMaterial()
         {
-            if (_firstClassMaterial.ListClassCharacter.Count == 0 || _secondClassMaterial.ListClassCharacter.Count == 0) return;
-            
+            if (_stateController.ClassBerserkerControllerMaterial.IsValid)
+            {
+                SelectClassBerserkerMaterial();
+                return;
+            }
+
+            if (_firstClassMaterial.ListClassCharacter.Count == 0 ||
+                _secondClassMaterial.ListClassCharacter.Count == 0) return;
+
             var currentCharacter = EventSystem.current.currentSelectedGameObject.GetComponent<UICharacter>();
 
             switch (_index)
@@ -70,14 +83,22 @@ namespace CryptoQuest.ChangeClass.State
                     _stateController.ConfirmMaterial.FilterClassMaterial(currentCharacter, _secondClassMaterial);
                     break;
                 case 1:
-                    _stateController.ConfirmMaterial.SetLastClassMaterial(_secondClassMaterial,currentCharacter);
+                    _stateController.ConfirmMaterial.SetLastClassMaterial(_secondClassMaterial, currentCharacter);
                     ChangeState();
                     break;
                 default:
                     Debug.LogError("[ChangeClass]:: unknown class material index");
                     break;
             }
+
             _index++;
+        }
+
+        private void SelectClassBerserkerMaterial()
+        {
+            var currentCharacter = EventSystem.current.currentSelectedGameObject.GetComponent<UICharacter>();
+            _stateController.ConfirmMaterial.SetBerserkerMaterial(currentCharacter);
+            ChangeState();
         }
 
         private void ChangeState()

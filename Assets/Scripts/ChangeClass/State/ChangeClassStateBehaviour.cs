@@ -33,7 +33,7 @@ namespace CryptoQuest.ChangeClass.State
 
         private void ChangeState()
         {
-            if (!_stateController.Presenter.IsValid) return;
+            if (!_stateController.Presenter.IsValid && !_stateController.ClassBerserkerControllerMaterial.IsValid) return;
             _animator.SetTrigger(_submit);
             _stateController.Presenter.SetSelectedClass(true);
         }
