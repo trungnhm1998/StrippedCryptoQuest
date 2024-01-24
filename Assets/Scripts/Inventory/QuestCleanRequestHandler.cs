@@ -1,9 +1,11 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using CryptoQuest.API;
 using CryptoQuest.Networking;
 using CryptoQuest.Quest;
 using CryptoQuest.Quest.Sagas;
+using CryptoQuest.System.SaveSystem;
 using IndiGames.Core.Common;
 using IndiGames.Core.Events;
 using UniRx;
@@ -24,30 +26,27 @@ namespace CryptoQuest.Inventory
         public long time;
     }
 
-    public class QuestCleanRequestHandler : SagaBase<QuestCleanAllAction>
+    public class QuestCleanRequestHandler : CoSagaBase<QuestCleanAllAction>
     {
         [SerializeField] private QuestSaveSO _saveData;
+        [SerializeField] private SaveSystemSO _saveSystem;
 
-        protected override void HandleAction(QuestCleanAllAction ctx)
+        protected override IEnumerator HandleActionCoroutine(QuestCleanAllAction ctx)
         {
             var restClient = ServiceProvider.GetService<IRestClient>();
-            restClient.WithoutDispactError()
+
+            var op = restClient
+                .WithoutDispactError()
                 .WithHeaders(new Dictionary<string, string> { { "DEBUG_KEY", Profile.DEBUG_KEY } })
-                .Get<QuestCleanResponse>(Quests.QUEST_DEBUG_CLEAN_ALL)
-                .Subscribe(OnSucceed, OnFailed);
-        }
+                .Request<QuestCleanResponse>(ERequestMethod.DELETE, Quests.QUEST_DEBUG_CLEAN_ALL)
+                .ToYieldInstruction();
 
-        private void OnSucceed(QuestCleanResponse response)
-        {
-            if (!response.success) return;
+            yield return op;
 
+            _saveSystem.SaveData.Objects.RemoveAll(keyValue => keyValue.Key == "QuestSave");
             _saveData.ClearAll();
-            Debug.Log($"<color=green>QuestCleanRequestHandler.OnSucceed</color> {response.message}");
-        }
 
-        private void OnFailed(Exception e)
-        {
-            Debug.Log($"<color=red>QuestCleanRequestHandler.OnFailed</color> {e.Message}");
+            Debug.Log($"<color=green>QuestCleanRequestHandler.OnSucceed</color> {op.Result.message}");
         }
     }
 }
