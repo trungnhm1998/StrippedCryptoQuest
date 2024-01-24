@@ -12,11 +12,20 @@ using PluginRestClient = Proyecto26.RestClient;
 
 namespace CryptoQuest.Networking
 {
+    public enum ERequestMethod
+    {
+        GET = 0,
+        POST = 1,
+        PUT = 2,
+        DELETE = 3,
+    }
+
     public interface IRestClient
     {
         public IObservable<TResponse> Post<TResponse>(string path);
         public IObservable<TResponse> Get<TResponse>(string path);
         public IObservable<TResponse> Put<TResponse>(string path);
+        public IObservable<TResponse> Request<TResponse>(ERequestMethod method, string path);
         public IRestClient WithParam(string key, string value);
         public IRestClient WithParams(Dictionary<string, string> parameters);
         public IRestClient WithBody(object body);
@@ -77,6 +86,20 @@ namespace CryptoQuest.Networking
             {
                 var generateRequest = GenerateRequest(path);
                 PluginRestClient.Put<TResponse>(generateRequest)
+                    .Then(observer.OnNext)
+                    .Catch(observer.OnError)
+                    .Finally(observer.OnCompleted);
+            });
+        }
+
+        public IObservable<TResponse> Request<TResponse>(ERequestMethod method, string path)
+        {
+            return CreateRequest<TResponse>(observer =>
+            {
+                var generateRequest = GenerateRequest(path);
+                generateRequest.Method = method.ToString();
+
+                PluginRestClient.Request<TResponse>(generateRequest)
                     .Then(observer.OnNext)
                     .Catch(observer.OnError)
                     .Finally(observer.OnCompleted);
