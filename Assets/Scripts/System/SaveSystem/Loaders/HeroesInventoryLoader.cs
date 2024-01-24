@@ -33,7 +33,6 @@ namespace CryptoQuest.System.SaveSystem.Loaders
             var dataCharacters = op.Result.data.characters;
             foreach (var heroResponse in dataCharacters)
             {
-                if (heroResponse.id == -1) continue;
                 nftHeroes.Add(converter.Convert(heroResponse));
             }
 
