@@ -1,6 +1,4 @@
-﻿using CryptoQuest.AbilitySystem;
-using CryptoQuest.Battle.Events;
-using CryptoQuest.System;
+﻿using CryptoQuest.Battle.Events;
 using IndiGames.GameplayAbilitySystem.TagSystem.ScriptableObjects;
 
 namespace CryptoQuest.Battle.Components
@@ -13,7 +11,7 @@ namespace CryptoQuest.Battle.Components
             Character.AbilitySystem.TagSystem.TagRemoved += LogEffectRemoved;
         }
 
-        private void OnDestroy()
+        protected override void OnReset()
         {
             if (Character.IsValid() == false) return;
             Character.AbilitySystem.TagSystem.TagAdded -= LogEffectAdded;

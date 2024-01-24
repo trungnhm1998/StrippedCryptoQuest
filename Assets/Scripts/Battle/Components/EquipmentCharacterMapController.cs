@@ -19,8 +19,8 @@ namespace CryptoQuest.Battle.Components
 
         private void OnDisable()
         {
-            _equipmentsController.Equipped += UpdateCharacterId;
-            _equipmentsController.Removed += RemoveCharacterId;
+            _equipmentsController.Equipped -= UpdateCharacterId;
+            _equipmentsController.Removed -= RemoveCharacterId;
         }
 
         private void UpdateCharacterId(IEquipment item)

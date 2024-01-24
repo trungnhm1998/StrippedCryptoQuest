@@ -21,8 +21,8 @@ namespace CryptoQuest.Gameplay.PlayerParty
 
         public void Reset()
         {
-            HeroBehaviour.Spec = new HeroSpec();
             HeroBehaviour.gameObject.SetActive(false);
+            HeroBehaviour.Spec = new HeroSpec();
         }
 
         public void Init(PartySlotSpec slotSpec)
