@@ -150,7 +150,6 @@ namespace CryptoQuest.AbilitySystem.Abilities
                 if (!AbilitySystemHelper.SystemHasNoneTags(target, AbilitySO.Tags.TargetTags.IgnoreTags))
                 {
                     BattleEventBus.RaiseEvent(new CastSkillFailedEvent());
-                    //TODO: implement failed log
                     continue;
                 }
 
@@ -175,6 +174,9 @@ namespace CryptoQuest.AbilitySystem.Abilities
             {
                 Debug.Log($"Failed to cast {_def.name}");
                 BattleEventBus.RaiseEvent(new CastSkillFailedEvent());
+                // I have to end the ability when the skill failed or the _isActive is still true and
+                // owner cant cast the skill again
+                EndAbility();
             }
 
             return result;
@@ -186,6 +188,7 @@ namespace CryptoQuest.AbilitySystem.Abilities
 
             Debug.Log($"Not enough {_costEffect.EffectDetails.Modifiers[0].Attribute.name} to cast this ability");
             BattleEventBus.RaiseEvent(new MpNotEnoughEvent());
+            EndAbility();
             return false;
         }
 
