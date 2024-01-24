@@ -15,6 +15,7 @@ namespace CryptoQuest.Gameplay
         Dialogue = 3,
         Cutscene = 4,
         Merchant = 5,
+        Loading = 6,
     }
 
     public class GameStateSO : ScriptableObject
