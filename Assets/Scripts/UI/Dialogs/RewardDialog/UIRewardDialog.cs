@@ -1,4 +1,5 @@
-﻿using CryptoQuest.Battle.Audio;
+﻿using CryptoQuest.Battle.Actions;
+using CryptoQuest.Battle.Audio;
 using CryptoQuest.Gameplay;
 using CryptoQuest.Input;
 using CryptoQuest.Quest.Controllers;
@@ -66,6 +67,7 @@ namespace CryptoQuest.UI.Dialogs.RewardDialog
 
             ActionDispatcher.Dispatch(new PlayCachedBgmAction());
             ActionDispatcher.Dispatch(new ResumeCutsceneAction());
+            ActionDispatcher.Dispatch(new ShowLevelUpAction());
 
             _inputAction.Disable();
             _inputAction.performed -= OnCloseImmediately;

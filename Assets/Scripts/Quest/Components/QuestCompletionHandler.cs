@@ -1,7 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
+using CryptoQuest.Battle.Actions;
 using CryptoQuest.Gameplay.Loot;
 using CryptoQuest.Quest.Authoring;
+using IndiGames.Core.Events;
 using UnityEngine;
 
 namespace CryptoQuest.Quest.Components
@@ -22,6 +24,7 @@ namespace CryptoQuest.Quest.Components
 
         private List<LootInfo> GetRewards(QuestReward[] rewards)
         {
+            ActionDispatcher.Dispatch(new ShowLevelUpAction());
             return rewards.Select(reward => reward.CreateReward()).ToList();
         }
     }

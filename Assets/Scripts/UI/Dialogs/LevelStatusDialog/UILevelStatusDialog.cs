@@ -15,9 +15,7 @@ namespace CryptoQuest.UI.Dialogs.LevelStatusDialog
         [SerializeField] private Button _defaultSelectButton;
         [SerializeField] private LevelUpCharName _levelStatusTextPrefab;
         [SerializeField] private Transform _levelStatusesContainerTransform;
-        [SerializeField] private LocalizedString _noLevelUpTargetString;
 
-        public UnityAction CloseButtonPressed;
         private LevelStatusDialogData _levelStatusDialogData;
 
         protected override void OnBeforeShow()
@@ -29,6 +27,7 @@ namespace CryptoQuest.UI.Dialogs.LevelStatusDialog
 
         private void Awake()
         {
+            _inputMediator.DisableAllInput();
             StartCoroutine(CoSelectDefaultButton());
         }
 
@@ -40,8 +39,16 @@ namespace CryptoQuest.UI.Dialogs.LevelStatusDialog
 
         public void OnCloseButtonPressed()
         {
-            CloseButtonPressed.Invoke();
             Close();
+            _inputMediator.EnableMapGameplayInput();
+        }
+        
+        public override UILevelStatusDialog Close()
+        {
+            if (this == null) return this;
+            Visible = false;
+            Destroy(gameObject);
+            return this;
         }
 
         public UILevelStatusDialog SetDialog(LevelStatusDialogData levelStatusDialogData)
@@ -52,16 +59,23 @@ namespace CryptoQuest.UI.Dialogs.LevelStatusDialog
 
         private void DisplayListLeveledUpCharacter()
         {
+            CleanUpTargets();
             foreach (var target in _levelStatusDialogData.TargetTextList)
             {
                 SetNameForLeveledUpCharacter(target);
             }
+            _levelStatusDialogData.ClearListTarget();
         }
 
         private void SetNameForLeveledUpCharacter(LocalizedString name)
         {
             var component = Instantiate<LevelUpCharName>(_levelStatusTextPrefab, _levelStatusesContainerTransform);
             component.SetName(name);
+        }
+
+        private void CleanUpTargets()
+        {
+            foreach (Transform child in _levelStatusesContainerTransform) Destroy(child.gameObject);
         }
     }
 
