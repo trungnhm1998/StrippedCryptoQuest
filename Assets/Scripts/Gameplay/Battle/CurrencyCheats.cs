@@ -39,9 +39,6 @@ namespace CryptoQuest.Gameplay.Battle
 
         private void AddGold(CommandArg[] args)
         {
-            float amount = args[0].Float;
-            _wallet[_goldSo].SetAmount(_wallet[_goldSo].Amount + amount);
-
             ActionDispatcher.Dispatch(new ShowLoading());
             _restClient
                 .WithBody(new GoldBody { Gold = args[0].Int })
@@ -52,9 +49,6 @@ namespace CryptoQuest.Gameplay.Battle
 
         private void AddDiamond(CommandArg[] args)
         {
-            float amount = args[0].Float;
-            _wallet[_diamondSo].SetAmount(_wallet[_diamondSo].Amount + amount);
-
             ActionDispatcher.Dispatch(new ShowLoading());
             _restClient
                 .WithBody(new DiamondBody { Diamond = args[0].Int })
