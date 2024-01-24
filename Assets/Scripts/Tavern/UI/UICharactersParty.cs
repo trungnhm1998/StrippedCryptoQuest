@@ -37,7 +37,7 @@ namespace CryptoQuest.Tavern.UI
             var uiIndex = 0;
             for (var i = 0; i < _partySO.Count; i++)
             {
-                if (_partySO[i].Hero.Id == 0) continue;
+                if (_partySO[i].Hero.Origin.DetailInformation.Id == 0) continue;
                 _characterInfos[uiIndex++].Init(_partySO[i].Hero);
             }
         }
