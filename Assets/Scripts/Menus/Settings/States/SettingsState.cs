@@ -16,17 +16,22 @@ namespace CryptoQuest.Menus.Settings.States
         public override void OnEnter()
         {
             _settingsPanel.Input.MenuCancelEvent += HandleCancel;
+            _settingsPanel.Focusing += ShowSettings;
+
             _settingsPanel.LanguageOptions.Initialize();
         }
 
         public override void OnExit()
         {
             _settingsPanel.Input.MenuCancelEvent -= HandleCancel;
-            _settingsPanel.LanguageOptions.DeInitialize();
+            _settingsPanel.Focusing -= ShowSettings;
         }
+
+        private void ShowSettings() => _settingsPanel.LanguageOptions.Initialize();
 
         private void HandleCancel()
         {
+            _settingsPanel.LanguageOptions.DeInitialize();
             UIMainMenu.OnBackToNavigation();
         }
     }
