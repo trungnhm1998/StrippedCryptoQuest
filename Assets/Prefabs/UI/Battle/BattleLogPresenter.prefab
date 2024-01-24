@@ -34,6 +34,7 @@ Transform:
   - {fileID: 1999307973280316604}
   - {fileID: 4279018468068645140}
   - {fileID: 9117217519538951039}
+  - {fileID: 2591826109394765989}
   - {fileID: 2795479537145360612}
   - {fileID: 3609803679854329241}
   - {fileID: 2704798854172030109}
@@ -517,6 +518,62 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 77c53593fd92c904aa7689c5a7449df3, type: 2}
   - {fileID: 11400000, guid: a7e3a44d36bf87d44afeb00b236e832e, type: 2}
   _attributeConfigMapping: {fileID: 11400000, guid: bbbb07ca878ba794db30359afe0e06f4, type: 2}
+  references:
+    version: 2
+    RefIds: []
+--- !u!1 &2388246975118264406
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2591826109394765989}
+  - component: {fileID: 5594292197953542919}
+  m_Layer: 0
+  m_Name: CastFailed
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2591826109394765989
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2388246975118264406}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3441466529967231316}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5594292197953542919
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2388246975118264406}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b523d77a7848d347b5832e788505c7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _failedMessage:
+    m_TableReference:
+      m_TableCollectionName: GUID:810dd60b781de0a4589f9f164a4b0a8c
+    m_TableEntryReference:
+      m_KeyId: 942061969432
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   references:
     version: 2
     RefIds: []
