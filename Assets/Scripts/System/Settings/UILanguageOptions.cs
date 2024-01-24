@@ -12,8 +12,7 @@ namespace CryptoQuest.System.Settings
     {
         [SerializeField] private LanguageSettingSO _languageSetting;
 
-        [Header("UI")]
-        [SerializeField] TMP_Dropdown _dropdown;
+        [Header("UI")] [SerializeField] TMP_Dropdown _dropdown;
 
         private int _localeIndex;
 
@@ -42,7 +41,7 @@ namespace CryptoQuest.System.Settings
         private void OnChangeLocale(Locale locale)
         {
             List<string> localeNames = LanguageHelper.GetLocaleNames();
-            
+
             _dropdown.ClearOptions();
             _dropdown.AddOptions(localeNames);
             _dropdown.value = LanguageHelper.GetLocaleIndex(locale);
