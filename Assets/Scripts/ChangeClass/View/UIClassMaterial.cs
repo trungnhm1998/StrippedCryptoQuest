@@ -49,6 +49,42 @@ namespace CryptoQuest.ChangeClass.View
             IsFinishInstantiateData = true;
             IsEmptyMaterial = _scrollRect.content.childCount <= 0;
         }
+        
+        public IEnumerator InstantiateDataForBerserker(List<HeroSpec> classMaterials, UIOccupation occupation)
+        {
+            _occupation = occupation;
+            _heroSpecs = classMaterials;
+
+            CleanUpScrollView();
+            IsFinishInstantiateData = false;
+
+            yield return new WaitUntil(() => _scrollRect.content.childCount == 0);
+
+            if (occupation.Class.ClassMaterials.Count == 0) yield break;
+
+            foreach (var heroSpec in _heroSpecs)
+            {
+                foreach (var classMaterial in occupation.Class.ClassMaterials)
+                {
+                    ClassID = classMaterial.Id;
+                    int requiredLevel = classMaterial.Level;
+
+                    _calculator = new LevelCalculator(heroSpec.Stats.MaxLevel);
+                    int level = _calculator.CalculateCurrentLevel(heroSpec.Experience);
+
+                    if (ClassID.ToString() == heroSpec.Class.Id.ToString() && level >= requiredLevel)
+                    {
+                        UICharacter newMaterial = Instantiate(_characterClassObject, _scrollRect.content);
+                        newMaterial.ConfigureCell(heroSpec);
+                        _syncData.SetClassMaterialData(newMaterial);
+                        ListClassCharacter.Add(newMaterial);
+                    }
+                }
+            }
+
+            IsFinishInstantiateData = true;
+            IsEmptyMaterial = _scrollRect.content.childCount <= 0;
+        }
 
         public IEnumerator FilterClassMaterial(UICharacter character)
         {

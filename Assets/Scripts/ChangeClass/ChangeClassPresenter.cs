@@ -24,6 +24,7 @@ namespace CryptoQuest.ChangeClass
         [SerializeField] private WalletMaterialAPI _materialApi;
         [SerializeField] private WalletCharacterAPI _characterAPI;
         [SerializeField] private HeroInventorySO _heroInventorySO;
+        [SerializeField] private ClassBerserkerController _classBerserkerController;
         private HeroInventorySO _changeClassHeroData;
         private IPartyController _partyController;
         public UIOccupation Occupation { get; private set; }
@@ -46,8 +47,8 @@ namespace CryptoQuest.ChangeClass
             GetAllHerosData();
             _syncData.ReleaseAllAssetReference();
             _isEmptyClassMaterial = false;
-            StartCoroutine(LoadDataToChangeClass());
             EnableClassInteractable(true);
+            StartCoroutine(LoadDataToChangeClass());
         }
 
         private void GetAllHerosData()
@@ -81,15 +82,14 @@ namespace CryptoQuest.ChangeClass
 
         private IEnumerator GetWalletItemMaterial()
         {
-            _materialApi.LoadMaterialsFromWallet();
+            StartCoroutine(_materialApi.LoadMaterialsFromWallet());
             yield return new WaitUntil(() => _materialApi.IsFinishFetchData);
-            if (_materialApi.Data.Count <= 0) yield break;
             StartCoroutine(RenderItemMaterial());
         }
 
         private IEnumerator GetWalletCharacterMaterial()
         {
-            _characterAPI.LoadCharacterFromWallet();
+            StartCoroutine(_characterAPI.LoadCharacterFromWallet());
             yield return new WaitUntil(() => _characterAPI.IsFinishFetchData);
             if (_characterAPI.Data.Count <= 0) yield break;
             RenderClassMaterial();
@@ -102,6 +102,7 @@ namespace CryptoQuest.ChangeClass
             RenderClassMaterial();
             StartCoroutine(RenderItemMaterial());
             StartCoroutine(ValidateChangeClassMaterial());
+            _classBerserkerController.HandleSelectedOccupation(_changeClassHeroData, Occupation);
         }
 
         private void RenderClassMaterial()
@@ -114,7 +115,6 @@ namespace CryptoQuest.ChangeClass
         private IEnumerator RenderItemMaterial()
         {
             yield return new WaitUntil(() => _materialApi.IsFinishFetchData);
-
             foreach (var item in _itemMaterials)
             {
                 if (item.ID == Occupation.Class.ItemMaterialId.ToString())
@@ -172,7 +172,7 @@ namespace CryptoQuest.ChangeClass
                 .Any(character1 => SecondClassMaterials.ListClassCharacter
                     .Any(character2 => character1.Class.Origin == character2.Class.Origin));
         }
-        
+
         public void EnableClassInteractable(bool isEnable)
         {
             _uiClassToChange.EnableInteractable(isEnable);
