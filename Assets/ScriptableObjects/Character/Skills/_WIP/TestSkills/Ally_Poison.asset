@@ -25,29 +25,10 @@ MonoBehaviour:
       IgnoreTags: []
     TargetTags:
       RequireTags: []
-      IgnoreTags:
-      - {fileID: 11400000, guid: 4d4cdc671e3dda44bb45c2c392e2302d, type: 2}
+      IgnoreTags: []
   _context:
     _skillInfo:
       Id: 1083
-      SkillName:
-        m_TableReference:
-          m_TableCollectionName: GUID:a04f9e0f3e0ba4b4fb5275c51c13428a
-        m_TableEntryReference:
-          m_KeyId: 28283991045369856
-          m_Key: 
-        m_FallbackState: 0
-        m_WaitForCompletion: 0
-        m_LocalVariables: []
-      SkillDescription:
-        m_TableReference:
-          m_TableCollectionName: 
-        m_TableEntryReference:
-          m_KeyId: 28284653787344896
-          m_Key: 
-        m_FallbackState: 0
-        m_WaitForCompletion: 0
-        m_LocalVariables: []
       SkillIcon: {fileID: 0}
       SkillType: 1
       Category: {fileID: 0}
@@ -65,9 +46,27 @@ MonoBehaviour:
         IsFixed: 1
         ContinuesTurn: 3
         EffectType: 1
-        targetAttribute:
+        TargetAttribute:
           Attribute: {fileID: 11400000, guid: 77c53593fd92c904aa7689c5a7449df3, type: 2}
           CaptureFrom: 1
+  _skillName:
+    m_TableReference:
+      m_TableCollectionName: 
+    m_TableEntryReference:
+      m_KeyId: 0
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  _skillDescription:
+    m_TableReference:
+      m_TableCollectionName: 
+    m_TableEntryReference:
+      m_KeyId: 0
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   <SuccessRate>k__BackingField: 100
   <TargetType>k__BackingField: {fileID: 11400000, guid: 22b78d0c574a9b64984629f7aedc22ea, type: 2}
   _effects:
