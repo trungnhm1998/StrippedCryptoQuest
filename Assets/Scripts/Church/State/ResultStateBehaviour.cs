@@ -53,6 +53,9 @@ namespace CryptoQuest.Church.State
 
         private LocalizedString GetMessageForEnoughGold()
         {
+            var localizedName = _stateController.Presenter.CharacterToRevive.HeroBehaviour.LocalizedName;
+            string displayName = localizedName.GetLocalizedString();
+            _reviveSuccessMessage.Arguments = new object[] { displayName };
             return _isAlive ? _reviveFailMessage : _reviveSuccessMessage;
         }
     }
