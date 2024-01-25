@@ -29,8 +29,8 @@ namespace CryptoQuest.BlackSmith.ScriptableObjects
         public float GetCost(int currentLevel, int toLevel)
         {
             // Index is imported base on master data in this format
-            var currentIndex = currentLevel - 1;
-            var toIndex = toLevel - 1;
+            var currentIndex = currentLevel;
+            var toIndex = toLevel;
             int totalCost = 0;
 
             for (int i = currentIndex; i < toIndex; i++)
