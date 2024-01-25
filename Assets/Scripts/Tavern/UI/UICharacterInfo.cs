@@ -1,4 +1,5 @@
-﻿using CryptoQuest.Character.Hero;
+﻿using System.Collections;
+using CryptoQuest.Character.Hero;
 using CryptoQuest.Character.Hero.AvatarProvider;
 using CryptoQuest.UI.Extensions;
 using UnityEngine;
@@ -24,6 +25,12 @@ namespace CryptoQuest.Tavern.UI
             if (isValid == false) return;
             var avatarId = $"{heroSpec.Origin.DetailInformation.Id}-{heroSpec.Class.Id}";
             if (_avatarDatabase.CacheLookupTable.ContainsKey(avatarId) == false) return;
+            StartCoroutine(CoLoadAvatar(avatarId));
+        }
+
+        private IEnumerator CoLoadAvatar(string avatarId)
+        {
+            yield return _avatarDatabase.LoadDataByIdAsync(avatarId);
             _avatar.gameObject.SetActive(true);
             _avatarOpHandle = _avatar.LoadSpriteAndSet(_avatarDatabase.CacheLookupTable[avatarId]);
         }
