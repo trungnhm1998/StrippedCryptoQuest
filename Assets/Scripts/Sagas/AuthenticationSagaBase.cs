@@ -17,7 +17,7 @@ namespace CryptoQuest.Sagas
                 { Token = firebaseUser.stsTokenManager.accessToken });
         }
 
-        protected void OnUserSignedOut(string json)
+        protected virtual void OnUserSignedOut(string json)
         {
             Debug.Log("FirebaseAuthScript: OnUserSignedOut " + json);
             ActionDispatcher.Dispatch(new AuthenticateFailed());
