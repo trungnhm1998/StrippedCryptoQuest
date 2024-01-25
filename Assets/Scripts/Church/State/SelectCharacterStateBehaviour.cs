@@ -11,7 +11,7 @@ namespace CryptoQuest.Church.State
         [SerializeField] private LocalizedString _overviewMessage;
         private ChurchStateController _stateController;
         private static readonly int Confirm = Animator.StringToHash("ConfirmState");
-        private static readonly int Overview = Animator.StringToHash("OverviewState");
+        private static readonly int ExitReviveState = Animator.StringToHash("ExitState");
 
         protected override void OnEnter()
         {
@@ -36,8 +36,8 @@ namespace CryptoQuest.Church.State
 
         private void ExitState()
         {
-            StateMachine.Play(Overview);
-            _stateController.DialogController.ShowChoiceDialog(_overviewMessage);
+            StateMachine.Play(ExitReviveState);
+            _stateController.IsExitState = true;
             _stateController.DialogController.Dialogue.Hide();
         }
 
