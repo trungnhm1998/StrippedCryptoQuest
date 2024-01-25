@@ -27,12 +27,9 @@ namespace CryptoQuest.Sagas
 
         protected override void OnUserSignedOut(string json)
         {
+            base.OnUserSignedOut(json);
             FirebaseAuthScript response = JsonConvert.DeserializeObject<FirebaseAuthScript>(json);
-            if (response.Code != ErrorCode.ACCOUNT_EXISTS)
-            {
-                base.OnUserSignedOut(json);
-                return;
-            }
+            if (response.Code != ErrorCode.ACCOUNT_EXISTS) return;
 
             _localizedErrorPopupEventSO.RaiseEvent(_errorMessage);
         }
