@@ -18,15 +18,10 @@ namespace CryptoQuest.UI.Dialogs.RewardDialog
         {
             if (!IsCorrectStoneSetup(ctx)) return;
 
-            var msg = new LocalizedString(_itemWithQuantity.TableReference, _itemWithQuantity.TableEntryReference)
-            {
-                {
-                    "item", GetMagicStoneString(ctx.Loot.StoneId)
-                },
-                {
-                    "quantity", new IntVariable { Value = ctx.Loot.Quantity }
-                }
-            };
+            var msg = new LocalizedString();
+            msg.SetReference(_itemWithQuantity.TableReference, _itemWithQuantity.TableEntryReference);
+            msg.Add("item", GetMagicStoneString(ctx.Loot.StoneId));
+            msg.Add("quantity", new IntVariable { Value = ctx.Loot.Quantity });
 
             ctx.UIRewardItem.SetContentStringRef(msg);
         }
@@ -52,7 +47,10 @@ namespace CryptoQuest.UI.Dialogs.RewardDialog
                 key = magicStone.Name;
             }
 
-            return new LocalizedString(_tableReference, key);
+            LocalizedString localizedString = new LocalizedString();
+            localizedString.SetReference(_tableReference, key);
+
+            return localizedString;
         }
     }
 }

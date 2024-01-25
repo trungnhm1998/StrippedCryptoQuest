@@ -1,3 +1,4 @@
+using System.Collections;
 using CryptoQuest.Gameplay.Loot;
 using CryptoQuest.UI.Dialogs.RewardDialog.ConfigDisplayAction;
 using IndiGames.Core.Events;
@@ -22,21 +23,25 @@ namespace CryptoQuest.UI.Dialogs.RewardDialog
 
         public void Visit(ConsumableLootInfo loot)
         {
-            var msg = new LocalizedString(_itemWithQuantity.TableReference, _itemWithQuantity.TableEntryReference)
-            {
-                {
-                    "item", loot.Item.Data.DisplayName
-                },
-                {
-                    "quantity", new IntVariable { Value = loot.Item.Quantity }
-                }
-            };
+            var msg = new LocalizedString();
+            msg.SetReference(_itemWithQuantity.TableReference, _itemWithQuantity.TableEntryReference);
+            msg.Add("item", loot.Item.Data.DisplayName);
+            msg.Add("quantity", new IntVariable { Value = loot.Item.Quantity });
+
             _content.StringReference = msg;
         }
 
         public void Visit(CurrencyLootInfo loot)
         {
-            _text.text = $"{loot.Item.Amount} {loot.Item.Data.DisplayName.GetLocalizedString()}";
+            StartCoroutine(CoLoadCurrencyText(loot));
+        }
+
+        private IEnumerator CoLoadCurrencyText(CurrencyLootInfo loot)
+        {
+            var handle = loot.Item.Data.DisplayName.GetLocalizedStringAsync();
+            yield return handle;
+            string currencyName = handle.Result;
+            _text.text = $"{loot.Item.Amount} {currencyName}";
         }
 
         public void Visit(EquipmentLoot loot)
@@ -80,16 +85,22 @@ namespace CryptoQuest.UI.Dialogs.RewardDialog
 
     public class RequestConfigWeaponReward : RequestConfigEquipmentRewardBase
     {
-        public RequestConfigWeaponReward(UIRewardItem rewardItem, EquipmentLoot loot) : base(rewardItem, loot) { }
+        public RequestConfigWeaponReward(UIRewardItem rewardItem, EquipmentLoot loot) : base(rewardItem, loot)
+        {
+        }
     }
 
     public class RequestConfigArmorReward : RequestConfigEquipmentRewardBase
     {
-        public RequestConfigArmorReward(UIRewardItem rewardItem, EquipmentLoot loot) : base(rewardItem, loot) { }
+        public RequestConfigArmorReward(UIRewardItem rewardItem, EquipmentLoot loot) : base(rewardItem, loot)
+        {
+        }
     }
 
     public class RequestConfigAccessoryReward : RequestConfigEquipmentRewardBase
     {
-        public RequestConfigAccessoryReward(UIRewardItem rewardItem, EquipmentLoot loot) : base(rewardItem, loot) { }
+        public RequestConfigAccessoryReward(UIRewardItem rewardItem, EquipmentLoot loot) : base(rewardItem, loot)
+        {
+        }
     }
 }
