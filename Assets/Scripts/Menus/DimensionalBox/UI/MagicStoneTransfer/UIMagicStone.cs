@@ -1,3 +1,4 @@
+using System.Collections;
 using CryptoQuest.Item.MagicStone;
 using CryptoQuest.Sagas.MagicStone;
 using IndiGames.Core.Common;
@@ -43,6 +44,13 @@ namespace CryptoQuest.Menus.DimensionalBox.UI.MagicStoneTransfer
             _transferringTag.SetActive(isTransferring);
             _equippedTag.SetActive(isEquipped);
             _magicStone = ServiceProvider.GetService<IMagicStoneResponseConverter>().Convert(magicStone);
+            StartCoroutine(SetLocalizedName());
+        }
+
+        private IEnumerator SetLocalizedName()
+        {
+            yield return new WaitUntil(() => _magicStone.Definition.DisplayName != null);
+            _name.StringReference = _magicStone.Definition.DisplayName;
         }
 
         public void OnSelectToTransfer()
