@@ -49,11 +49,11 @@ namespace CryptoQuest.Ranch.Upgrade.Presenters
             LeftPanel.SetActive(true);
             if (beasts.Count <= 0) return;
 
-            BeastList.FillBeasts(beasts);
             Interactable = true;
+            BeastList.FillBeasts(beasts);
             UiBeastUpgradeDetail.gameObject.SetActive(true);
         }
-        
+
         public void ActiveBeastDetail(bool value)
         {
             UiBeastUpgradeDetail.gameObject.SetActive(value);
