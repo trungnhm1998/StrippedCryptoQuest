@@ -61,7 +61,12 @@ namespace CryptoQuest.Battle.Components
             var allowedSlots = equipment.AllowedSlots;
             if (allowedSlots.Contains(equippingSlot) == false) return;
             var requiredSlots = equipment.RequiredSlots;
-            foreach (var slot in requiredSlots) Unequip(GetEquipmentInSlot(slot));
+            var slotToUnequip = new List<ESlot>();
+            // Not every equipment can have required slots like Accessory
+            slotToUnequip.AddRange(requiredSlots);
+            slotToUnequip.Add(equippingSlot);
+
+            foreach (var slot in slotToUnequip) Unequip(GetEquipmentInSlot(slot));
             OnEquipmentAdded(equipment, equippingSlot, requiredSlots);
         }
 
