@@ -35,7 +35,8 @@ namespace CryptoQuest.System.SaveSystem.Loaders
             for (var index = 0; index < partySlotSpecs.Length; index++)
             {
                 var partySlotSpec = partySlotSpecs[index];
-                if (partySlotSpec.Hero.Id != 0) continue;
+                var heroOrigin = partySlotSpec.Hero.Origin;
+                if (heroOrigin != null && heroOrigin.DetailInformation.Id != 0) continue;
                 var heroSpec = partySlotSpec.Hero;
                 heroSpec.Stats = unit.Stats;
                 heroSpec.Class = unit.Class;
