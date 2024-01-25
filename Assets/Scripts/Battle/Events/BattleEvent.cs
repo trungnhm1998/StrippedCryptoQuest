@@ -177,7 +177,15 @@ namespace CryptoQuest.Battle.Events
 
     public class MpNotEnoughEvent : LogEvent { }
 
-    public class CastSkillFailedEvent : LogEvent { }
+    public class CastSkillFailedEvent : LogEvent
+    {
+        public CastSkillAbility Skill { get; private set; }
+
+        public CastSkillFailedEvent(CastSkillAbility skill)
+        {
+            Skill = skill;
+        }
+    }
 
     public class MissedEvent : LogEvent
     {

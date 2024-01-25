@@ -149,7 +149,7 @@ namespace CryptoQuest.AbilitySystem.Abilities
 
                 if (!AbilitySystemHelper.SystemHasNoneTags(target, AbilitySO.Tags.TargetTags.IgnoreTags))
                 {
-                    BattleEventBus.RaiseEvent(new CastSkillFailedEvent());
+                    NotifyCastByTagCondition(target, AbilitySO.Tags.TargetTags.IgnoreTags);
                     continue;
                 }
 
@@ -173,7 +173,7 @@ namespace CryptoQuest.AbilitySystem.Abilities
             if (!result)
             {
                 Debug.Log($"Failed to cast {_def.name}");
-                BattleEventBus.RaiseEvent(new CastSkillFailedEvent());
+                BattleEventBus.RaiseEvent(new CastSkillFailedEvent(_def));
                 // I have to end the ability when the skill failed or the _isActive is still true and
                 // owner cant cast the skill again
                 EndAbility();

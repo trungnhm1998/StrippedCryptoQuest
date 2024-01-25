@@ -2,6 +2,7 @@
 using TinyMessenger;
 using UnityEngine;
 using UnityEngine.Localization;
+using UnityEngine.Localization.SmartFormat.PersistentVariables;
 
 namespace CryptoQuest.Battle.UI.Logs
 {
@@ -22,7 +23,15 @@ namespace CryptoQuest.Battle.UI.Logs
         
         private void LogCastFailed(CastSkillFailedEvent ctx)
         {
-            Logger.QueueLog(_failedMessage);
+            var castMessage = new LocalizedString(_failedMessage.TableReference, _failedMessage.TableEntryReference);
+            var localizedSkillName = ctx.Skill.SkillName;
+            castMessage.Add(Constants.ABILITY_NAME, localizedSkillName.IsEmpty ? 
+                new StringVariable()
+                {
+                    Value = ctx.Skill.name
+                }
+                : localizedSkillName);
+            Logger.QueueLog(castMessage);
         }
     }
 }
