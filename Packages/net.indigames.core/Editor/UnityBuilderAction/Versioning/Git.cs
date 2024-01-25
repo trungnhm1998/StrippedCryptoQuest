@@ -82,6 +82,15 @@ namespace IndiGamesEditor.UnityBuilderAction.Versioning
             return version;
         }
 
+        public static string GetLatestTagVersion()
+        {
+            string version = Run(@"describe --abbrev=0");
+
+            version = version.Substring(1);
+
+            return version;
+        }
+
         /// <summary>
         /// Get the total number of commits.
         /// </summary>
@@ -111,7 +120,7 @@ namespace IndiGamesEditor.UnityBuilderAction.Versioning
         {
             // 0.1
             // 1.6-alpha
-            var gitTagVersion = GetTagVersion();
+            var gitTagVersion = GetLatestTagVersion();
 
             var versionRegex = new Regex(@"([0-9]+).([0-9])(.*)");
             var match = versionRegex.Match(gitTagVersion);
@@ -129,10 +138,11 @@ namespace IndiGamesEditor.UnityBuilderAction.Versioning
             var patch = patchRegex.Match(strippedVersion).Groups[1].Value; // 2
             meta = strippedVersion.Replace(patchRegex.Match(strippedVersion).Value, ""); // v-g12345678-dirty
             meta = meta.Substring(2); // g12345678-dirty
-            
+
             Console.WriteLine($"Git::Version is {major}.{minor}.{patch}{prerelease}_{meta}");
-            
-            return $"{major}.{minor}.{patch}{prerelease}_{meta}";;
+
+            return $"{major}.{minor}.{patch}{prerelease}_{meta}";
+            ;
         }
 
         /// <summary>
