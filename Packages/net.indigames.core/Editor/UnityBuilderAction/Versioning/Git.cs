@@ -1,6 +1,6 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Text.RegularExpressions;
-using Codice.CM.Common;
 using IndiGamesEditor.UnityBuilderAction.System;
 using UnityEngine;
 
@@ -109,26 +109,30 @@ namespace IndiGamesEditor.UnityBuilderAction.Versioning
         /// </summary>
         static string GetSemanticCommitVersion()
         {
+            // 0.1
+            // 1.6-alpha
+            var gitTagVersion = GetTagVersion();
+
+            var versionRegex = new Regex(@"([0-9]+).([0-9])(.*)");
+            var match = versionRegex.Match(gitTagVersion);
+            var major = match.Groups[1].Value; // 1
+            var minor = match.Groups[2].Value; // 6
+            var prerelease = match.Groups[3].Value; // -alpha
+
             // v0.1-2-g12345678-dirty
+            // v0.1-alpha-2-g12345678-dirty
             // (where 2 is the amount of commits, g stands for git
             // , 12345678 is the commit hash and dirty means there are uncommitted changes)
-            string version = GetVersionString();
-            Console.WriteLine("Git::GetSemanticCommitVersion::version: " + version);
+            string meta = GetVersionString();
+            var strippedVersion = meta.Replace(gitTagVersion, ""); // v-2-g12345678-dirty
+            var patchRegex = new Regex(@"-([0-9]+)");
+            var patch = patchRegex.Match(strippedVersion).Groups[1].Value; // 2
+            meta = strippedVersion.Replace(patchRegex.Match(strippedVersion).Value, ""); // v-g12345678-dirty
+            meta = meta.Substring(2); // g12345678-dirty
             
-            // 0.1-2-g12345678-dirty
-            version = version.Substring(1);
-            Console.WriteLine($"Git::GetSemanticCommitVersion::version.Substring(1): {version}");
-
-            var regex = new Regex(Regex.Escape("-"));
-            // 0.1.2-g12345678-dirty
-            version = regex.Replace(version, ".", 1);
-            Console.WriteLine($"Git::GetSemanticCommitVersion::version.Replace(.): {version}");
+            Console.WriteLine($"Git::Version is {major}.{minor}.{patch}{prerelease}_{meta}");
             
-            // 0.1.2_g12345678-dirty
-            version = regex.Replace(version, "_", 1);
-            Console.WriteLine($"Git::GetSemanticCommitVersion::version.Replace(_): {version}");
-
-            return version;
+            return $"{major}.{minor}.{patch}{prerelease}_{meta}";;
         }
 
         /// <summary>
@@ -152,9 +156,9 @@ namespace IndiGamesEditor.UnityBuilderAction.Versioning
         /// </summary>
         static string Run(string arguments)
         {
-            using (var process = new global::System.Diagnostics.Process())
+            using (var process = new Process())
             {
-                string workingDirectory = UnityEngine.Application.dataPath;
+                string workingDirectory = Application.dataPath;
 
                 string output, errors;
                 int exitCode = process.Run(application, arguments, workingDirectory, out output, out errors);

@@ -734,7 +734,6 @@ MonoBehaviour:
       data:
         _inventory: {fileID: 11400000, guid: 8e54c04f1de81b14b9717fd394372769, type: 2}
         _party: {fileID: 11400000, guid: 197a08cf381438a48875f05c90e104fb, type: 2}
-        _saveSystem: {fileID: 0}
     - rid: 3779421920259735568
       type: {class: ConsumablesLoader, ns: CryptoQuest.System.SaveSystem.Loaders, asm: IndiGames.CryptoQuest}
       data:
@@ -1532,6 +1531,14 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 101.37
       objectReference: {fileID: 0}
+    - target: {fileID: 4720026255795890011, guid: 7d6c35d654339cb489dfbf91416939fe, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4720026255795890011, guid: 7d6c35d654339cb489dfbf91416939fe, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4841469214657485855, guid: 7d6c35d654339cb489dfbf91416939fe, type: 3}
       propertyPath: _checkLoginCheckState
       value: 
@@ -1621,7 +1628,8 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 2732811745800252746, guid: 7d6c35d654339cb489dfbf91416939fe, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 637110613254792650, guid: 7d6c35d654339cb489dfbf91416939fe, type: 3}
