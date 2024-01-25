@@ -22,11 +22,12 @@ namespace CryptoQuest.Ranch.Evolve.UI
         {
             _evolvableBeasts = evolvableBeasts;
             CleanUpScrollView();
-            InstantiateBeast();
+            StartCoroutine(InstantiateBeast());
         }
 
-        private void InstantiateBeast()
+        private IEnumerator InstantiateBeast()
         {
+            yield return new WaitUntil(() => _scrollRect.content.childCount == 0);
             foreach (var evolvable in _evolvableBeasts.Where(b => b.Beast.Level >= b.Beast.MaxLevel))
             {
                 var newBeast = Instantiate(_beast, _scrollRect.content);
