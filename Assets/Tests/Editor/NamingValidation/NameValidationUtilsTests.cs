@@ -1,4 +1,6 @@
-﻿using CryptoQuest.System.Settings;
+﻿using System.Collections.Generic;
+using System.Linq;
+using CryptoQuest.System.Settings;
 using NUnit.Framework;
 using UnityEditor;
 using UnityEngine;
@@ -16,6 +18,28 @@ namespace CryptoQuest.Tests.Editor.NamingValidation
         private static string BAD_WORD_ASSET_PATH = "Assets/Settings/Gameplay/BadWords.txt";
         private static string SPECIAL_CHAR_ASSET_PATH = "Assets/Settings/Gameplay/SpecialCharacters.txt";
 
+        private static string[] badWords =
+        {
+            "nigga", "nigger", "HELL", "FUCK", "bitch", "hell", "asshole", "dickhead", "cunt", "idiot", "moron", "shit",
+            "jerk", "bastard", "fuckwit", "douchebag", "wanker", "twat", "prick", "cockwomble", "motherfucker",
+            "dumbass", "scumbag"
+        };
+
+        private static string[] specialCharacters =
+            { ".dot..", "???nani", ".!@#$%", "?!@#$%^", "&*()_+-", "<>={}|/", "`~;:", "£§€", ".,", "'" };
+
+        private static string[] normalNames =
+            { "a", "MyNameJeff", "Linda", "Simon", "CrypQuest", "Steve", "Queen", "Assert", "Yui" };
+
+        private static string[] invalidNamesLongerThanTen =
+        {
+            "ThisIsLongerThanTen", "ThisIsLongerThanTenToo", "ThisIsLongerThanTenTooToo",
+            "ThisIsLongerThanTenTooTooToo", "LongestNameEverInThisWorld", "LongestNameEverInThisWorldToo"
+        };
+
+        private static string[] nullNames = { "", " ", "     " };
+        private static string[] numberNames = { "1", "123", "123456789", "Saymyname9", "N0ic3" };
+        private static string[] trimmedTestNames = { " Test name", "Test name ", " Test name " };
 
         [SetUp]
         public void Setup()
@@ -29,102 +53,82 @@ namespace CryptoQuest.Tests.Editor.NamingValidation
             nameValidator = new NameValidator(_textAsset, _specialCharAsset);
         }
 
-        [TestCase("nigga")]
-        [TestCase("nigger")]
-        [TestCase("nigga")]
-        [TestCase("HELL")]
-        [TestCase("FUCK")]
-        [TestCase("bitch")]
-        [TestCase("hell")]
-        [TestCase("asshole")]
-        [TestCase("dickhead")]
-        [TestCase("cunt")]
-        [TestCase("idiot")]
-        [TestCase("moron")]
-        [TestCase("shit")]
-        [TestCase("jerk")]
-        [TestCase("bastard")]
-        [TestCase("fuckwit")]
-        [TestCase("douchebag")]
-        [TestCase("wanker")]
-        [TestCase("twat")]
-        [TestCase("prick")]
-        [TestCase("cockwomble")]
-        [TestCase("motherfucker")]
-        [TestCase("dumbass")]
-        [TestCase("scumbag")]
-        public void Validate_BadWord_ShouldReturnEValidationBadWord(string input)
+        [TestCaseSource(nameof(BadWordTestCases))]
+        public void Validate_BadWord_ShouldReturnEValidationBadWord(string input, EValidation expected)
         {
             EValidation result = nameValidator.Validate(input);
 
-            Assert.AreEqual(EValidation.BadWord, result);
+            Assert.AreEqual(expected, result, $"Input: {input} - Output: {result}");
         }
 
-
-        [TestCase(".dot..")]
-        [TestCase("???nani")]
-        [TestCase(".!@#$%")]
-        [TestCase("?!@#$%^")]
-        [TestCase("&*()_+-")]
-        [TestCase("<>={}|/")]
-        [TestCase("`~;:")]
-        [TestCase("£§€")]
-        [TestCase(".,")]
-        [TestCase("'")]
-        public void Validate_SpecialCharacter_ShouldReturnFalse(string input)
+        [TestCaseSource(nameof(SpecialCharacterTestCases))]
+        public void Validate_SpecialCharacter_ShouldReturnEValidationSpecialChars(string input, EValidation expected)
         {
             EValidation result = nameValidator.Validate(input);
 
-            Assert.AreEqual(EValidation.SpecialChars, result);
+            Assert.AreEqual(expected, result, $"Input: {input} - Output: {result}");
         }
 
-        [TestCase("a")]
-        [TestCase("MyNameJeff")]
-        [TestCase("Linda")]
-        [TestCase("Simon")]
-        [TestCase("CrypQuest")]
-        [TestCase("Steve")]
-        [TestCase("Queen")]
-        [TestCase("Assert")]
-        [TestCase("Yui")]
-        public void Validate_NormalNameBetweenOneToTen_ShouldReturnTrue(string input)
+        [TestCaseSource(nameof(NormalNameTestCases))]
+        public void Validate_NormalNameBetweenOneToTen_ShouldReturnEValidationValid(string input, EValidation expected)
         {
             EValidation result = nameValidator.Validate(input);
 
-            Assert.AreEqual(EValidation.Valid, result);
+            Assert.AreEqual(expected, result, $"Input: {input} - Output: {result}");
         }
 
-        [TestCase("ThisIsLongerThanTen")]
-        [TestCase("ThisIsLongerThanTenToo")]
-        [TestCase("ThisIsLongerThanTenTooToo")]
-        [TestCase("ThisIsLongerThanTenTooTooToo")]
-        [TestCase("LongestNameEverInThisWorld")]
-        [TestCase("LongestNameEverInThisWorldToo")]
-        public void Validate_InvalidNameLongerThanTen_ShouldReturnFalse(string input)
+        [TestCaseSource(nameof(InvalidNameLongerThanTenTestCases))]
+        public void Validate_InvalidNameLongerThanTen_ShouldReturnEValidationLongWord(string input,
+            EValidation expected)
         {
             EValidation result = nameValidator.Validate(input);
 
-            Assert.AreEqual(EValidation.LongWord, result);
+            Assert.AreEqual(expected, result, $"Input: {input} - Output: {result}");
         }
 
-        [TestCase("")]
-        public void Validate_NullName_ShouldReturnTrue(string input)
+        [TestCaseSource(nameof(NullNameTestCases))]
+        public void Validate_NullName_ShouldReturnEValidationNull(string input, EValidation expected)
         {
             EValidation result = nameValidator.Validate(input);
 
-            Assert.AreEqual(EValidation.Null, result);
+            Assert.AreEqual(expected, result, $"Input: {input} - Output: {result}");
         }
-        
-        [TestCase("1")]
-        [TestCase("123")]
-        [TestCase("123456789")]
-        [TestCase("Saymyname9")]
-        [TestCase("N0ic3")]
-        public void Validate_NumberName_ShouldReturnTrue(string input)
+
+        [TestCaseSource(nameof(NumberNameTestCases))]
+        public void Validate_NumberName_ShouldReturnEValidationValid(string input, EValidation expected)
         {
             EValidation result = nameValidator.Validate(input);
 
-            Assert.AreEqual(EValidation.Valid, result);
+            Assert.AreEqual(expected, result, $"Input: {input} - Output: {result}");
         }
+
+        [TestCaseSource(nameof(TrimmedTestCases))]
+        public void Validate_TrimmedName_ShouldReturnEValidationValid(string input, EValidation expected)
+        {
+            EValidation result = nameValidator.Validate(input);
+
+            var expectedTrimmed = input.Trim();
+
+            Assert.AreEqual(expected, result, $"Input: {input} - Output: {result}");
+
+            Debug.Log($"Input: [{input}] - Output: [{result}] - Expected: [{expectedTrimmed}]");
+        }
+
+        private static IEnumerable<TestCaseData> BadWordTestCases => GetTestCases(badWords, EValidation.BadWord);
+
+        private static IEnumerable<TestCaseData> SpecialCharacterTestCases =>
+            GetTestCases(specialCharacters, EValidation.SpecialChars);
+
+        private static IEnumerable<TestCaseData> NormalNameTestCases => GetTestCases(normalNames, EValidation.Valid);
+
+        private static IEnumerable<TestCaseData> InvalidNameLongerThanTenTestCases =>
+            GetTestCases(invalidNamesLongerThanTen, EValidation.LongWord);
+
+        private static IEnumerable<TestCaseData> NullNameTestCases => GetTestCases(nullNames, EValidation.Null);
+        private static IEnumerable<TestCaseData> NumberNameTestCases => GetTestCases(numberNames, EValidation.Valid);
+        private static IEnumerable<TestCaseData> TrimmedTestCases => GetTestCases(trimmedTestNames, EValidation.Valid);
+
+        private static IEnumerable<TestCaseData> GetTestCases(string[] inputs, EValidation expected) =>
+            inputs.Select(input => new TestCaseData(input, expected));
     }
 }
