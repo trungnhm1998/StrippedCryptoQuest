@@ -17,6 +17,7 @@ namespace CryptoQuest.Menus.DimensionalBox.UI.MagicStoneTransfer
         [SerializeField] private Button _button;
         [SerializeField] private GameObject _pendingTag;
         [SerializeField] private GameObject _equippedTag;
+        [SerializeField] private GameObject _transferringTag;
         private IMagicStone _magicStone;
         public IMagicStone MagicStone => _magicStone;
         public MagicStone Respone { get; private set; }
@@ -32,17 +33,21 @@ namespace CryptoQuest.Menus.DimensionalBox.UI.MagicStoneTransfer
 
         public void Initialize(MagicStone magicStone)
         {
+            bool isTransferring = magicStone.transferring == 1;
+            bool isEquipped = magicStone.attachEquipment != 0;
+
             _magicStone = NullMagicStone.Instance;
             MarkedForTransfer = false;
             Respone = magicStone;
             _nameText.text = $"{Id}.Stone";
-
+            _transferringTag.SetActive(isTransferring);
+            _equippedTag.SetActive(isEquipped);
             _magicStone = ServiceProvider.GetService<IMagicStoneResponseConverter>().Convert(magicStone);
         }
 
         public void OnSelectToTransfer()
         {
-            if (_equippedTag.activeSelf) return;
+            if (_equippedTag.activeSelf || _transferringTag.activeSelf) return;
             MarkedForTransfer = !MarkedForTransfer;
         }
     }
