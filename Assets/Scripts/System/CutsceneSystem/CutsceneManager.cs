@@ -1,4 +1,5 @@
-﻿using CryptoQuest.Quest.Controllers;
+﻿using CryptoQuest.Gameplay;
+using CryptoQuest.Quest.Controllers;
 using CryptoQuest.System.CutsceneSystem.Events;
 using CryptoQuest.System.Dialogue.Managers;
 using IndiGames.Core.Events;
@@ -16,6 +17,7 @@ namespace CryptoQuest.System.CutsceneSystem
     {
         public static event UnityAction CutsceneCompleted;
         public static event UnityAction<PlayableDirector> CutsceneFinished;
+        [SerializeField] private GameStateSO _gameState;
 
         [Header("Listening to")] [SerializeField]
         private PlayCutsceneEvent _playCutsceneEvent;
@@ -81,6 +83,7 @@ namespace CryptoQuest.System.CutsceneSystem
             _currentPlayableDirector = playableDirector;
             _currentPlayableDirector.Play();
             _currentPlayableDirector.stopped += HandleDirectorStopped;
+            _gameState.UpdateGameState(EGameState.Cutscene);
         }
 
         private void HandleDirectorStopped(PlayableDirector director)
@@ -92,6 +95,8 @@ namespace CryptoQuest.System.CutsceneSystem
             _onCutsceneCompleted.Invoke();
             CutsceneFinished?.Invoke(director);
             CutsceneCompleted?.Invoke();
+
+            _gameState.UpdateGameState(EGameState.Field);
         }
 
         private void PauseCutscene(bool isPaused)

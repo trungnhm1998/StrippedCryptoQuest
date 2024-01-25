@@ -110,7 +110,8 @@ namespace CryptoQuest.System.Dialogue.Managers
 
             _currentYarnNode = yarnNodeName;
             Debug.Log($"YarnSpinnerDialogueManager::ShowDialogue: yarnNodeName[{yarnNodeName}]");
-            _gameState.UpdateGameState(EGameState.Dialogue);
+            if (_gameState.CurrentGameState is not EGameState.Cutscene)
+                _gameState.UpdateGameState(EGameState.Dialogue);
             StartCoroutine(CoRunDialogue(yarnNodeName));
         }
 
@@ -130,10 +131,13 @@ namespace CryptoQuest.System.Dialogue.Managers
 
         public void DialogueCompleted()
         {
-            _gameState.RevertGameState();
+            if (_gameState.CurrentGameState is not EGameState.Cutscene)
+            {
+                _gameState.RevertGameState();
 
-            if (_gameState.CurrentGameState is EGameState.Field or EGameState.Battle)
-                _inputMediator.EnableMapGameplayInput();
+                if (_gameState.CurrentGameState is EGameState.Field or EGameState.Battle)
+                    _inputMediator.EnableMapGameplayInput();
+            }
 
             // support cross scene
             if (_dialogueCompletedEventChannelSO != null) _dialogueCompletedEventChannelSO.RaiseEvent();
