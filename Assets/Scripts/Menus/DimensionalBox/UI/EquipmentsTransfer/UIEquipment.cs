@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using CryptoQuest.Inventory.ScriptableObjects;
 using CryptoQuest.Item.Equipment;
 using CryptoQuest.Sagas.Equipment;
 using CryptoQuest.Sagas.Objects;
@@ -19,6 +20,7 @@ namespace CryptoQuest.Menus.DimensionalBox.UI.EquipmentsTransfer
         [SerializeField] private GameObject _equippedTag;
         [SerializeField] private GameObject _transferringTag;
         [SerializeField] private RectTransform _contentRectTransform;
+        [SerializeField] private EquipmentInventory _equipmentInventory;
 
         private IEquipment _equipment;
         public IEquipment Equipment => _equipment;
@@ -38,10 +40,13 @@ namespace CryptoQuest.Menus.DimensionalBox.UI.EquipmentsTransfer
             MarkedForTransfer = false;
             Response = equipment;
             _nameText.text = "Item " + Id;
-            _equippedTag.SetActive(Response.IsEquipped);
+            _equippedTag.SetActive(false);
             _transferringTag.SetActive(Response.IsTransferring || Response.mintStatus != 2);
 
             _equipment = ServiceProvider.GetService<IEquipmentResponseConverter>().Convert(equipment);
+
+            var equipmentInInventory = _equipmentInventory.Equipments.Find(e => e.Id == Id);
+            _equippedTag.SetActive(equipmentInInventory != null && equipmentInInventory.IsEquipped());
 
             StartCoroutine(UpdateUIWhenEquipmentLoaded()); // TODO: Potential unload
         }
