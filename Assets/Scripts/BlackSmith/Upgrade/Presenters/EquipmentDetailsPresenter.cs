@@ -46,7 +46,7 @@ namespace CryptoQuest.BlackSmith.Upgrade.Presenters
                 var newValue = attribute.Value;
                 newValue += (level - 1) * Equipment.Data.ValuePerLvl;
                 _attributePreviewUIs.TryGetValue(attribute, out var previewUI);
-                previewUI.SetPreviewValue(newValue);
+                previewUI.SetPreviewValue(Mathf.FloorToInt(newValue));
             }
 
             _previewLevelUI.SetPreviewLevel(level, Equipment.Data.MaxLevel);

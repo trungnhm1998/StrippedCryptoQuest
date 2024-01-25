@@ -86,7 +86,7 @@ namespace CryptoQuest.Battle.Components
                 {
                     Attribute = attribute.Attribute,
                     OperationType = EAttributeModifierOperationType.Add,
-                    Value = attribute.Value + attributeValue
+                    Value = attribute.Value + Mathf.FloorToInt(attributeValue)
                 };
             }
 
