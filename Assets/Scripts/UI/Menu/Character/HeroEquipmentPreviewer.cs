@@ -113,6 +113,7 @@ namespace CryptoQuest.UI.Menu.Character
             // Remove this so equip/unequip wont affect server or inventory
             RemoveComponent<EquipmentsNetworkController>();
             RemoveComponent<InventoryEquipmentsController>();
+            RemoveComponent<EquipmentCharacterMapController>();
 
             InitSpec();
         }
