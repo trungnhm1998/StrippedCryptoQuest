@@ -137,7 +137,7 @@ namespace CryptoQuest.UI.Menu.Character
 
         private void RemoveComponent<T>() where T : CharacterComponentBase
         {
-            var component = _clonedHero.GetComponent<T>();
+            if (!_clonedHero.TryGetComponent<T>(out var component)) return;
             component.enabled = false;
             DestroyImmediate(component);
         }
