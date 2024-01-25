@@ -12,9 +12,10 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
 {
     public class SelectCommand : StateBase, ISelectCommandCallback
     {
-        private const float SELECT_DELAY = 0.05f;
+        private const float SHOW_DELAY = 0.05f;
         private EnemyGroupPresenter _enemyGroupPresenter;
         private SelectCommandPresenter _selectCommandPresenter;
+        private UISelectCommand _selectCommandUI;
 
         public SelectCommand(HeroBehaviour hero, SelectHeroesActions fsm) : base(hero, fsm)
         {
@@ -27,23 +28,22 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
 
         public override void OnEnter()
         {
+            _selectCommandUI = Fsm.SelectCommandUI;
+
             BattleEventBus.RaiseEvent<HighlightHeroEvent>(_heroEventObject);
             
-            Fsm.SelectCommandUI.SetCharacterName(Hero.Spec.Origin.DetailInformation.LocalizedName);
-            Fsm.SelectCommandUI.RegisterCallback(this);
+            _selectCommandUI.SetCharacterName(Hero.Spec.Origin.DetailInformation.LocalizedName);
+            _selectCommandUI.RegisterCallback(this);
             
-            DOVirtual.DelayedCall(SELECT_DELAY, SelectButton);
+            _selectCommandUI.SelectFirstButton();
 
-            _enemyGroupPresenter.Show();
-            EnableCommandMenu();
-
-            _selectCommandPresenter.CheckActiveButtons(Hero);
+            DOVirtual.DelayedCall(SHOW_DELAY, ShowUI);
         }
 
         public override void OnExit()
         {
             _enemyGroupPresenter.Hide();
-            Fsm.SelectCommandUI.RegisterCallback(null);
+            _selectCommandUI.RegisterCallback(null);
             DisableCommandMenu();
         }
 
@@ -93,17 +93,19 @@ namespace CryptoQuest.Battle.States.SelectHeroesActions
 
         private void EnableCommandMenu()
         {
-            Fsm.SelectCommandUI.SetActiveCommandsMenu(true);
+            _selectCommandUI.SetActiveCommandsMenu(true);
         }
 
         private void DisableCommandMenu()
         {
-            Fsm.SelectCommandUI.SetActiveCommandsMenu(false);
+            _selectCommandUI.SetActiveCommandsMenu(false);
         }
 
-        private void SelectButton()
+        private void ShowUI()
         {
-            Fsm.SelectCommandUI.SelectFirstButton();
+            _enemyGroupPresenter.Show();
+            EnableCommandMenu();
+            _selectCommandPresenter.CheckActiveButtons(Hero);
         }
     }
 }
