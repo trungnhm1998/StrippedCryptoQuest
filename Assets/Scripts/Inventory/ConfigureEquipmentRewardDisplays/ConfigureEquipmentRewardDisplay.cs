@@ -18,7 +18,8 @@ namespace CryptoQuest.Inventory.ConfigureEquipmentRewardDisplays
             var key = GetStringKey(ctx.Loot.EquipmentId, _database);
             if (string.IsNullOrEmpty(key)) return;
 
-            LocalizedString localizedString = new LocalizedString(_tableReference, key);
+            LocalizedString localizedString = new LocalizedString();
+            localizedString.SetReference(_tableReference, key);
             ctx.RewardItem.SetContentStringRef(localizedString);
         }
 
