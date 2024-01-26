@@ -14,20 +14,23 @@ namespace CryptoQuest.Inventory.LootAPI
     {
         private IRestClient _restClient;
 
-        private struct Body
+        public struct UpdatePartyEXPBody
         {
-            [JsonProperty("id")]
-            public int Id;
+            public UpdateEXPBody[] Characters;
+        }
 
-            [JsonProperty("exp")]
-            public float Exp;
+        public struct UpdateEXPBody
+        {
+            [JsonProperty("id")] public int Id;
+
+            [JsonProperty("exp")] public float Exp;
         }
 
         protected override void HandleAction(UpdateCharacterExpAction ctx)
         {
             _restClient = ServiceProvider.GetService<IRestClient>();
             _restClient
-                .WithBody(new Body { Id = ctx.CharacterId, Exp = ctx.UpdatedExp })
+                .WithBody(ctx.UpdateEXPRequests)
                 .Put<CharactersResponse>(Accounts.CHARACTERS)
                 .Subscribe();
         }

@@ -1,16 +1,15 @@
+using CryptoQuest.Inventory.LootAPI;
 using IndiGames.Core.Events;
 
 namespace CryptoQuest.Inventory.Actions
 {
     public class UpdateCharacterExpAction : ActionBase
     {
-        public int CharacterId;
-        public float UpdatedExp;
+        public UpdateCharacterExpRequest.UpdateEXPBody[] UpdateEXPRequests;
 
-        public UpdateCharacterExpAction(int characterId, float updatedExp)
+        public UpdateCharacterExpAction(UpdateCharacterExpRequest.UpdateEXPBody[] updateEXPRequests)
         {
-            CharacterId = characterId;
-            UpdatedExp = updatedExp;
+            UpdateEXPRequests = updateEXPRequests;
         }
     }
 }
