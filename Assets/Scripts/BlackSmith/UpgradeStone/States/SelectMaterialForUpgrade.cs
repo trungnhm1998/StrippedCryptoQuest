@@ -9,7 +9,10 @@ namespace CryptoQuest.BlackSmith.UpgradeStone.States
 {
     public class SelectMaterialForUpgrade : UpgradeMagicStoneStateBase
     {
-        public SelectMaterialForUpgrade(UpgradeMagicStoneStateMachine stateMachine) : base(stateMachine) { }
+        public SelectMaterialForUpgrade(UpgradeMagicStoneStateMachine stateMachine) : base(stateMachine)
+        {
+        }
+
         private List<UIUpgradableStone> _cachedItems = new();
         private readonly int _requiredMaterialAmount = 3;
 
@@ -22,12 +25,14 @@ namespace CryptoQuest.BlackSmith.UpgradeStone.States
             RequestPreview(upgradableStones, _stateMachine.StoneToUpgrade.MagicStone);
             _magicStoneTooltip.SetData(_stateMachine.StoneToUpgrade.MagicStone, true);
             _magicStoneTooltip.SetupInfo();
+            _magicStoneTooltip.gameObject.SetActive(true);
             _materialStonesPresenter.gameObject.SetActive(true);
-
+            _upgradableStonePresenter.ClearStones();
             _materialStonesPresenter.ClearStones();
             _materialStonesPresenter.RenderStones(upgradableStones);
             _materialStonesPresenter.ClearStones(_stateMachine.StoneToUpgrade);
             _materialStonesPresenter.MaterialSelected += OnSelectMaterialStone;
+            _materialStonesPresenter.SelectFirstButton();
         }
 
         private void OnSelectMaterialStone(UIUpgradableStone stoneUI)
@@ -97,6 +102,7 @@ namespace CryptoQuest.BlackSmith.UpgradeStone.States
 
 
             var ids = GetIdsForPreviews(filteredStoneLists);
+            if (ids.Count == 0) return;
             ActionDispatcher.Dispatch(new UpgradeStonePreviewRequest(ids));
         }
 

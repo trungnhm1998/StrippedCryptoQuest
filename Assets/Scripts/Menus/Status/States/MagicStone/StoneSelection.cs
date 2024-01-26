@@ -44,7 +44,7 @@ namespace CryptoQuest.Menus.Status.States.MagicStone
             });
         }
 
-        private void BackToSelectSlot() => fsm.RequestStateChange(State.MAGIC_STONE_ELEMENT_NAVIGATION);
+        private void BackToSelectSlot() => fsm.RequestStateChange(State.MAGIC_STONE_SLOT_SELECTION);
 
         public override void OnExit()
         {
