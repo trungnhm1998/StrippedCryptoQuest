@@ -168,17 +168,20 @@ MonoBehaviour:
   _pathStorage: {fileID: 11400000, guid: 2a4e24b3a44766f4d88fe843fa5fbd5a, type: 2}
   _inputMediatorSO: {fileID: 11400000, guid: 1fb61cdb72f0a484f8e4db68e2011977, type: 2}
   _ocarinaData: {fileID: 11400000, guid: e1a8fc228b0646346b1744f53d19c13b, type: 2}
+  _spiralConfig: {fileID: 11400000, guid: 2708a2e85420add4493974ea482cd235, type: 2}
+  _fadeConfig: {fileID: 0}
+  _transitionColor: {r: 0, g: 0, b: 0, a: 1}
   _onSceneLoadedEventChannel: {fileID: 11400000, guid: b8b96e43d21a7bf4c96df4cb83c2b764, type: 2}
   _registerTownEvent: {fileID: 11400000, guid: 3ea2dceec7e7a764da0d5ccbd12c59be, type: 2}
-  _spiralConfig: {fileID: 11400000, guid: 2708a2e85420add4493974ea482cd235, type: 2}
   _requestLoadMapEvent: {fileID: 11400000, guid: 932ea26428d5f4c4f8bdfd48ebc80873, type: 2}
   _onOcarinaTriggered:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11400000, guid: 312b6b19365a1864b9390012b99f669d, type: 2}
-        m_TargetAssemblyTypeName: CryptoQuest.Gameplay.Ship.ShipBus, IndiGames.CryptoQuest
-        m_MethodName: set_HasSailed
-        m_Mode: 6
+      - m_Target: {fileID: 11400000, guid: ae9198eba63144e42afdbcbcdad4f55d, type: 2}
+        m_TargetAssemblyTypeName: IndiGames.Core.Events.ScriptableObjects.VoidEventChannelSO,
+          IndiGames.Core
+        m_MethodName: RaiseEvent
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
