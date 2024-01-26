@@ -80,7 +80,7 @@ namespace CryptoQuest.Battle.Components
             for (var i = 0; i < attributes.Length; i++)
             {
                 var attribute = attributes[i];
-                var attributeValue = (equipment.Level - 1) * equipment.ValuePerLvl;
+                var attributeValue = equipment.Level * equipment.ValuePerLvl;
 
                 modifiers[i] = new EffectAttributeModifier
                 {

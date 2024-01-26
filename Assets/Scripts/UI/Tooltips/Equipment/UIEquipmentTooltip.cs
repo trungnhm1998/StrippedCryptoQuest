@@ -83,7 +83,7 @@ namespace CryptoQuest.UI.Tooltips.Equipment
                 if (_attributeConfigMapping.TryGetMap(attribute.Attribute, out var config) == false) continue;
                 var attributeValue = Instantiate(_attributeValuePrefab, _statsContainer);
                 var value = attribute.Value;
-                value += (_equipment.Level - 1) * _equipment.Data.ValuePerLvl;
+                value += _equipment.Level * _equipment.Data.ValuePerLvl;
                 attributeValue.SetAttribute(config.Name, Mathf.FloorToInt(value));
             }
         }
