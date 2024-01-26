@@ -3,6 +3,7 @@ using CryptoQuest.Menus.DimensionalBox.States;
 using CryptoQuest.Menus.DimensionalBox.UI.EquipmentsTransfer;
 using CryptoQuest.Menus.DimensionalBox.UI.MetaDTransfer;
 using CryptoQuest.UI.Menu;
+using CryptoQuest.UI.Tooltips.Events;
 using UnityEngine;
 
 namespace CryptoQuest.Menus.DimensionalBox
@@ -29,6 +30,7 @@ namespace CryptoQuest.Menus.DimensionalBox
             Input.MenuCancelEvent += _stateMachine.Cancel;
             Input.MenuExecuteEvent += _stateMachine.Execute;
             Input.MenuResetEvent += _stateMachine.Reset;
+            Input.MenuInteractEvent += _stateMachine.Interact;
         }
 
         private void OnDisable()
@@ -38,6 +40,7 @@ namespace CryptoQuest.Menus.DimensionalBox
             Input.MenuCancelEvent -= _stateMachine.Cancel;
             Input.MenuExecuteEvent -= _stateMachine.Execute;
             Input.MenuResetEvent -= _stateMachine.Reset;
+            Input.MenuInteractEvent -= _stateMachine.Interact;
         }
 
         public void ChangeState(int state) => _stateMachine.RequestStateChange((EState)state);

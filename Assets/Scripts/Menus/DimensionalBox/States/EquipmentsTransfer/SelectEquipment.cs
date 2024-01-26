@@ -15,6 +15,7 @@ namespace CryptoQuest.Menus.DimensionalBox.States.EquipmentsTransfer
             AddAction(EStateAction.OnExecute, OnTransferring);
             AddAction<Vector2>(EStateAction.OnNavigate, NavigateList);
             AddAction(EStateAction.OnReset, ResetSelected);
+            AddAction(EStateAction.OnInteract, ShowDetail);
         }
 
         private void OnTransferring()
@@ -33,11 +34,13 @@ namespace CryptoQuest.Menus.DimensionalBox.States.EquipmentsTransfer
 
             _fsm.IngameList.Interactable = _fsm.InboxList.Interactable = false;
 
+            _fsm.TooltipEnabledEventChannel.RaiseEvent(false);
             fsm.RequestStateChange(EEquipmentState.Confirm);
         }
 
         private void NavigateList(Vector2 axis)
         {
+            _fsm.TooltipEnabledEventChannel.RaiseEvent(false);
             switch (axis.x)
             {
                 case 0:
@@ -55,12 +58,19 @@ namespace CryptoQuest.Menus.DimensionalBox.States.EquipmentsTransfer
         {
             _fsm.InboxList.Reset();
             _fsm.IngameList.Reset();
+            _fsm.TooltipEnabledEventChannel.RaiseEvent(false);
             ActionDispatcher.Dispatch(new FetchNftEquipments());
+        }
+
+        private void ShowDetail()
+        {
+            _fsm.TooltipEnabledEventChannel.RaiseEvent(true);
         }
 
         public override void OnEnter()
         {
             if (!_fsm.IngameList.TryFocus()) _fsm.InboxList.TryFocus();
+            _fsm.TooltipEnabledEventChannel.RaiseEvent(false);
         }
     }
 }
