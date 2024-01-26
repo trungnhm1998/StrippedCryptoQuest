@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using CryptoQuest.Battle.Components;
 using CryptoQuest.Events;
 using CryptoQuest.Gameplay.Loot;
@@ -58,13 +59,21 @@ namespace CryptoQuest.Inventory
 
         public void Visit(ExpLoot loot)
         {
+            List<UpdateCharacterExpRequest.UpdateEXPBody> requests = new();
             ActionDispatcher.Dispatch(new AddExpToPartyAction(loot.Exp));
             foreach (var slot in _partyManager.Slots)
             {
                 if (!slot.HeroBehaviour.IsValidAndAlive()) continue;
                 var expProvider = slot.HeroBehaviour.GetComponent<IExpProvider>();
-                ActionDispatcher.Dispatch(new UpdateCharacterExpAction(slot.HeroBehaviour.Spec.Id, expProvider.Exp));
+                requests.Add(new UpdateCharacterExpRequest.UpdateEXPBody
+                {
+                    Id = slot.HeroBehaviour.Spec.Id,
+                    Exp = expProvider.Exp
+                });
             }
+
+
+            ActionDispatcher.Dispatch(new UpdateCharacterExpAction(requests.ToArray()));
         }
     }
 }
