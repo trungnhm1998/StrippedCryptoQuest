@@ -60,14 +60,13 @@ namespace CryptoQuest.Ranch.State.BeastUpgrade
 
             _stateController.UIBeastUpgrade.Contents.SetActive(false);
             StateMachine.Play(OverviewState);
+            _dialogue.Hide();
         }
 
         protected override void OnExit()
         {
             _input.CancelEvent -= CancelBeastUpgradeState;
             _input.SubmitEvent -= SelectBeastLevel;
-
-            _dialogue.Hide();
 
             _stateController.UpgradePresenter.Interactable = false;
         }
