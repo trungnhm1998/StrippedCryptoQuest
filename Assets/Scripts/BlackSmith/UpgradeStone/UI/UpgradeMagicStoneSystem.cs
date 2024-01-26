@@ -9,7 +9,7 @@ namespace CryptoQuest.BlackSmith.UpgradeStone.UI
     public class UpgradeMagicStoneSystem : MonoBehaviour
     {
         public List<IMagicStone> StoneList => StoneInventory.MagicStones;
-      
+
         [field: SerializeField] public MagicStoneInventory StoneInventory { get; private set; }
         [field: SerializeField] public CurrencyPresenter CurrencyPresenter { get; private set; }
         [field: SerializeField] public StoneUpgradePresenter StoneUpgradePresenter { get; private set; }
@@ -38,7 +38,6 @@ namespace CryptoQuest.BlackSmith.UpgradeStone.UI
                     PassiveId1 = item.Passives[0].Context.SkillInfo.Id,
                     PassiveId2 = item.Passives[1].Context.SkillInfo.Id
                 })
-                .Where(group => group.Count() >= 3)
                 .SelectMany(group => group.ToList())
                 .ToList();
         }

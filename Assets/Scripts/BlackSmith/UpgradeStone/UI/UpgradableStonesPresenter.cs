@@ -28,7 +28,7 @@ namespace CryptoQuest.BlackSmith.UpgradeStone.UI
 
         [SerializeField] private ScrollRect _scrollRect;
         [SerializeField] private UIUpgradableStone _stonePrefab;
-        [SerializeField] private int _maxLevel = 9;
+        [SerializeField] private int _maxLevel = 10;
         public Transform Content => _scrollRect.content;
         protected IObjectPool<UIUpgradableStone> _itemPool;
 
@@ -52,25 +52,28 @@ namespace CryptoQuest.BlackSmith.UpgradeStone.UI
                 SetupStonePrice(stoneUI);
             }
 
-            StartCoroutine(SelectFirstButton());
+            StartCoroutine(CoSelectFirstButton());
         }
 
-        private IEnumerator SelectFirstButton()
+        private IEnumerator CoSelectFirstButton()
         {
             foreach (var item in _cachedItems)
             {
-                if (item.Button.interactable)
+                if (!item.Button.interactable || !item.Button.gameObject.activeSelf) continue;
+                while (item.MagicStone.Passives.Length < 2)
                 {
-                    while (item.MagicStone.Passives.Length < 2)
-                    {
-                        yield return null;
-                    }
-
-                    item.Button.Select();
-                    StoneInspected?.Invoke(item.MagicStone);
-                    yield break;
+                    yield return null;
                 }
+
+                item.Button.Select();
+                StoneInspected?.Invoke(item.MagicStone);
+                yield break;
             }
+        }
+
+        public void SelectFirstButton()
+        {
+            StartCoroutine(CoSelectFirstButton());
         }
 
         public void SetupStonePrice(UIUpgradableStone itemUI)
@@ -99,10 +102,16 @@ namespace CryptoQuest.BlackSmith.UpgradeStone.UI
         {
             foreach (var item in _cachedItems.ToList())
             {
-                if (exceptionUI != null && item.MagicStone.Definition == exceptionUI.MagicStone.Definition &&
-                    item.MagicStone.Level == exceptionUI.MagicStone.Level) continue;
+                if (exceptionUI != null && IsSameStone(item.MagicStone, exceptionUI.MagicStone)) continue;
                 _itemPool.Release(item);
             }
+        }
+
+        private bool IsSameStone(IMagicStone cachedStone, IMagicStone stoneSelected)
+        {
+            return cachedStone.Definition == stoneSelected.Definition && cachedStone.Level == stoneSelected.Level &&
+                   cachedStone.Passives[0].Context.SkillInfo.Id == stoneSelected.Passives[0].Context.SkillInfo.Id &&
+                   cachedStone.Passives[1].Context.SkillInfo.Id == stoneSelected.Passives[1].Context.SkillInfo.Id;
         }
 
         private void OnInspectItem(UIUpgradableStone ui)
