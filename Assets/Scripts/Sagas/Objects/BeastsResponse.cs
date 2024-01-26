@@ -42,10 +42,10 @@ namespace CryptoQuest.Sagas.Objects
         public string beastId;
         public float HP;
         public float addHp;
-        public float maxHp;
+        public float maxHP;
         public float MP;
         public float addMp;
-        public float maxMp;
+        public float maxMP;
         public float strength;
         public float addStrength;
         public float vitality;
