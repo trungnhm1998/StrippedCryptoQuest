@@ -64,6 +64,10 @@ namespace CryptoQuest.BlackSmith.Upgrade.Presenters
         private IEnumerator CoInitUI()
         {
             yield return _upgradeModel.CoGetData();
+
+            var hasEquipments = _upgradeModel.Equipments.Count > 0;
+            _equipmentDetailsUI.gameObject.SetActive(hasEquipments);
+
             _equipmentListUI.InitUI(_upgradeModel);
 
             yield return new WaitForSeconds(ERROR_PRONE_DELAY);
