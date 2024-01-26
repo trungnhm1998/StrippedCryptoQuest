@@ -57,10 +57,7 @@ namespace CryptoQuest.Map.CheckPoint
 
         private IEnumerator CoLoadDialogAndShowMessage()
         {
-            if (_dialog == null)
-            {
-                yield return GenericDialogController.Instance.CoInstantiate(dialog => _dialog = dialog);
-            }
+            yield return GenericDialogController.Instance.CoInstantiate(dialog => _dialog = dialog);
 
             _dialog.WithMessage(_revivalMessage).RequireInput().WithHideCallback(EnableMapInput).Show();
         }
