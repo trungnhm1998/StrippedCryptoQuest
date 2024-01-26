@@ -21,6 +21,7 @@ namespace CryptoQuest.Menus.DimensionalBox.States
         OnExecute = 1,
         OnNavigate = 2,
         OnReset = 3,
+        OnInteract = 4,
     }
 
     public class DBoxStateMachine : StateMachine<EState, EStateAction>
@@ -55,5 +56,6 @@ namespace CryptoQuest.Menus.DimensionalBox.States
         }
 
         public void Reset() => OnAction(EStateAction.OnReset);
+        public void Interact() => OnAction(EStateAction.OnInteract);
     }
 }

@@ -2,6 +2,7 @@
 using CryptoQuest.Input;
 using CryptoQuest.Menus.DimensionalBox.UI.EquipmentsTransfer;
 using CryptoQuest.Sagas.Objects;
+using CryptoQuest.UI.Tooltips.Events;
 using FSM;
 using IndiGames.Core.Events;
 using TinyMessenger;
@@ -24,6 +25,7 @@ namespace CryptoQuest.Menus.DimensionalBox.States.EquipmentsTransfer
         public UIEquipmentList InboxList => Panel.InboxList;
         public List<UIEquipment> ToWallet { get; set; }
         public List<UIEquipment> ToGame { get; set; }
+        public ShowTooltipEvent TooltipEnabledEventChannel => Panel.TooltipEnabledEventChannel;
 
         public TransferEquipmentsStateMachine(DBoxStateMachine rootFsm) : base(false)
         {
@@ -74,6 +76,7 @@ namespace CryptoQuest.Menus.DimensionalBox.States.EquipmentsTransfer
 
         public override void OnExit()
         {
+            TooltipEnabledEventChannel.RaiseEvent(false);
             Panel.gameObject.SetActive(false);
             base.OnExit();
 
