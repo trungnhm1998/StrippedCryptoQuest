@@ -14,10 +14,8 @@ namespace CryptoQuest.System.SaveSystem.Loaders
 
         public override void Load()
         {
-#if UNITY_EDITOR
             _questSave.InProgressQuest.Clear();
             _questSave.CompletedQuests.Clear();
-#endif
             if (!_progressionSystem.SaveData.TryGetValue(_questSave.name, out var json)) return;
             JsonConvert.PopulateObject(json, _questSave);
         }
