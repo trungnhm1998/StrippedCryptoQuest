@@ -76,12 +76,11 @@ namespace CryptoQuest.Ranch.Evolve.UI
 
         private void SetBeastStarAfterEvolve(IBeast beast)
         {
-            for (int i = 0; i < beast.Stars; i++)
+            for (int i = 0; i < MAX_STAR; i++)
             {
-                _listStar[i].sprite = _currentStar;
+                _listStar[i].sprite = i < beast.Stars ? _currentStar : _defaultStar;
             }
         }
-
 
         private void UpdateBeastStats(AttributeSystemBehaviour attributeValues)
         {
