@@ -14,8 +14,11 @@ namespace CryptoQuest.System.SaveSystem.Loaders
 
         private void Start()
         {
+            // Because editor need to reload domain so this can be called multiple times
+#if !UNITY_EDITOR
             if (_isLoaded) return;
             _isLoaded = true;
+#endif
             if (_shipBus.CurrentSailState != ESailState.Sailing) return;
             _spawnShipAtPositionEvent.RaiseEvent(transform.position);
         }

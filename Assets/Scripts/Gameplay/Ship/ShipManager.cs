@@ -9,8 +9,9 @@ namespace CryptoQuest.Gameplay.Ship
         [SerializeField] private ShipSpawner _shipSpawner;
         [SerializeField] private ShipBus _shipBus;
         [SerializeField] private VoidEventChannelSO _sceneLoadedEvent;
-        [SerializeField] private VoidEventChannelSO _spawnAllShipsEvent;
+        [SerializeField] private VoidEventChannelSO _forceSpawnAllShipsEvent;
         [SerializeField] private VoidEventChannelSO _setActiveShipEvent;
+        [SerializeField] private VoidEventChannelSO _requestSpawnAllShipsEvent;
         
         private List<ShipBehaviour> _spawnedShips = new();
         private ShipBehaviour _sailedShip;
@@ -20,7 +21,8 @@ namespace CryptoQuest.Gameplay.Ship
             _shipSpawner.ShipSpawned += ShipSpawned;
             _setActiveShipEvent.EventRaised += SetShipActivated;
             _sceneLoadedEvent.EventRaised += RequestSpawnShip;
-            _spawnAllShipsEvent.EventRaised += OnSpawnAllShip;
+            _requestSpawnAllShipsEvent.EventRaised += RequestSpawnShip;
+            _forceSpawnAllShipsEvent.EventRaised += OnSpawnAllShip;
         }
 
         private void OnDisable()
@@ -28,7 +30,8 @@ namespace CryptoQuest.Gameplay.Ship
             _shipSpawner.ShipSpawned -= ShipSpawned;
             _setActiveShipEvent.EventRaised -= SetShipActivated;
             _sceneLoadedEvent.EventRaised -= RequestSpawnShip;
-            _spawnAllShipsEvent.EventRaised -= OnSpawnAllShip;
+            _requestSpawnAllShipsEvent.EventRaised -= RequestSpawnShip;
+            _forceSpawnAllShipsEvent.EventRaised -= OnSpawnAllShip;
         }
 
         private void OnDestroy()
@@ -44,7 +47,7 @@ namespace CryptoQuest.Gameplay.Ship
 
             if (TrySpawnShipAtLastPosition()) return;
 
-            _spawnAllShipsEvent.RaiseEvent();
+            _forceSpawnAllShipsEvent.RaiseEvent();
             _shipBus.CurrentSailState = ESailState.NotSail;
         }
 
@@ -62,6 +65,7 @@ namespace CryptoQuest.Gameplay.Ship
 
         private void SetShipActivated()
         {
+            if (_shipBus.IsShipActivated) return;
             _shipBus.IsShipActivated = true;
             _shipBus.CurrentSailState = ESailState.NotSail;
             _shipSpawner.enabled = _shipBus.IsShipActivated;

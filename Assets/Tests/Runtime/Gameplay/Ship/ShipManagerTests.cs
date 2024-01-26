@@ -1,7 +1,9 @@
 using System.Collections;
+using System.Reflection;
 using CryptoQuest.Character.MonoBehaviours;
 using CryptoQuest.Gameplay;
 using CryptoQuest.Gameplay.Ship;
+using CryptoQuest.System.SaveSystem.Loaders;
 using IndiGames.Core.Events.ScriptableObjects;
 using NUnit.Framework;
 using UnityEditor;
@@ -16,7 +18,8 @@ namespace CryptoQuest.Tests.Runtime.Gameplay.Ship
     public class ShipManagerTests
     {
         private ShipBus _shipBus;
-        private VoidEventChannelSO _spawnAllShipsEvent;
+        private VoidEventChannelSO _requestSpawnAllShipsEvent;
+        private VoidEventChannelSO _forceSpawnAllShipsEvent;
         private HeroBehaviour _hero;
         private VoidEventChannelSO _sceneLoadedEvent;
 
@@ -27,8 +30,10 @@ namespace CryptoQuest.Tests.Runtime.Gameplay.Ship
         {
             _shipBus = AssetDatabase.LoadAssetAtPath<ShipBus>(
                 "Assets/ScriptableObjects/GameplayBuses/ShipBus.asset");
-            _spawnAllShipsEvent = AssetDatabase.LoadAssetAtPath<VoidEventChannelSO>(
-                "Assets/ScriptableObjects/Events/Ship/SpawnAllShipsEventChannel.asset");
+            _requestSpawnAllShipsEvent = AssetDatabase.LoadAssetAtPath<VoidEventChannelSO>(
+                "Assets/ScriptableObjects/Events/Ship/RequestSpawnAllShipsEventChannel.asset");
+            _forceSpawnAllShipsEvent = AssetDatabase.LoadAssetAtPath<VoidEventChannelSO>(
+                "Assets/ScriptableObjects/Events/Ship/ForceSpawnAllShipsEventChannel.asset");
             _sceneLoadedEvent = AssetDatabase.LoadAssetAtPath<VoidEventChannelSO>(
                 "Assets/ScriptableObjects/Events/SceneManagement/SceneLoadedEventChannel.asset");
         }
@@ -73,6 +78,7 @@ namespace CryptoQuest.Tests.Runtime.Gameplay.Ship
             _shipBus.LastPosition = new SerializableVector2(new Vector2(100, 100));
             _shipBus.IsShipActivated = true;
             _shipBus.CurrentSailState = ESailState.Sailing;
+
             yield return LoadScene(TEST_SCENE_PATH);
 
             yield return new WaitForSeconds(1f);
@@ -83,14 +89,14 @@ namespace CryptoQuest.Tests.Runtime.Gameplay.Ship
         }
 
         [UnityTest]
-        public IEnumerator RespawnAllShips_AfterShipActivatedAndLanded_ShipsReseted()
+        public IEnumerator ForceRespawnAllShips_AfterShipActivatedAndLanded_ShipsReseted()
         {
             _shipBus.LastPosition = new SerializableVector2(new Vector2(100, 100));
             _shipBus.IsShipActivated = true;
             _shipBus.CurrentSailState = ESailState.Landed;
             yield return LoadScene(TEST_SCENE_PATH);
 
-            _spawnAllShipsEvent.RaiseEvent();
+            _forceSpawnAllShipsEvent.RaiseEvent();
             yield return new WaitForEndOfFrame();
 
             var shipSpawnPoints = GameObject.FindObjectsByType<ShipSpawnPoint>(FindObjectsSortMode.None);
