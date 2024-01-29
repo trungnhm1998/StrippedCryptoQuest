@@ -22,7 +22,7 @@ namespace CryptoQuest.EditorTool
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
         private void OnGUI()
         {
-            bool isDialogueState = _gameState.CurrentGameState == EGameState.Dialogue;
+            bool isDialogueState = _gameState.CurrentGameState is EGameState.Dialogue or EGameState.Cutscene;
 
             var styleToggle = new GUIStyle(GUI.skin.toggle);
             styleToggle.fontSize = _fontSize;
