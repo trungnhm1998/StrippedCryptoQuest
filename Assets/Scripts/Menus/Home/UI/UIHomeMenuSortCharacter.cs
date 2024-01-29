@@ -207,6 +207,7 @@ namespace CryptoQuest.Menus.Home.UI
             {
                 var otherTarget = _partySlots[_indexHolder].transform.GetChild(0);
                 PutToNormalLayer(otherTarget, CurrentIndex);
+                PartyController.Sort(_indexHolder, CurrentIndex);
             }
 
             PutToNormalLayer(_selectedCardButtonHolder.transform, _indexHolder);
