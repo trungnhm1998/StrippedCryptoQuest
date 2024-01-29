@@ -67,6 +67,8 @@ MonoBehaviour:
   - rid: 8154416336514056341
   - rid: 8154416336514056340
   - rid: 8154416336514056342
+  - rid: 8154416499910543313
+  - rid: 8154416499910543312
   _saveFinishedEventChannel: {fileID: 11400000, guid: 0afeefb323956c94e93e98830d67ab90, type: 2}
   references:
     version: 2
@@ -92,3 +94,11 @@ MonoBehaviour:
       type: {class: SceneSaver, ns: CryptoQuest.System.SaveSystem.Savers, asm: IndiGames.CryptoQuest}
       data:
         _loadMap: {fileID: 11400000, guid: 932ea26428d5f4c4f8bdfd48ebc80873, type: 2}
+    - rid: 8154416499910543312
+      type: {class: PathStorageSaver, ns: CryptoQuest.System.SaveSystem.Savers, asm: IndiGames.CryptoQuest}
+      data:
+        _pathStorage: {fileID: 11400000, guid: 2a4e24b3a44766f4d88fe843fa5fbd5a, type: 2}
+    - rid: 8154416499910543313
+      type: {class: OpenedChestSaver, ns: CryptoQuest.System.SaveSystem.Savers, asm: IndiGames.CryptoQuest}
+      data:
+        _chestSave: {fileID: 11400000, guid: 238c3366bb1b1644b9434764feeb7e1d, type: 2}
