@@ -2475,7 +2475,7 @@ namespace CryptoQuest.Input
                 },
                 {
                     ""name"": ""LeftRightShoulders"",
-                    ""id"": ""523f3fc1-7434-4036-80e6-2b1ca4a85627"",
+                    ""id"": ""6ad117de-4dbd-47f6-9ce5-8b9a0ed6e44f"",
                     ""path"": ""1DAxis"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -2483,6 +2483,28 @@ namespace CryptoQuest.Input
                     ""action"": ""Execute"",
                     ""isComposite"": true,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""0b6c5c58-eb81-419c-a1a3-7366fb2f2e00"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Execute"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""2cffff81-e3bf-4eab-8f56-4a1e0003411c"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Execute"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 },
                 {
                     ""name"": """",
