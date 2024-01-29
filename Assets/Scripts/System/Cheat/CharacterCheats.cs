@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using CommandTerminal;
@@ -37,15 +38,21 @@ namespace CryptoQuest.System.Cheat
                     FindObjectsSortMode.InstanceID);
             foreach (var character in characters.Reverse())
             {
-                if (!_cache.TryAdd(character.GetInstanceID(), character)) return;
-                Debug.Log($"Character [{character.DisplayName}] id: [{character.GetInstanceID()}]");
-
+                if (!character.IsValid()) continue;
+                _cache.TryAdd(character.GetInstanceID(), character);
+                StartCoroutine(CoShowCharacterId(character));
 #if UNITY_EDITOR
                 // Very handy in editor but since I can't remove from autocomplete when character not valid 
                 // it's not pratical in build since tester will test many battle
                 Terminal.Autocomplete.Register(character.GetInstanceID().ToString());
 #endif
             }
+        }
+
+        private IEnumerator CoShowCharacterId(Battle.Components.Character character)
+        {
+            yield return character.LocalizedName.GetLocalizedStringAsync();
+            Debug.Log($"Character [{character.DisplayName}] id: [{character.GetInstanceID()}]");
         }
 
         public Battle.Components.Character GetCharacter(int instanceId) =>
