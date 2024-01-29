@@ -11,7 +11,7 @@ namespace CryptoQuest.Menus.Home.UI
         public void Active(bool isValid)
         {
             _hasCharacter = isValid;
-            _characterInSlot.gameObject.SetActive(_hasCharacter);
+            _characterInSlot.transform.parent.gameObject.SetActive(_hasCharacter);
         }
 
         public void Init(HeroBehaviour member, UICharacterInfo child)
