@@ -22,7 +22,10 @@ MonoBehaviour:
         m_Key: 
       m_FallbackState: 0
       m_WaitForCompletion: 0
-      m_LocalVariables: []
+      m_LocalVariables:
+      - name: global
+        variable:
+          rid: 5072777877853602918
     Gender: 0
     LocalizedBirthPlace:
       m_TableReference:
@@ -44,8 +47,10 @@ MonoBehaviour:
       m_FallbackState: 0
       m_WaitForCompletion: 0
       m_LocalVariables: []
-  <Label>k__BackingField:
-    m_LabelString: character-main
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 5072777877853602918
+      type: {class: NestedVariablesGroup, ns: UnityEngine.Localization.SmartFormat.PersistentVariables, asm: Unity.Localization}
+      data:
+        m_Value: {fileID: 11400000, guid: 485ec8f60e1b08a43bfd52c618cf8d9b, type: 2}
