@@ -168,8 +168,7 @@ namespace CryptoQuestEditor.Item
             var cappedAttribute = new CappedAttributeDef(attributeMap.Attribute);
             cappedAttribute.MinValue = min;
             cappedAttribute.MaxValue = max;
-            return new AttributeWithValue(attributeMap.Attribute,
-                _levelCalculator.GetValueAtLevel(equipment.MinLevel, cappedAttribute, equipment.MaxLevel));
+            return new AttributeWithValue(attributeMap.Attribute, cappedAttribute.MinValue);
         }
 
 
