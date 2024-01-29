@@ -45,8 +45,10 @@ namespace CryptoQuest.Ranch.UI
             _inGameTag.SetActive(Response.IsEquipped);
 
             _beast = ServiceProvider.GetService<IBeastResponseConverter>().Convert(beast);
-            _name.text = $"{Id}.{Response.name}";
-            _level.text = $"Lv.{_beast.Level}";
+
+            _name.text = $"{Id}-{Response.id}";
+            if (!_beast.LocalizedName.IsEmpty)
+                _localizeName.StringReference = _beast.LocalizedName;
         }
 
         public void OnSelectToTransfer()
