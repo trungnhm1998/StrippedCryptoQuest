@@ -8,11 +8,14 @@ namespace CryptoQuest.Battle.Components
         private Character _character;
         protected Character Character => _character ??= base.GetComponent<Character>();
 
-        protected virtual void Awake()
+        private void Awake()
         {
             if (Character == null)
                 Debug.LogError($"CharacterComponentBase requires Character component on the same GameObject");
+            OnAwake();
         }
+        
+        protected virtual void OnAwake() { }
 
         public void Init()
         {

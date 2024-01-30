@@ -1,7 +1,6 @@
 using System;
 using CryptoQuest.Battle.Actions;
 using CryptoQuest.Character.LevelSystem;
-using CryptoQuest.Inventory.Actions;
 using IndiGames.Core.EditorTools.Attributes.ReadOnlyAttribute;
 using IndiGames.Core.Events;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
@@ -25,6 +24,7 @@ namespace CryptoQuest.Battle.Components
     /// </summary>
     public class LevelSystem : MonoBehaviour
     {
+        public event Action ExpAdded;
         [SerializeField, ReadOnly] private int _level = 1;
         [SerializeField] private AttributeScriptableObject _expBuffAttribute;
 
@@ -71,6 +71,7 @@ namespace CryptoQuest.Battle.Components
 
             var addedExp = expToAdd * expBuffValue.CurrentValue;
             _expProvider.Exp += addedExp;
+            ExpAdded?.Invoke();
 
             CalculateCurrentLevel();
         }
