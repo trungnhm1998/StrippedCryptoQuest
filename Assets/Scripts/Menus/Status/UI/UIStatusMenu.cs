@@ -32,6 +32,7 @@ namespace CryptoQuest.Menus.Status.UI
         [field: SerializeField] public GameObject MagicStoneMenu { get; private set; }
         [field: SerializeField] public UIAttachList UIAttachList { get; private set; }
         [field: SerializeField] public MagicStoneSelection MagicStoneSelection { get; private set; }
+        [field: SerializeField] public StatusMenuEquipmentPreviewer EquipmentPreviewer { get; private set; }
 
         public ESlot ModifyingSlot { get; set; }
         public EEquipmentCategory ModifyingCategory { get; set; }

@@ -41,10 +41,14 @@ namespace CryptoQuest.Menus.Status.UI
         }
 
         /// <summary>
-        // Need to reset previewer when unequip pressed so UIAttribute can SetValue
-        // Setup this in Unequip Button
-        /// <see cref="UIAttribute.SetValue(AttributeValue)"/>
+        // Need to reset previewer when enter this state so it can re-init character
         /// </summary>
+        public void ResetPreviewer()
+        {
+            _hero = null;
+            _equipmentController = null;
+        }
+
         public void UnequipPressed() => _previewer.ResetPreview();
 
         private void InitPreviewer(HeroBehaviour hero)
@@ -82,29 +86,42 @@ namespace CryptoQuest.Menus.Status.UI
         private void RegistEvents()
         {
             if (_equipmentController == null) return;
-            _equipmentController.Equipped += InitCurrentHero;
-            _equipmentController.Removed += InitCurrentHero;
+            _equipmentController.Equipped += EquipPreviewEquipment;
+            _equipmentController.Removed += RemovePreviewEquipment;
         }
 
         private void UnregistEvents()
         {
             if (_equipmentController == null) return;
-            _equipmentController.Equipped -= InitCurrentHero;
-            _equipmentController.Removed -= InitCurrentHero;
+            _equipmentController.Equipped -= EquipPreviewEquipment;
+            _equipmentController.Removed -= RemovePreviewEquipment;
         }
 
-        private void InitCurrentHero(IEquipment _) => InitPreviewer(_hero);
+        private void EquipPreviewEquipment(IEquipment equipment) 
+        {
+            _previewer.ClonedHero.TryGetComponent<EquipmentsController>(out var equipmentsController);
+            equipmentsController.Equip(equipment, _statusMenu.ModifyingSlot);
+            CacheCurrentAttributesValue();
+        }
+
+        private void RemovePreviewEquipment(IEquipment equipment) 
+        {
+            _previewer.ClonedHero.TryGetComponent<EquipmentsController>(out var equipmentsController);
+            equipmentsController.Unequip(equipment);
+            CacheCurrentAttributesValue();
+        }
+
 
         private void PreviewEquip()
         {
             var equipment = GetEquipmentFromSelectedObject();
-            _previewer.PreviewEquip(equipment);
+            _previewer.PreviewEquip(equipment, _statusMenu.ModifyingSlot);
         }
 
         private void PreviewUnequip()
         {
             var equipment = GetEquipmentFromSelectedObject();
-            _previewer.PreviewUnequip(equipment);
+            _previewer.PreviewUnequip(equipment, _statusMenu.ModifyingSlot);
         }
 
         private IEquipment GetEquipmentFromSelectedObject()
