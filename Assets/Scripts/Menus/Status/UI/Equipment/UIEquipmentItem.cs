@@ -11,7 +11,6 @@ namespace CryptoQuest.Menus.Status.UI.Equipment
     {
         public event Action<UIEquipmentItem> EquipItem;
         [SerializeField] private UIEquipment _equipmentUI;
-        [SerializeField] private VoidEventChannelSO _unequipEventChannel;
         public IEquipment Equipment => _equipmentUI.Equipment;
         private bool _canClick;
 
@@ -32,12 +31,6 @@ namespace CryptoQuest.Menus.Status.UI.Equipment
         {
             if (!_canClick) return;
             EquipItem?.Invoke(this);
-        }
-
-        private void OnDisable()
-        {
-            if (EventSystem.current.currentSelectedGameObject == gameObject)
-                _unequipEventChannel.RaiseEvent();
         }
     }
 }

@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using CryptoQuest.Battle.Components;
-using CryptoQuest.Character.Hero;
 using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.Inventory.Helper;
 using CryptoQuest.Item.Equipment;
@@ -26,19 +25,6 @@ namespace CryptoQuest.UI.Menu.Character
         public bool IsValid => _clonedHero != null;
         public HeroBehaviour ClonedHero => _clonedHero;
 
-        private void OnEnable()
-        {
-            if (_clonedHero == null) return;
-            InitSpec();
-            _clonedHero.gameObject.SetActive(true);
-        }
-
-        private void OnDisable()
-        {
-            if (_clonedHero == null) return;
-            _clonedHero.gameObject.SetActive(false);
-        }
-
         public void SetPreviewHero(HeroBehaviour hero)
         {
             Clone(hero);
@@ -59,7 +45,7 @@ namespace CryptoQuest.UI.Menu.Character
             _cachedAttributes.Add(attribute, attributeUIValue);
         }
 
-        public void PreviewEquip(IEquipment equipment)
+        public void PreviewEquip(IEquipment equipment, ESlot equipSlot = ESlot.None)
         {
             ResetPreview();
 
@@ -67,15 +53,26 @@ namespace CryptoQuest.UI.Menu.Character
             if (!equipment.CanEquipByHero(_clonedHero)) return;
             if (!_clonedHero.TryGetComponent<EquipmentsController>(out var equipmentController))
                 return;
+            if (equipSlot == ESlot.None)
+                equipSlot = equipment.AllowedSlots[0];
 
-            var attributeSystem = _clonedHero.AttributeSystem;
+            _baseHero.TryGetComponent<EquipmentsController>(out var baseEquipmentController);
+            var currentEquipped = baseEquipmentController.GetEquipmentInSlot(equipSlot);
 
-            equipmentController.Equip(equipment, equipment.AllowedSlots[0]);
+            equipmentController.Equip(equipment, equipSlot);
 
             PreviewValue();
+
+            if (currentEquipped != null && currentEquipped.IsValid())
+            {
+                equipmentController.Equip(currentEquipped, equipSlot);
+                return;
+            }
+
+            equipmentController.Unequip(equipment);
         }
 
-        public void PreviewUnequip(IEquipment equipment)
+        public void PreviewUnequip(IEquipment equipment, ESlot equipSlot = ESlot.None)
         {
             ResetPreview();
 
@@ -83,12 +80,14 @@ namespace CryptoQuest.UI.Menu.Character
             if (!equipment.CanEquipByHero(_clonedHero)) return;
             if (!_clonedHero.TryGetComponent<EquipmentsController>(out var equipmentController))
                 return;
+            if (equipSlot == ESlot.None)
+                equipSlot = equipment.AllowedSlots[0];
 
-            var attributeSystem = _clonedHero.AttributeSystem;
-
-            equipmentController.Unequip(equipment.AllowedSlots[0]);
+            equipmentController.Unequip(equipSlot);
 
             PreviewValue();
+
+            equipmentController.Equip(equipment, equipSlot);
         }
 
         public void ResetPreview()

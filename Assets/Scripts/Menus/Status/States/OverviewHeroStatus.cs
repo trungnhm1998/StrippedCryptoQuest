@@ -51,6 +51,8 @@ namespace CryptoQuest.Menus.Status.States
             UICharacterEquipmentSlot.Pressed += ToEquipmentSelection;
             StatusPanel.InspectingHeroChanged += RenderHero;
 
+            StatusPanel.EquipmentPreviewer.ResetPreviewer();
+
             SelectInspectingHero();
             var selectable = StatusPanel.CharacterEquipmentsPanel.GetComponentInChildren<Selectable>();
             EventSystem.current.SetSelectedGameObject(selectable.gameObject);
