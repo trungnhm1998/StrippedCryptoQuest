@@ -149,7 +149,7 @@ namespace CryptoQuest.Tests.Runtime.Gameplay.Ship
             yield return EditorSceneManager.LoadSceneAsyncInPlayMode(scenePath,
                 new LoadSceneParameters(LoadSceneMode.Single));
             _hero = GameObject.FindObjectOfType<HeroBehaviour>();
-            _sceneLoadedEvent.RaiseEvent();
+            _requestSpawnAllShipsEvent.RaiseEvent();
         }
 
         private ShipBehaviour[] GetShipInScene()
