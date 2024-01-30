@@ -65,7 +65,7 @@ namespace CryptoQuest.Tavern.UI
             UnRegisterEvents();
             var restClient = ServiceProvider.GetService<IRestClient>();
             var op = restClient
-                .Get<CharactersResponse>(CharacterAPI.GET_CHARACTERS)
+                .Get<CharactersResponse>(CharacterAPI.CHARACTERS)
                 .ToYieldInstruction();
             yield return op;
             ActionDispatcher.Dispatch(new ShowLoading(false));

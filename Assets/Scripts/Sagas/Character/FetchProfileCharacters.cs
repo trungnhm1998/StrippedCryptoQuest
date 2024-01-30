@@ -39,7 +39,7 @@ namespace CryptoQuest.Sagas.Character
             ActionDispatcher.Dispatch(new ShowLoading());
             var restClient = ServiceProvider.GetService<IRestClient>();
             restClient
-                .Get<CharactersResponse>(CharacterAPI.GET_CHARACTERS)
+                .Get<CharactersResponse>(CharacterAPI.CHARACTERS)
                 .Subscribe(ProcessResponseCharacters, OnError);
         }
 

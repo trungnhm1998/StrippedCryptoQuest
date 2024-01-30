@@ -23,7 +23,7 @@ namespace CryptoQuest.System.SaveSystem.Loaders
             var restClient = ServiceProvider.GetService<IRestClient>();
             var op = restClient
                 .WithParam("source", "2") // in game only
-                .Get<CharactersResponse>(CharacterAPI.GET_CHARACTERS)
+                .Get<CharactersResponse>(CharacterAPI.CHARACTERS)
                 .ToYieldInstruction();
             yield return op;
 
