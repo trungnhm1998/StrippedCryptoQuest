@@ -53,8 +53,8 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
         private const int SOUL_COLUMN_INDEX = 22;
         private const int DROP_ITEM_ID_COLUMN_INDEX = 23;
         private const int DROP_ITEM_NAME_COLUMN_INDEX = 24;
-        private const int DROP_ITEM_RATE_COLUMN_INDEX = 25;
-        private const int MONSTER_PREFAB_NAME_COLUMN_INDEX = 26;
+        private const int DROP_ITEM_RATE_COLUMN_INDEX = 26;
+        private const int MONSTER_PREFAB_NAME_COLUMN_INDEX = 27;
 
 
         private const string NORMAL_ATTACK_ABILITY_PATH =
@@ -227,9 +227,17 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Monster
 
             if (!string.IsNullOrEmpty(data.DropItemID))
             {
-                ConsumableLootInfo consumableLootInfo = GetUsableLootInfo(data.DropItemID);
-                if (consumableLootInfo != null)
-                    drops.Add(new Drop(consumableLootInfo, data.DropItemRate));
+                if (data.DropItemID[0].ToString() == "4")
+                {
+                    MagicStoneLoot magicStoneLoot = new MagicStoneLoot(data.DropItemID, 1);
+                    drops.Add(new Drop(magicStoneLoot, data.DropItemRate));
+                }
+                else
+                {
+                    ConsumableLootInfo consumableLootInfo = GetUsableLootInfo(data.DropItemID);
+                    if (consumableLootInfo != null)
+                        drops.Add(new Drop(consumableLootInfo, data.DropItemRate));
+                }
             }
 
 
