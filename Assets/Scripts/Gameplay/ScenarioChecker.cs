@@ -19,10 +19,10 @@ namespace CryptoQuest.Gameplay
         public bool IsCorrectScenario(EAbilityUsageScenario scenario)
         {
             bool isAllowedInField = scenario.HasFlag(EAbilityUsageScenario.Field);
+            if (isAllowedInField) return true;
             bool isWorldMap = _sceneManagerSO.CurrentScene == _worldMapScene;
-            if (!isWorldMap) return isAllowedInField;
 
-            return scenario.HasFlag(EAbilityUsageScenario.World);
+            return scenario.HasFlag(EAbilityUsageScenario.World) && isWorldMap;
         }
     }
 }
