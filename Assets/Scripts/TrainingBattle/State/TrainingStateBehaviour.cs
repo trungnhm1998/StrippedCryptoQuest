@@ -17,7 +17,7 @@ namespace CryptoQuest.TrainingBattle.State
         protected override void OnEnter()
         {
             _stateController = StateMachine.GetComponent<TrainingBattleStateController>();
-            _battleEndEvent = BattleEventBus.SubscribeEvent<BattleCleanUpFinishedEvent>(ChangeState);
+            _battleEndEvent = BattleEventBus.SubscribeEvent<UnloadedBattle>(ChangeState);
             LoadBattle();
         }
 
@@ -26,7 +26,7 @@ namespace CryptoQuest.TrainingBattle.State
             BattleEventBus.UnsubscribeEvent(_battleEndEvent);
         }
 
-        private void ChangeState(BattleCleanUpFinishedEvent ctx)
+        private void ChangeState(UnloadedBattle ctx)
         {
             switch (_battleResult.State)
             {
@@ -35,6 +35,9 @@ namespace CryptoQuest.TrainingBattle.State
                     break;
                 case ResultSO.EState.Lose:
                     StateMachine.Play(LoseBattle);
+                    break;
+                case ResultSO.EState.Retreat:
+                    StateMachine.Play(WonBattle);
                     break;
             }
 
