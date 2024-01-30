@@ -39,6 +39,11 @@ namespace CryptoQuest.System.SaveSystem.Savers
         private void MoveEvent_Raised(Vector2 dir)
         {
             if (dir == Vector2.zero) return;
+            SaveCurrentPosition();
+        }
+
+        public void SaveCurrentPosition()
+        {
             var transformPosition = transform.position;
             _saveSystemSO.SaveData["HeroTransform"] = JsonUtility.ToJson(new HeroTransformSerializeObject()
             {
