@@ -17,7 +17,9 @@ using UnityEngine.Localization;
 
 namespace CryptoQuestEditor.Gameplay.Gameplay.Abilities
 {
-    public class MagicImport : ScriptableObject { }
+    public class MagicImport : ScriptableObject
+    {
+    }
 
     public class MagicalAbilitiesSOEditor : ScriptableObjectBrowserEditor<MagicImport>
     {
@@ -226,7 +228,9 @@ namespace CryptoQuestEditor.Gameplay.Gameplay.Abilities
                 ? EAbilityUsageScenario.Field
                 : data.ScenarioId == "2"
                     ? EAbilityUsageScenario.Battle
-                    : EAbilityUsageScenario.Field | EAbilityUsageScenario.Battle;
+                    : data.ScenarioId == "4"
+                        ? EAbilityUsageScenario.World
+                        : EAbilityUsageScenario.Field | EAbilityUsageScenario.Battle;
 
             skillInfo.VfxId = string.IsNullOrEmpty(data.VfxId) ? 0 : int.Parse(data.VfxId);
             CustomExecutionAttributeCaptureDef attributeCaptureDef = new();
