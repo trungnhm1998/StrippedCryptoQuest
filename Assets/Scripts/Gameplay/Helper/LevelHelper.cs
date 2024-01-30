@@ -11,10 +11,11 @@ namespace CryptoQuest.Gameplay.Helper
     {
         public float GetValueAtLevel(int level, CappedAttributeDef attributeDef, int maxLevel)
         {
-            var value = attributeDef.MinValue;
             var currentLvl = Mathf.Clamp(level, 1, maxLevel);
-            value = Mathf.Floor((attributeDef.MaxValue - attributeDef.MinValue) / maxLevel * currentLvl) +
-                    attributeDef.MinValue;
+            var value = Mathf.Floor((attributeDef.MaxValue - attributeDef.MinValue) / maxLevel * currentLvl) +
+                        attributeDef.MinValue;
+
+            value += attributeDef.ModifyValue + attributeDef.RandomValue;
 
             return value;
         }

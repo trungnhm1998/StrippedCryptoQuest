@@ -31,17 +31,18 @@ namespace CryptoQuest.Sagas.Character
 
         [SerializeField] private List<ResponseAttributeMap> _attributeMap = new();
 
-        private Dictionary<string, AttributeScriptableObject> _lookupAttribute = new();
+        private Dictionary<string, AttributeScriptableObject> _lookupAttribute;
         private FieldInfo[] _fields;
 
         private void Awake()
         {
             ServiceProvider.Provide<IHeroResponseConverter>(this);
-            _lookupAttribute = _attributeMap.ToDictionary(map => map.Name, map => map.Attribute);
         }
 
         public HeroSpec Convert(Objects.Character responseObject)
         {
+            _lookupAttribute ??= _attributeMap.ToDictionary(map => map.Name.ToLower(), map => map.Attribute);
+            _fields ??= typeof(Objects.Character).GetFields();
             var nftHero = new HeroSpec();
             FillCharacterData(responseObject, ref nftHero);
             return nftHero;
@@ -57,20 +58,37 @@ namespace CryptoQuest.Sagas.Character
             FillCharacterStats(response, ref nftHero);
             if (string.IsNullOrEmpty(heroName) == false)
                 nftHero.Origin =
-                _charOrigins[_charNames.IndexOf(_charNames.FirstOrDefault(origin => origin == heroName))];
+                    _charOrigins[_charNames.IndexOf(_charNames.FirstOrDefault(origin => origin == heroName))];
         }
 
         private void FillCharacterStats(Objects.Character response, ref HeroSpec nftHero)
         {
             var initialAttributes = new Dictionary<AttributeScriptableObject, CappedAttributeDef>();
-            _fields ??= typeof(CryptoQuest.Sagas.Objects.Character).GetFields();
+
+            InitializeAttributes(response, ref initialAttributes);
+            InitializeRandomValue(response, ref initialAttributes);
+            InitializeModifyStats(response, ref initialAttributes);
+
+            var stats = new StatsDef
+            {
+                MaxLevel = response.maxLv,
+                Attributes = initialAttributes.Values.ToArray()
+            };
+
+            nftHero.Stats = stats;
+        }
+
+        private void InitializeAttributes(Objects.Character response,
+            ref Dictionary<AttributeScriptableObject, CappedAttributeDef> initialAttributes)
+        {
             foreach (var fieldInfo in _fields)
             {
-                if (_lookupAttribute.TryGetValue(fieldInfo.Name, out var attributeSO) == false) continue;
+                var fieldName = fieldInfo.Name.ToLower();
+                if (_lookupAttribute.TryGetValue(fieldName, out var attributeSO) == false) continue;
                 var value = (float)fieldInfo.GetValue(response);
                 if (initialAttributes.TryGetValue(attributeSO, out var def))
                 {
-                    if (fieldInfo.Name.Contains("min"))
+                    if (fieldName.Contains("min"))
                         def.MinValue = value;
                     else
                         def.MaxValue = value;
@@ -80,19 +98,38 @@ namespace CryptoQuest.Sagas.Character
                 {
                     initialAttributes.Add(attributeSO, new CappedAttributeDef(attributeSO)
                     {
-                        MinValue = fieldInfo.Name.Contains("min") ? value : -1,
-                        MaxValue = fieldInfo.Name.Contains("max") ? value : -1
+                        MinValue = fieldInfo.Name.ToLower().Contains("min") ? value : -1,
+                        MaxValue = fieldInfo.Name.ToLower().Contains("max") ? value : -1,
                     });
                 }
             }
+        }
 
-            var stats = new StatsDef
+        private void InitializeRandomValue(Objects.Character response,
+            ref Dictionary<AttributeScriptableObject, CappedAttributeDef> initialAttributes)
+        {
+            foreach (var fieldInfo in _fields)
             {
-                MaxLevel = response.maxLv,
-                Attributes = initialAttributes.Values.ToArray()
-            };
+                var fieldName = fieldInfo.Name.ToLower();
+                if (!fieldName.Contains("add")) continue;
+                if (_lookupAttribute.TryGetValue(fieldName, out var attributeSO) == false) continue;
+                var value = (float)fieldInfo.GetValue(response);
+                if (!initialAttributes.TryGetValue(attributeSO, out var def)) continue;
+                def.RandomValue = value;
+                initialAttributes[attributeSO] = def;
+            }
+        }
 
-            nftHero.Stats = stats;
+        private void InitializeModifyStats(Objects.Character response,
+            ref Dictionary<AttributeScriptableObject, CappedAttributeDef> initialAttributes)
+        {
+            foreach (var modifyStat in response.modifyStats)
+            {
+                if (_lookupAttribute.TryGetValue(modifyStat.AttributeName, out var attributeSO) == false) continue;
+                if (!initialAttributes.TryGetValue(attributeSO, out var def)) continue;
+                def.ModifyValue = modifyStat.Value;
+                initialAttributes[attributeSO] = def;
+            }
         }
     }
 }

@@ -39,7 +39,10 @@ namespace CryptoQuest.Tests.Editor.Character.Stats
         }
 
         [TestCase(0, 10, 45f, 75f,  48f)]
+        [TestCase(1, 10, 45f, 75f,  48f)]
         [TestCase(3, 10, 45f, 75f,  54f)]
+        [TestCase(10, 10, 45f, 75f,  75f)]
+        [TestCase(99, 99, 35f, 140f,  140f)]
         public void GetValueAtLevel(int lvl, int maxLvl, float minVal, float maxVal, float expected)
         {
             var defaultLevelCalculator = new DefaultLevelAttributeCalculator();

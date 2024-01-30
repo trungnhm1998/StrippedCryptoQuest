@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.Networking;
 using Proyecto26.Common;
@@ -121,7 +122,7 @@ namespace Proyecto26
                 try
                 {
                     if (err == null && res.StatusCode != HTTP_NO_CONTENT && res.Data != null && options.ParseResponseBody)
-                        body = JsonUtility.FromJson<TResponse>(res.Text);
+                        body = JsonConvert.DeserializeObject<TResponse>(res.Text);
                 }
                 catch (Exception error)
                 {
