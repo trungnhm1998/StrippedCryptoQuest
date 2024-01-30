@@ -20,7 +20,6 @@ namespace CryptoQuest.Gameplay.Ship
         {
             _shipSpawner.ShipSpawned += ShipSpawned;
             _setActiveShipEvent.EventRaised += SetShipActivated;
-            _sceneLoadedEvent.EventRaised += RequestSpawnShip;
             _requestSpawnAllShipsEvent.EventRaised += RequestSpawnShip;
             _forceSpawnAllShipsEvent.EventRaised += OnSpawnAllShip;
         }
@@ -29,7 +28,6 @@ namespace CryptoQuest.Gameplay.Ship
         {
             _shipSpawner.ShipSpawned -= ShipSpawned;
             _setActiveShipEvent.EventRaised -= SetShipActivated;
-            _sceneLoadedEvent.EventRaised -= RequestSpawnShip;
             _requestSpawnAllShipsEvent.EventRaised -= RequestSpawnShip;
             _forceSpawnAllShipsEvent.EventRaised -= OnSpawnAllShip;
         }
