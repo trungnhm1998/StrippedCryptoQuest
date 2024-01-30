@@ -20,6 +20,8 @@ namespace CryptoQuest.Sagas.Character
 
     public class HeroResponseConverter : MonoBehaviour, IHeroResponseConverter
     {
+        [SerializeField] private AttributeSets _attributeSets;
+        
         [SerializeField] private List<Elemental> _elements = new();
         [SerializeField] private List<CharacterClass> _classes = new();
 
@@ -56,9 +58,18 @@ namespace CryptoQuest.Sagas.Character
             nftHero.Elemental = _elements.FirstOrDefault(element => element.Id == Int32.Parse(response.elementId));
             nftHero.Class = _classes.FirstOrDefault(@class => @class.Id == Int32.Parse(response.classId));
             FillCharacterStats(response, ref nftHero);
+            FillRuntimeStats(response, ref nftHero);
             if (string.IsNullOrEmpty(heroName) == false)
                 nftHero.Origin =
                     _charOrigins[_charNames.IndexOf(_charNames.FirstOrDefault(origin => origin == heroName))];
+        }
+
+        private void FillRuntimeStats(Objects.Character response, ref HeroSpec nftHero)
+        {
+            var runtimeStats = new List<AttributeWithValue>();
+            runtimeStats.Add(new AttributeWithValue(AttributeSets.Health, response.HP));
+            runtimeStats.Add(new AttributeWithValue(AttributeSets.Mana, response.MP));
+            nftHero.RuntimeStats = runtimeStats;
         }
 
         private void FillCharacterStats(Objects.Character response, ref HeroSpec nftHero)
