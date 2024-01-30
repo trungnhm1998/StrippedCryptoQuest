@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using CryptoQuest.Battle.Events;
 using CryptoQuest.Gameplay;
 using IndiGames.Core.SceneManagementSystem.Events.ScriptableObjects;
 using IndiGames.Core.SceneManagementSystem.ScriptableObjects;
@@ -20,6 +21,7 @@ namespace CryptoQuest.Battle.PostBattleHandlers
             _fadeController.OnFadeOut();
             yield return new WaitForSeconds(_fadeController.Duration);
             _gameState.UpdateGameState(EGameState.Field);
+            BattleEventBus.RaiseEvent(new UnloadedBattle());
         }
     }
 }

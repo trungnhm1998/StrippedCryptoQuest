@@ -14,6 +14,7 @@ namespace CryptoQuest.TrainingBattle.State
             _stateController.DialogController.Dialogue.SetMessage(_message).Show();
             _stateController.Input.SubmitEvent += ExitState;
             _stateController.Input.CancelEvent += ExitState;
+            _stateController.Input.EnableInput();
         }
 
         protected override void OnExit()

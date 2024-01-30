@@ -57,6 +57,8 @@ namespace CryptoQuest.Battle.Events
         public Battlefield Battlefield { get; set; }
     }
 
+    public class UnloadedBattle : BattleEvent { }
+
     public abstract class TurnResultEvent : BattleEvent { }
 
     public class BattleCleanUpFinishedEvent : BattleEvent { }
