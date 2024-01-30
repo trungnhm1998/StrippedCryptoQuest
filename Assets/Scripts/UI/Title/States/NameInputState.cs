@@ -51,7 +51,9 @@ namespace CryptoQuest.UI.Title.States
 
         public override void OnCancel(InputAction.CallbackContext context)
         {
-            if (context.performed)
+            var currentSelected = EventSystem.current.currentSelectedGameObject;
+            var nameInput = _namingPanel.NameInput;
+            if (context.performed && currentSelected != nameInput.gameObject)
                 _stateMachine.ChangeState(new StartGameState());
         }
     }
