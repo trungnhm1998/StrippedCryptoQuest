@@ -22,9 +22,8 @@ namespace CryptoQuest.Battle.Components
 
         private IHeroSpecProvider _heroSpecProvider;
 
-        protected override void Awake()
+        protected override void OnAwake()
         {
-            base.Awake();
             TryGetComponent(out _heroSpecProvider);
             _attributeScriptableObjectSet = new HashSet<AttributeScriptableObject>(_attributesToSync);
         }
