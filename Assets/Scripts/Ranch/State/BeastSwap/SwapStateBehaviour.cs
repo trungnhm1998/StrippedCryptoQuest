@@ -19,6 +19,7 @@ namespace CryptoQuest.Ranch.State.BeastSwap
         private static readonly int OverViewState = Animator.StringToHash("OverviewState");
         private static readonly int ConfirmState = Animator.StringToHash("ConfirmState");
         private bool _hasFocus;
+        private bool _isOpennedDetail;
 
         protected override void OnEnter()
         {
@@ -29,6 +30,7 @@ namespace CryptoQuest.Ranch.State.BeastSwap
             uiBeastSwap.InBoxBeastList.Clear();
             uiBeastSwap.InGameBeastList.Clear();
             _hasFocus = false;
+            _isOpennedDetail = false;
 
             _getDataSucceed = ActionDispatcher.Bind<GetBeastSucceeded>(_ => _hasFocus = false);
 
@@ -45,7 +47,7 @@ namespace CryptoQuest.Ranch.State.BeastSwap
             _controller.Controller.Input.ExecuteEvent += SendItemsRequested;
             _controller.Controller.Input.ResetEvent += ResetTransferRequested;
             _controller.Controller.Input.CancelEvent += CancelBeastSwapState;
-            _controller.Controller.Input.InteractEvent += ShowBeastDetail;
+            _controller.Controller.Input.InteractEvent += ToggleBeastDetailVisibility;
 
             _controller.Controller.ShowWalletEventChannel.EnableAll().Show();
             ActionDispatcher.Dispatch(new FetchProfileBeastsAction());
@@ -59,7 +61,7 @@ namespace CryptoQuest.Ranch.State.BeastSwap
             _controller.Controller.Input.ExecuteEvent -= SendItemsRequested;
             _controller.Controller.Input.ResetEvent -= ResetTransferRequested;
             _controller.Controller.Input.CancelEvent -= CancelBeastSwapState;
-            _controller.Controller.Input.InteractEvent -= ShowBeastDetail;
+            _controller.Controller.Input.InteractEvent -= ToggleBeastDetailVisibility;
 
             _controller.Controller.ShowWalletEventChannel.Hide();
 
@@ -68,14 +70,16 @@ namespace CryptoQuest.Ranch.State.BeastSwap
             ActionDispatcher.Unbind(_getDataSucceed);
         }
 
-        private void ShowBeastDetail()
+        private void ToggleBeastDetailVisibility()
         {
-            _showTooltipEventChannelSO.RaiseEvent(true);
+            _isOpennedDetail = !_isOpennedDetail;
+            _showTooltipEventChannelSO.RaiseEvent(_isOpennedDetail);
         }
 
         private void HideBeastTooltip()
         {
-            _showTooltipEventChannelSO.RaiseEvent(false);
+            _isOpennedDetail = false;
+            _showTooltipEventChannelSO.RaiseEvent(_isOpennedDetail);
         }
 
         private void UIBeastItemOnPressed(UIBeastItem item) => _controller.UIBeastSwap.TransferBeast();
