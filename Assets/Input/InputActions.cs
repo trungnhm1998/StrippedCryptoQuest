@@ -317,6 +317,17 @@ namespace CryptoQuest.Input
                 },
                 {
                     ""name"": """",
+                    ""id"": ""7b7f5a8c-9d59-4370-bfb8-d1efb76d7cce"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MnK"",
+                    ""action"": ""Confirm"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""610de0d7-063a-4f16-86a9-93f012a50ffe"",
                     ""path"": ""<Keyboard>/a"",
                     ""interactions"": """",
@@ -450,6 +461,17 @@ namespace CryptoQuest.Input
                 {
                     ""name"": """",
                     ""id"": ""f072aa0b-637c-4c1e-a286-e61e1ce52227"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MnK"",
+                    ""action"": ""Submit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1be58045-b768-4d2c-84d1-c6987ad0349d"",
                     ""path"": ""<Keyboard>/space"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -776,18 +798,7 @@ namespace CryptoQuest.Input
                 {
                     ""name"": """",
                     ""id"": ""6ba6116d-7607-407c-a14b-25dfa31b1145"",
-                    ""path"": ""<Keyboard>/e"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""MnK"",
-                    ""action"": ""Interact"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""d08c2eec-e868-4f59-9328-d513b30cc3aa"",
-                    ""path"": ""<Keyboard>/space"",
+                    ""path"": ""<Keyboard>/a"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""MnK"",
@@ -799,6 +810,17 @@ namespace CryptoQuest.Input
                     ""name"": """",
                     ""id"": ""84c0a4fd-9611-4cbc-9833-e1f01f487518"",
                     ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MnK"",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c418d399-d74a-48de-af82-bd1c14662735"",
+                    ""path"": ""<Keyboard>/space"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""MnK"",
@@ -831,7 +853,7 @@ namespace CryptoQuest.Input
                 {
                     ""name"": """",
                     ""id"": ""53b81d6c-03d4-4dff-94ff-6347b837ec11"",
-                    ""path"": ""<Keyboard>/tab"",
+                    ""path"": ""<Keyboard>/b"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""MnK"",
@@ -1031,7 +1053,7 @@ namespace CryptoQuest.Input
                 {
                     ""name"": """",
                     ""id"": ""24e0692a-e3dc-4251-b54e-851057f13d1d"",
-                    ""path"": ""<Keyboard>/space"",
+                    ""path"": ""<Keyboard>/a"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""MnK"",
@@ -1054,6 +1076,17 @@ namespace CryptoQuest.Input
                     ""name"": """",
                     ""id"": ""283ae2b0-3744-4629-9f73-b2f3115139c9"",
                     ""path"": ""<Keyboard>/numpadEnter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MnK"",
+                    ""action"": ""NextDialogue"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2b5f4518-4490-4fa1-a5a6-3d3a7c03c751"",
+                    ""path"": ""<Keyboard>/space"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""MnK"",
@@ -1449,7 +1482,7 @@ namespace CryptoQuest.Input
                 {
                     ""name"": """",
                     ""id"": ""9507e137-59c1-4036-939b-b0073fb7b74f"",
-                    ""path"": ""<Keyboard>/space"",
+                    ""path"": ""<Keyboard>/a"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""MnK"",
@@ -1461,6 +1494,17 @@ namespace CryptoQuest.Input
                     ""name"": """",
                     ""id"": ""fe112ca5-3c18-4b76-806f-b0f2ac14bbe5"",
                     ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MnK"",
+                    ""action"": ""Confirm"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""bb5a9dbc-a72f-4625-bb10-d47aa03b7e32"",
+                    ""path"": ""<Keyboard>/space"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""MnK"",
@@ -1514,6 +1558,17 @@ namespace CryptoQuest.Input
                 },
                 {
                     ""name"": """",
+                    ""id"": ""8527a9b6-61f4-4e64-8f33-3347c49151d3"",
+                    ""path"": ""<Keyboard>/b"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MnK"",
+                    ""action"": ""Cancel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""76a18232-d132-4ca4-81d0-1f5214da0d5b"",
                     ""path"": ""<Gamepad>/buttonEast"",
                     ""interactions"": """",
@@ -1538,6 +1593,28 @@ namespace CryptoQuest.Input
                     ""name"": """",
                     ""id"": ""5bb67c77-f705-41c1-88af-1220c517b078"",
                     ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MnK"",
+                    ""action"": ""Submit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0379e639-cc4d-45f4-9708-a352708651ad"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MnK"",
+                    ""action"": ""Submit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""da411531-15af-45cd-830f-5d542876029d"",
+                    ""path"": ""<Keyboard>/space"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""MnK"",
@@ -1979,8 +2056,8 @@ namespace CryptoQuest.Input
                 },
                 {
                     ""name"": """",
-                    ""id"": ""9b6b1f8f-69d6-4125-8524-91563c2b25ce"",
-                    ""path"": ""<Keyboard>/space"",
+                    ""id"": ""3d48e296-fff1-4944-92dd-d78b860fe3d8"",
+                    ""path"": ""<Keyboard>/a"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""MnK"",
@@ -1992,6 +2069,17 @@ namespace CryptoQuest.Input
                     ""name"": """",
                     ""id"": ""ef2abb2a-cbc9-4a96-b60b-aebdcd2734fc"",
                     ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MnK"",
+                    ""action"": ""Confirm"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d4ba0a07-6e84-4f8b-96e7-d49cac1d4df4"",
+                    ""path"": ""<Keyboard>/space"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""MnK"",
@@ -2036,6 +2124,17 @@ namespace CryptoQuest.Input
                     ""name"": """",
                     ""id"": ""34f1c6c7-944f-4c89-ab37-3389e9a03a1e"",
                     ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MnK"",
+                    ""action"": ""Cancel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""258da2d7-9892-4e6b-bbf9-8c3210f311d0"",
+                    ""path"": ""<Keyboard>/b"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""MnK"",
@@ -2420,6 +2519,17 @@ namespace CryptoQuest.Input
                 },
                 {
                     ""name"": """",
+                    ""id"": ""c299f364-3398-4a5e-9d3e-558a842e9876"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MnK"",
+                    ""action"": ""Submit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""0e6a8fb0-956f-47b2-a2ce-26ddc00bf311"",
                     ""path"": ""<Keyboard>/numpadEnter"",
                     ""interactions"": """",
@@ -2436,17 +2546,6 @@ namespace CryptoQuest.Input
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""MnK;Gamepad"",
-                    ""action"": ""Submit"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""3790aabd-ca7e-4de4-b175-bd06aedaefa9"",
-                    ""path"": ""<Keyboard>/space"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""MnK"",
                     ""action"": ""Submit"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -2677,6 +2776,17 @@ namespace CryptoQuest.Input
                 },
                 {
                     ""name"": """",
+                    ""id"": ""9570ff8b-3ee7-4995-be37-0792cd89911c"",
+                    ""path"": ""<Keyboard>/b"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MnK"",
+                    ""action"": ""Cancel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""c7ab3573-a436-4c86-af8e-383c3d5f3b82"",
                     ""path"": ""<Gamepad>/buttonEast"",
                     ""interactions"": """",
@@ -2700,6 +2810,17 @@ namespace CryptoQuest.Input
                 {
                     ""name"": """",
                     ""id"": ""0fef5bfd-cc03-4e1c-bc48-452e7d531dab"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MnK"",
+                    ""action"": ""Confirm"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""955a6531-2adf-4f7b-b90e-d7043e756da8"",
                     ""path"": ""<Keyboard>/space"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -2956,6 +3077,17 @@ namespace CryptoQuest.Input
                 },
                 {
                     ""name"": """",
+                    ""id"": ""cc311969-0dd2-4eb0-af64-348ebff99169"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MnK"",
+                    ""action"": ""Submit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""4ece5687-f900-46ea-9512-b97bf1557878"",
                     ""path"": ""<Keyboard>/numpadEnter"",
                     ""interactions"": """",
@@ -2972,17 +3104,6 @@ namespace CryptoQuest.Input
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""MnK;Gamepad"",
-                    ""action"": ""Submit"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""95340f9b-4905-4e2e-8155-74dbbe100123"",
-                    ""path"": ""<Keyboard>/space"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""MnK"",
                     ""action"": ""Submit"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
