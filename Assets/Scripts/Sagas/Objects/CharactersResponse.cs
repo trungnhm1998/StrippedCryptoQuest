@@ -1,4 +1,5 @@
 ﻿using System;
+using Newtonsoft.Json;
 
 namespace CryptoQuest.Sagas.Objects
 {
@@ -112,8 +113,19 @@ namespace CryptoQuest.Sagas.Objects
         public string imageURL;
         public int isNFT;
         public object[] beasts;
+        [JsonProperty("modifyStats")]
+        public ModifyStat[] modifyStats;
         public object[] equipments;
         public int transferring;
         public bool IsTransferring => transferring == 1;
+    }
+
+    [Serializable]
+    public class ModifyStat
+    {
+        [JsonProperty("attribute")]
+        public string AttributeName;
+        [JsonProperty("value")]
+        public float Value;
     }
 }

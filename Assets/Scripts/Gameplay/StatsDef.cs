@@ -18,6 +18,8 @@ namespace CryptoQuest.Gameplay
         public AttributeScriptableObject Attribute;
         public float MinValue;
         public float MaxValue;
+        public float RandomValue;
+        public float ModifyValue;
 
         public CappedAttributeDef(AttributeScriptableObject attribute) : this()
         {
