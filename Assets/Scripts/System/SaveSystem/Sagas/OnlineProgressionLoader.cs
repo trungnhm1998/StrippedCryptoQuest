@@ -79,7 +79,6 @@ namespace CryptoQuest.System.SaveSystem.Sagas
 
             // TODO: Violate OCP implement CoR pattern for new type of check
             ClearSaveIfVersionIsDifferent(ref saveData);
-            UsingLocalSaveIfNewer(ref saveData);
             UsingOnlineSaveIfUserAreDifferent(res, ref saveData);
             return saveData;
         }
@@ -91,6 +90,12 @@ namespace CryptoQuest.System.SaveSystem.Sagas
             saveData.Objects = new();
         }
 
+        /// <summary>
+        /// This one tend to bug if SavedTime is different format and will cause error
+        /// when parsing to DateTime and cause user lose all saved data
+        /// so I removed it for now, sync date time format when use this
+        /// </summary>
+        /// <param name="saveData"></param>
         private void UsingLocalSaveIfNewer(ref SaveData saveData)
         {
             if (string.IsNullOrEmpty(saveData.SavedTime) ||
