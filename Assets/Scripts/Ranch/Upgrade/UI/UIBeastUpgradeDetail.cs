@@ -2,14 +2,13 @@
 using CryptoQuest.AbilitySystem.Attributes;
 using CryptoQuest.Beast;
 using CryptoQuest.Beast.Avatar;
-using UIAttribute = CryptoQuest.UI.Character.UIAttribute;
 using CryptoQuest.UI.Tooltips;
-using IndiGames.GameplayAbilitySystem.AttributeSystem.Components;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Components;
 using UnityEngine.UI;
+using UIAttribute = CryptoQuest.UI.Character.UIAttribute;
 
 namespace CryptoQuest.Ranch.Upgrade.UI
 {
@@ -21,6 +20,7 @@ namespace CryptoQuest.Ranch.Upgrade.UI
         [SerializeField] private LocalizeStringEvent _LocalizePassiveSkill;
         [SerializeField] private TMP_Text _level;
         [SerializeField] private TMP_Text _passiveSkill;
+        [SerializeField] private TMP_Text _passiveSkillValue;
         [SerializeField] private UIStars _startsUi;
         [SerializeField] private UIAttribute[] _attributeUIs;
 
@@ -69,9 +69,16 @@ namespace CryptoQuest.Ranch.Upgrade.UI
 
         private void SetPassiveSkill(PassiveAbility beastPassive)
         {
-            _passiveSkill.text = "";
-            _LocalizePassiveSkill.StringReference =
-                beastPassive != null ? beastPassive.Description : new LocalizedString();
+            _passiveSkill.text = string.Empty;
+
+            _LocalizePassiveSkill.StringReference = beastPassive != null
+                ? beastPassive.Description
+                : new LocalizedString();
+
+            _passiveSkillValue.text = beastPassive != null
+                ? $"{beastPassive.Context.SkillInfo.SkillParameters.BasePower}%"
+                : string.Empty;
+
             _LocalizePassiveSkill.RefreshString();
         }
 
@@ -87,7 +94,6 @@ namespace CryptoQuest.Ranch.Upgrade.UI
                 attributeUI.ResetAttributeUI();
             }
         }
-
 
         #endregion
     }
