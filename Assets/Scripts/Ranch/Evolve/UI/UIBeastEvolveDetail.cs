@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using CryptoQuest.Beast;
 using CryptoQuest.Beast.Avatar;
 using CryptoQuest.Beast.ScriptableObjects;
@@ -22,6 +23,7 @@ namespace CryptoQuest.Ranch.Evolve.UI
         [SerializeField] private List<Image> _listStar;
         [SerializeField] private TextMeshProUGUI _level;
         [SerializeField] private TextMeshProUGUI _passiveSkillText;
+        [SerializeField] private TextMeshProUGUI _passiveSkillValueText;
         [SerializeField] private List<UIAttribute> _attributeBar;
         [SerializeField] private Sprite _evolveStar;
         [SerializeField] private Sprite _currentStar;
@@ -56,12 +58,17 @@ namespace CryptoQuest.Ranch.Evolve.UI
             if (!_isResultScreen) SetBeastStarBeforeEvolve(beast);
             else SetBeastStarAfterEvolve(beast);
         }
-        
+
         private void SetLocalizedPassiveSkill(IBeast beast)
         {
-            _passiveSkillText.text = "";
-            _localizedPassiveSkill.StringReference =
-                beast.Passive != null ? beast.Passive.Description : new LocalizedString();
+            _passiveSkillText.text = string.Empty;
+            _localizedPassiveSkill.StringReference = beast.Passive != null
+                ? beast.Passive.Description
+                : new LocalizedString();
+
+            _passiveSkillValueText.text = beast.Passive != null
+                ? $"{beast.Passive.Context.SkillInfo.SkillParameters.BasePower}%"
+                : string.Empty;
         }
 
         private void SetBeastStarBeforeEvolve(IBeast beast)
