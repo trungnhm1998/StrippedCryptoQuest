@@ -18,7 +18,7 @@ namespace CryptoQuest.Sagas.Objects
         public string message;
         public string uuid;
         public int gold;
-        public int diamond;
+        public float diamond;
         public int soul;
         public long time;
         public Data data;

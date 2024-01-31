@@ -11,7 +11,7 @@ namespace CryptoQuest.ChangeClass.API
         public string message;
         public string uuid;
         public int gold;
-        public int diamond;
+        public float diamond;
         public int soul;
         public long time;
         public MaterialData data;

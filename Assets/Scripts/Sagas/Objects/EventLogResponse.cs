@@ -10,7 +10,7 @@ namespace CryptoQuest.Sagas.Objects
         public string message { get; set; }
         public string uuid { get; set; }
         public int gold { get; set; }
-        public int diamond { get; set; }
+        public float diamond { get; set; }
         public int soul { get; set; }
         public long time { get; set; }
     }
