@@ -7,6 +7,7 @@ namespace CryptoQuest.Menus.DimensionalBox.States.EquipmentsTransfer
     public class SelectEquipment : ActionState<EEquipmentState, EStateAction>
     {
         private TransferEquipmentsStateMachine _fsm;
+        private bool _isOpennedDetail;
 
         public SelectEquipment(TransferEquipmentsStateMachine fsm) : base(false)
         {
@@ -15,7 +16,7 @@ namespace CryptoQuest.Menus.DimensionalBox.States.EquipmentsTransfer
             AddAction(EStateAction.OnExecute, OnTransferring);
             AddAction<Vector2>(EStateAction.OnNavigate, NavigateList);
             AddAction(EStateAction.OnReset, ResetSelected);
-            AddAction(EStateAction.OnInteract, ShowDetail);
+            AddAction(EStateAction.OnInteract, ToggleEquipmentDetailVisibility);
         }
 
         private void OnTransferring()
@@ -34,13 +35,13 @@ namespace CryptoQuest.Menus.DimensionalBox.States.EquipmentsTransfer
 
             _fsm.IngameList.Interactable = _fsm.InboxList.Interactable = false;
 
-            _fsm.TooltipEnabledEventChannel.RaiseEvent(false);
+            HideEquipmentTooltip();
             fsm.RequestStateChange(EEquipmentState.Confirm);
         }
 
         private void NavigateList(Vector2 axis)
         {
-            _fsm.TooltipEnabledEventChannel.RaiseEvent(false);
+            HideEquipmentTooltip();
             switch (axis.x)
             {
                 case 0:
@@ -58,19 +59,27 @@ namespace CryptoQuest.Menus.DimensionalBox.States.EquipmentsTransfer
         {
             _fsm.InboxList.Reset();
             _fsm.IngameList.Reset();
-            _fsm.TooltipEnabledEventChannel.RaiseEvent(false);
+            HideEquipmentTooltip();
             ActionDispatcher.Dispatch(new FetchNftEquipments());
         }
 
-        private void ShowDetail()
+        private void ToggleEquipmentDetailVisibility()
         {
-            _fsm.TooltipEnabledEventChannel.RaiseEvent(true);
+            _isOpennedDetail = !_isOpennedDetail;
+            _fsm.TooltipEnabledEventChannel.RaiseEvent(_isOpennedDetail);
+        }
+
+        private void HideEquipmentTooltip()
+        {
+            if(!_isOpennedDetail) return;
+            _isOpennedDetail = false;
+            _fsm.TooltipEnabledEventChannel.RaiseEvent(_isOpennedDetail);
         }
 
         public override void OnEnter()
         {
             if (!_fsm.IngameList.TryFocus()) _fsm.InboxList.TryFocus();
-            _fsm.TooltipEnabledEventChannel.RaiseEvent(false);
+            _isOpennedDetail = false;
         }
     }
 }
