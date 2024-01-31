@@ -16,13 +16,14 @@ namespace CryptoQuest.Ranch
             GenericMerchantDialogueController.Instance.InstantiateAsync(DialogInstantiated);
             ChoiceDialogController.Instance.InstantiateAsync(dialog => ChoiceDialog = dialog);
         }
+
         private void OnDisable()
         {
             GenericMerchantDialogueController.Instance.Release(NormalDialogue);
             ChoiceDialogController.Instance.Release(ChoiceDialog);
         }
 
-        public void ShowWelcomeDialog(LocalizedString message)
+        private void ShowWelcomeDialog(LocalizedString message)
         {
             NormalDialogue
                 .SetMessage(message)

@@ -10,21 +10,17 @@ namespace CryptoQuest.Ranch.State.BeastSwap
     public class SwapStateBehaviour : BaseStateBehaviour
     {
         [SerializeField] private ShowTooltipEvent _showTooltipEventChannelSO;
-        private RanchStateController _controller;
 
         private TinyMessageSubscriptionToken _getDataInGameSucceed;
         private TinyMessageSubscriptionToken _getDataInBoxSucceed;
         private TinyMessageSubscriptionToken _getDataSucceed;
 
-        private static readonly int OverViewState = Animator.StringToHash("OverviewState");
-        private static readonly int ConfirmState = Animator.StringToHash("ConfirmState");
         private bool _hasFocus;
         private bool _isOpennedDetail;
 
         protected override void OnEnter()
         {
-            _controller = StateMachine.GetComponent<RanchStateController>();
-            var uiBeastSwap = _controller.UIBeastSwap;
+            var uiBeastSwap = _stateController.UIBeastSwap;
 
             uiBeastSwap.Contents.SetActive(true);
             uiBeastSwap.InBoxBeastList.Clear();
@@ -43,13 +39,13 @@ namespace CryptoQuest.Ranch.State.BeastSwap
 
             UIBeastItem.Pressed += UIBeastItemOnPressed;
 
-            _controller.Controller.Input.NavigateEvent += SwitchToOtherListRequested;
-            _controller.Controller.Input.ExecuteEvent += SendItemsRequested;
-            _controller.Controller.Input.ResetEvent += ResetTransferRequested;
-            _controller.Controller.Input.CancelEvent += CancelBeastSwapState;
-            _controller.Controller.Input.InteractEvent += ToggleBeastDetailVisibility;
+            _input.NavigateEvent += SwitchToOtherListRequested;
+            _input.ExecuteEvent += SendItemsRequested;
+            _input.ResetEvent += ResetTransferRequested;
+            _input.CancelEvent += CancelBeastSwapState;
+            _input.InteractEvent += ToggleBeastDetailVisibility;
 
-            _controller.Controller.ShowWalletEventChannel.EnableAll().Show();
+            _stateController.Controller.ShowWalletEventChannel.EnableAll().Show();
             ActionDispatcher.Dispatch(new FetchProfileBeastsAction());
         }
 
@@ -57,13 +53,13 @@ namespace CryptoQuest.Ranch.State.BeastSwap
         {
             UIBeastItem.Pressed -= UIBeastItemOnPressed;
 
-            _controller.Controller.Input.NavigateEvent -= SwitchToOtherListRequested;
-            _controller.Controller.Input.ExecuteEvent -= SendItemsRequested;
-            _controller.Controller.Input.ResetEvent -= ResetTransferRequested;
-            _controller.Controller.Input.CancelEvent -= CancelBeastSwapState;
-            _controller.Controller.Input.InteractEvent -= ToggleBeastDetailVisibility;
+            _input.NavigateEvent -= SwitchToOtherListRequested;
+            _input.ExecuteEvent -= SendItemsRequested;
+            _input.ResetEvent -= ResetTransferRequested;
+            _input.CancelEvent -= CancelBeastSwapState;
+            _input.InteractEvent -= ToggleBeastDetailVisibility;
 
-            _controller.Controller.ShowWalletEventChannel.Hide();
+            _stateController.Controller.ShowWalletEventChannel.Hide();
 
             ActionDispatcher.Unbind(_getDataInGameSucceed);
             ActionDispatcher.Unbind(_getDataInBoxSucceed);
@@ -82,28 +78,28 @@ namespace CryptoQuest.Ranch.State.BeastSwap
             _showTooltipEventChannelSO.RaiseEvent(_isOpennedDetail);
         }
 
-        private void UIBeastItemOnPressed(UIBeastItem item) => _controller.UIBeastSwap.TransferBeast();
+        private void UIBeastItemOnPressed(UIBeastItem item) => _stateController.UIBeastSwap.TransferBeast();
 
         private void ResetTransferRequested()
         {
             HideBeastTooltip();
-            _controller.UIBeastSwap.ResetSelected();
+            _stateController.UIBeastSwap.ResetSelected();
         }
 
         private void SendItemsRequested()
         {
             HideBeastTooltip();
-            if (!_controller.UIBeastSwap.IsValid()) return;
-            StateMachine.Play(ConfirmState);
+            if (!_stateController.UIBeastSwap.IsValid()) return;
+            StateMachine.Play(SwapConfirmState);
         }
 
         private void CancelBeastSwapState()
         {
             HideBeastTooltip();
-            _controller.UIBeastSwap.Contents.SetActive(false);
-            _controller.Controller.Initialize();
-            _controller.UIBeastSwap.OnTransferring();
-            StateMachine.Play(OverViewState);
+            _stateController.UIBeastSwap.Contents.SetActive(false);
+            _stateController.Controller.Initialize();
+            _stateController.UIBeastSwap.OnTransferring();
+            StateMachine.Play(OverviewState);
         }
 
         private void FillBeasts(UIBeastList uiList, BeastResponse[] beasts)
@@ -122,7 +118,7 @@ namespace CryptoQuest.Ranch.State.BeastSwap
 
         private void SwitchToOtherListRequested(Vector2 direction)
         {
-            _controller.UIBeastSwap.SwitchList(direction);
+            _stateController.UIBeastSwap.SwitchList(direction);
             HideBeastTooltip();
         }
     }
