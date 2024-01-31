@@ -1,8 +1,10 @@
+using System.Linq;
 using CryptoQuest.Battle.Components;
 using CryptoQuest.BlackSmith.Upgrade.Actions;
 using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.Inventory.ScriptableObjects;
 using CryptoQuest.Item.Equipment;
+using CryptoQuest.Sagas.Equipment;
 using CryptoQuest.Sagas.Profile;
 using IndiGames.Core.Common;
 using IndiGames.Core.Events;
@@ -22,8 +24,9 @@ namespace CryptoQuest.BlackSmith.Upgrade.Sagas
         protected override void HandleAction(UpgradeResponsed ctx)
         {
             var gold = ctx.Response.gold;
-            var level = ctx.Response.data.equipment.lv;
-            var equipmentId = ctx.Response.data.equipment.id;
+            var equipmentData = ctx.Response.data.equipment;
+            var level = equipmentData.lv;
+            var equipmentId = equipmentData.id;
 
 
             var equipment = TryFindEquipment(equipmentId);
@@ -33,6 +36,10 @@ namespace CryptoQuest.BlackSmith.Upgrade.Sagas
                 ActionDispatcher.Dispatch(new UpgradeFailed());
                 return;
             }
+
+            var converter = ServiceProvider.GetService<IEquipmentResponseConverter>();
+            var upgradedEquipment = converter.Convert(equipmentData);
+            equipment.Data.Stats = upgradedEquipment.Data.Stats.ToArray();
 
             var equipmentInfo = new UpgradedEquipmentInfo()
             {
