@@ -22,10 +22,9 @@ namespace CryptoQuest.BlackSmith.Upgrade.Sagas
 
             var equipmentController = hero.GetComponent<EquipmentsController>();
             equipmentController.Unequip(info.Slot);
-
             // Level should be update after unequip because if I update its first the controller
             // cannot find the effect from equipment to remove
-            ctx.UpgradedEquipmentInfo.Equipment.Level = ctx.Level;
+            info.Equipment.Level = ctx.Level;  
             equipmentController.Equip(info.Equipment, info.Slot);
         }
     }

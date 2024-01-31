@@ -28,7 +28,6 @@ namespace CryptoQuest.Menus.Status.UI
             _previewEquipEventChannel.EventRaised += PreviewEquip;
             _previewUnequipEventChannel.EventRaised += PreviewUnequip;
             _statusMenu.InspectingHeroChanged += InitPreviewer;
-            RegistEvents();
         }
 
         private void OnDisable()
@@ -55,6 +54,7 @@ namespace CryptoQuest.Menus.Status.UI
         {
             if (_hero != null && hero == _hero)
             {
+                RegistEvents();
                 CacheCurrentAttributesValue();
                 return;
             }
