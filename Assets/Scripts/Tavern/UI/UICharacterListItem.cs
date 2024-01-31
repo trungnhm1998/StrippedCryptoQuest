@@ -1,5 +1,6 @@
 ﻿using CryptoQuest.Character.Hero;
 using CryptoQuest.Character.LevelSystem;
+using CryptoQuest.Tavern.UI.Tooltip;
 using CryptoQuest.UI.Extensions;
 using TMPro;
 using UnityEngine;
@@ -8,7 +9,7 @@ using UnityEngine.UI;
 
 namespace CryptoQuest.Tavern.UI
 {
-    public class UICharacterListItem : MonoBehaviour
+    public class UICharacterListItem : MonoBehaviour, ITooltipHeroProvider
     {
         [SerializeField] private Image _imgClass;
         [SerializeField] private LocalizeStringEvent _strName;
@@ -36,5 +37,7 @@ namespace CryptoQuest.Tavern.UI
             _imgClass.sprite = null;
             _txtLevel.text = string.Empty;
         }
+
+        public HeroSpec Hero => Spec;
     }
 }
