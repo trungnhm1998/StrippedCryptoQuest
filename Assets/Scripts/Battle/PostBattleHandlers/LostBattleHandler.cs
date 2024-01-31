@@ -16,14 +16,12 @@ namespace CryptoQuest.Battle.PostBattleHandlers
     {
         [SerializeField] private WalletSO _wallet;
         [SerializeField] private CurrencySO _gold;
-        [SerializeField] private BattleResultEventSO _battleLostEvent;
 
         protected override ResultSO.EState ResultState => ResultSO.EState.Lose;
 
         protected override void HandleResult()
         {
             TeleportToClosestTownAfterSceneUnloaded();
-            _battleLostEvent.RaiseEvent(_battleBus.CurrentBattlefield);
             DecreaseGold();
             RestoreCharacter();
         }
