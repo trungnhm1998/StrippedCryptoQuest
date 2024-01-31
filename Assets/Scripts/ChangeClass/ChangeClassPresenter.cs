@@ -152,6 +152,7 @@ namespace CryptoQuest.ChangeClass
                 yield break;
 
             IsValid = IsValidClassMaterial();
+            yield return new WaitUntil(() => Occupation != null);
             Occupation.EnableDefaultBackground(IsValid);
         }
 

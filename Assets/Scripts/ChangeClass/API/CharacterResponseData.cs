@@ -28,7 +28,7 @@ namespace CryptoQuest.ChangeClass.API
         public int id;
         public string unitTokenId;
         public int inGameStatus;
-        public int userId;
+        public string userId;
         public string unitId;
         public float HP;
         public float addHp;

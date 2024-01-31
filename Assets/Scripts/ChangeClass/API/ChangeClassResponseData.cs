@@ -40,7 +40,7 @@ namespace CryptoQuest.ChangeClass.API
     {
         public int transferring;
         public int id;
-        public int unitTokenId;
+        public string unitTokenId;
         public float HP;
         public float MP;
         public float addHp;

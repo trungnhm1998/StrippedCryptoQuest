@@ -61,7 +61,7 @@ namespace CryptoQuest.ChangeClass.API
             var restClient = ServiceProvider.GetService<IRestClient>();
             var op = restClient
                 .WithBody(_requestBody)
-                .Post<ChangeClassResponseData>(APIChangeClass.CHANGE_NEW_CLASS_BERSERKER)
+                .Post<ChangeClassResponseData>(APIChangeClass.CHANGE_NEW_CLASS)
                 .ToYieldInstruction();
             yield return op;
             ActionDispatcher.Dispatch(new ShowLoading(false));
