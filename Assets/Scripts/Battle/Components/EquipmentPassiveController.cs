@@ -38,7 +38,9 @@ namespace CryptoQuest.Battle.Components
                 passiveSpecs[index] = spec;
             }
 
-            if (passiveSpecs.Length > 0) _passives.Add(equipment.Id, passiveSpecs);
+            if (passiveSpecs.Length == 0) return;
+            if (_passives.TryAdd(equipment.Id, passiveSpecs)) return;
+            Debug.LogWarning("Duplicate equipment id: " + equipment.Id);
         }
 
         private void RemovePassive(IEquipment equipment)

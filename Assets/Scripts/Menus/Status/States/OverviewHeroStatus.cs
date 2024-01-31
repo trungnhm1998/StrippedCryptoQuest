@@ -3,7 +3,6 @@ using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.Item.Equipment;
 using CryptoQuest.Menus.Status.UI;
 using CryptoQuest.Menus.Status.UI.Equipment;
-using CryptoQuest.UI.Utilities;
 using IndiGames.Core.Common;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -28,8 +27,9 @@ namespace CryptoQuest.Menus.Status.States
             get => _currentInspectingHeroIndex;
             set
             {
-                _currentInspectingHeroIndex = value % Party.Slots.Length;
-                if (_currentInspectingHeroIndex < 0) _currentInspectingHeroIndex = Party.Slots.Length - 1;
+                var partySize = Party.PartySO.Count;
+                _currentInspectingHeroIndex = value % partySize;
+                if (_currentInspectingHeroIndex < 0) _currentInspectingHeroIndex = partySize - 1;
                 var partySlot = Party.Slots[_currentInspectingHeroIndex];
                 if (partySlot.IsValid() == false)
                 {
@@ -45,7 +45,7 @@ namespace CryptoQuest.Menus.Status.States
         {
             StatusPanel.ModifyingSlot = ESlot.None;
             StatusPanel.ModifyingCategory = EEquipmentCategory.None;
-            
+
             StatusPanel.Input.MenuCancelEvent += BackToMainMenuNavigation;
             StatusPanel.Input.MenuNavigateEvent += HandleNavigate;
             UICharacterEquipmentSlot.Pressed += ToEquipmentSelection;

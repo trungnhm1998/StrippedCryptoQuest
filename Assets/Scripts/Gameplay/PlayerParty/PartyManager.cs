@@ -17,6 +17,7 @@ namespace CryptoQuest.Gameplay.PlayerParty
         // bool TryGetMemberAtIndex(int charIndexInParty, out IHero character);
         // IParty Party { get; }
         public PartySlot[] Slots { get; }
+        public PartySO PartySO { get; }
         int Size { get; }
 
         /// <summary>
@@ -38,6 +39,7 @@ namespace CryptoQuest.Gameplay.PlayerParty
         public int Size => _size;
         private int _size;
         [SerializeField] private PartySO _partySO;
+        public PartySO PartySO => _partySO;
 
         public List<HeroBehaviour> OrderedAliveMembers =>
             (from slot in _partySlots

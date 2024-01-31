@@ -29,12 +29,6 @@ namespace CryptoQuest.Character.Hero.AvatarProvider
                 yield break;
             }
 
-            if (CheckValidAvatar(hero))
-            {
-                Debug.LogWarning($"Avatar already loaded!");
-                yield break;
-            }
-
             var id = $"{hero.DetailsInfo.Id}-{hero.Class.Id}";
 
             yield return _avatarDatabase.LoadDataById(id);
@@ -48,6 +42,7 @@ namespace CryptoQuest.Character.Hero.AvatarProvider
                 AvatarLoaded(hero, hero.Avatar);
                 return true;
             }
+
             return false;
         }
 
