@@ -86,7 +86,7 @@ namespace CryptoQuest.Gameplay.Battle
         public struct DiamondBody
         {
             [JsonProperty("diamond")]
-            public int Diamond;
+            public float Diamond;
         }
     }
 }

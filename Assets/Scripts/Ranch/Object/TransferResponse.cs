@@ -11,7 +11,7 @@ namespace CryptoQuest.Ranch.Object
         public string message;
         public string uuid;
         public int gold;
-        public int diamond;
+        public float diamond;
         public int soul;
         public long time;
         public BeastsResponse.Data data;

@@ -19,7 +19,7 @@ namespace CryptoQuestEditor.CryptoQuestEditor.Scripts.System.QuestSystem
         public bool success;
         public string message;
         public int gold;
-        public int diamond;
+        public float diamond;
         public int soul;
         public long time;
         public Data data;

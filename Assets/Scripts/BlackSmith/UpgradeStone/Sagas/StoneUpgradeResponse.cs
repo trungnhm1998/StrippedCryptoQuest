@@ -27,7 +27,7 @@ namespace CryptoQuest.BlackSmith.UpgradeStone.Sagas
         {
             public int probability;
             public int gold;
-            public int diamond;
+            public float diamond;
             public string stoneId;
             public string stoneNameEn;
             public string stoneNameJp;
