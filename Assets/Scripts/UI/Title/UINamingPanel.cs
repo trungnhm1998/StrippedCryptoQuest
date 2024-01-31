@@ -49,7 +49,7 @@ namespace CryptoQuest.UI.Title
                 return;
             }
 
-            _saveSystem.PlayerName = NameInput.text.Trim();
+            _saveSystem.PlayerName = NameInput.text;
             _saveSystem.Save();
         }
 
