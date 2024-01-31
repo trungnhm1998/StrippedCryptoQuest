@@ -47,11 +47,11 @@ namespace CryptoQuest.BlackSmith.Upgrade.Sagas
 
         private IEquipment TryFindEquipment(int id)
         {
-            if (_inventory.TryFindEquipment(id, out var equipment))
-                return equipment;
-
             var equippingEquipment = TryFindEquipping(id);
             if (equippingEquipment != null) return equippingEquipment;
+
+            if (_inventory.TryFindEquipment(id, out var equipment))
+                return equipment;
 
             return new Equipment();
         }
