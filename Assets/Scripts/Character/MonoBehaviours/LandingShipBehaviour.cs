@@ -27,10 +27,10 @@ namespace CryptoQuest.Character.MonoBehaviours
                 .normalized;
             // use overlap 2d to avoid collision with other ships in the same layers
             var colliders = Physics2D.OverlapBoxAll(transform.position + dir * _castDistance, Vector2.one * _boxSize, 
-                0, _landLayer);
+                0);
             foreach (var collider in colliders)
             {
-                if (_landLayer.Contains(collider.gameObject.layer))
+                if (_landLayer.Contains(collider.gameObject.layer) || !collider.isTrigger)
                     return false;
             }
             return true;
