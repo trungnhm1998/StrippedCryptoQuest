@@ -51,7 +51,7 @@ namespace CryptoQuest.Gameplay.Battle
         {
             ActionDispatcher.Dispatch(new ShowLoading());
             _restClient
-                .WithBody(new DiamondBody { Diamond = args[0].Int })
+                .WithBody(new DiamondBody { Diamond = args[0].Float })
                 .WithHeaders(new Dictionary<string, string> { { "DEBUG_KEY", Profile.DEBUG_KEY },
                     {
                         "Content-Type",
