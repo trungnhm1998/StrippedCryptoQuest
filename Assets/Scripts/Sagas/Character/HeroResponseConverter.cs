@@ -99,10 +99,17 @@ namespace CryptoQuest.Sagas.Character
                 var value = (float)fieldInfo.GetValue(response);
                 if (initialAttributes.TryGetValue(attributeSO, out var def))
                 {
-                    if (fieldName.Contains("min"))
-                        def.MinValue = value;
-                    else
-                        def.MaxValue = value;
+                    switch (fieldName)
+                    {
+                        case var name when name.Contains("min"):
+                            def.MinValue = value;
+                            break;
+                        case var name when name.Contains("max"):
+                            def.MaxValue = value;
+                            break;
+                        default:
+                            break;
+                    }
                     initialAttributes[attributeSO] = def;
                 }
                 else
