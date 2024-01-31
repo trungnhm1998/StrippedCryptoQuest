@@ -44,7 +44,7 @@ namespace CryptoQuest.BlackSmith.Upgrade.Presenters
             foreach (var attribute in Equipment.Data.Stats)
             {
                 var newValue = attribute.Value;
-                newValue += level * Equipment.Data.ValuePerLvl;
+                newValue += (level - Equipment.Level) * Equipment.Data.ValuePerLvl;
                 _attributePreviewUIs.TryGetValue(attribute, out var previewUI);
                 previewUI.SetPreviewValue(Mathf.FloorToInt(newValue));
             }
