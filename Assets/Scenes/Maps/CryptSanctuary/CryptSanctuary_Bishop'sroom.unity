@@ -149,7 +149,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -1714495878164604308, guid: 77385803a01284ff6a978d84970fc06e, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -974300118888872852, guid: 77385803a01284ff6a978d84970fc06e, type: 3}
       propertyPath: m_Name
@@ -220,16 +220,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: -2695619058785784247, guid: 77385803a01284ff6a978d84970fc06e, type: 3}
---- !u!4 &46508475 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7009502869730735929, guid: 77385803a01284ff6a978d84970fc06e, type: 3}
-  m_PrefabInstance: {fileID: 46508474}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &46508476 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: -1714495878164604308, guid: 77385803a01284ff6a978d84970fc06e, type: 3}
-  m_PrefabInstance: {fileID: 46508474}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &122047313
 GameObject:
   m_ObjectHideFlags: 0
@@ -328,7 +318,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 46508475}
+  - {fileID: 7009502869701533315}
   - {fileID: 882073070}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1058,7 +1048,7 @@ PrefabInstance:
     - target: {fileID: 3976240083774453140, guid: 1d1c68953f8bde2408ac4fc4133846e4, type: 3}
       propertyPath: m_SceneBindings.Array.data[46].value
       value: 
-      objectReference: {fileID: 46508476}
+      objectReference: {fileID: 7508876158736610262}
     - target: {fileID: 5962919670509428884, guid: 1d1c68953f8bde2408ac4fc4133846e4, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1285,12 +1275,22 @@ PrefabInstance:
     - target: {fileID: 5045768131741447376, guid: bab3e78b6d8d63f429697949e3a50d25, type: 3}
       propertyPath: m_SceneBindings.Array.data[261].value
       value: 
-      objectReference: {fileID: 46508476}
+      objectReference: {fileID: 7508876158736610262}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bab3e78b6d8d63f429697949e3a50d25, type: 3}
+--- !u!4 &7009502869701533315 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7009502869730735929, guid: 77385803a01284ff6a978d84970fc06e, type: 3}
+  m_PrefabInstance: {fileID: 46508474}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7508876158736610262 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -1714495878164604308, guid: 77385803a01284ff6a978d84970fc06e, type: 3}
+  m_PrefabInstance: {fileID: 46508474}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8254565442262921943
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1339,14 +1339,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1183869888408295596, guid: 033186875ee3c99408d0673f25120bcf, type: 3}
-      propertyPath: _actorSpawnSettingSO
-      value: 
-      objectReference: {fileID: 11400000, guid: 3bbdc2faea03c4842b2c27d6f598f46d, type: 2}
     - target: {fileID: 7684522277565462102, guid: 033186875ee3c99408d0673f25120bcf, type: 3}
       propertyPath: m_SceneBindings.Array.data[22].value
       value: 
       objectReference: {fileID: 6781508543145278571}
+    - target: {fileID: 7684522277565462102, guid: 033186875ee3c99408d0673f25120bcf, type: 3}
+      propertyPath: m_SceneBindings.Array.data[37].value
+      value: 
+      objectReference: {fileID: 7508876158736610262}
     - target: {fileID: 8883140260636160276, guid: 033186875ee3c99408d0673f25120bcf, type: 3}
       propertyPath: m_Name
       value: ActorSpawner_ch003_p6_medusa
