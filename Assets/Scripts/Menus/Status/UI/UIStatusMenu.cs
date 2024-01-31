@@ -69,6 +69,7 @@ namespace CryptoQuest.Menus.Status.UI
             ShowMagicStone.EventRaised -= ShowMagicStoneMenuRequested;
             ShowTooltipEvent.RaiseEvent(false);
             _stateMachine.OnExit();
+            InspectingHero = null;
         }
 
         private void ShowMagicStoneMenuRequested(IEquipment equipment)

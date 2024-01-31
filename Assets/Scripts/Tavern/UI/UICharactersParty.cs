@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using CryptoQuest.Character.Hero;
 using CryptoQuest.Gameplay.PlayerParty;
 using CryptoQuest.Merchant;
+using CryptoQuest.System.SaveSystem.Savers;
+using IndiGames.Core.Events;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -63,7 +65,7 @@ namespace CryptoQuest.Tavern.UI
                 Debug.Log("Use transfer to add more heroes");
                 return;
             }
-            
+
             if (isSlotEmpty)
             {
                 AddingHeroToParty(uiSlot);
@@ -75,11 +77,21 @@ namespace CryptoQuest.Tavern.UI
             for (var index = 0; index < _partySO.Count; index++)
             {
                 var partySlot = _partySO[index];
-                if (partySlot.Hero.Id == selectedHero.Id) continue;
+                if (partySlot.Hero.Id == selectedHero.Id)
+                {
+                    foreach (var equipmentSlot in partySlot.EquippingItems.Slots)
+                    {
+                        if (equipmentSlot.IsValid() == false) continue;
+                        var equipment = equipmentSlot.Equipment;
+                        equipment.AttachCharacterId = -1;
+                    }
+                    continue;
+                }
                 newParty.Add(partySlot);
             }
 
             _partySO.SetParty(newParty.ToArray());
+            ActionDispatcher.Dispatch(new SaveEquipmentAction());
             _uiCharacterInventoryList.Refresh();
         }
 
