@@ -20,11 +20,12 @@ namespace CryptoQuest.ChangeClass.View
         public bool IsFinishInstantiateData { get; private set; }
         public int ClassID { get; private set; }
         private ILevelCalculator _calculator;
+        private int _requiredLevel;
 
         public IEnumerator InstantiateData(List<HeroSpec> classMaterials, UIOccupation occupation, int index)
         {
             ClassID = occupation.Class.ClassMaterials[index].Id;
-            int requiredLevel = occupation.Class.ClassMaterials[index].Level;
+            _requiredLevel = occupation.Class.ClassMaterials[index].Level;
             _occupation = occupation;
             _heroSpecs = classMaterials;
             CleanUpScrollView();
@@ -37,7 +38,7 @@ namespace CryptoQuest.ChangeClass.View
                 _calculator = new LevelCalculator(_heroSpecs[i].Stats.MaxLevel);
                 int level = _calculator.CalculateCurrentLevel(_heroSpecs[i].Experience);
 
-                if (ClassID.ToString() == _heroSpecs[i].Class.Id.ToString() && level >= requiredLevel)
+                if (ClassID.ToString() == _heroSpecs[i].Class.Id.ToString() && level >= _requiredLevel)
                 {
                     UICharacter newMaterial = Instantiate(_characterClassObject, _scrollRect.content);
                     newMaterial.ConfigureCell(_heroSpecs[i]);
@@ -93,6 +94,8 @@ namespace CryptoQuest.ChangeClass.View
             yield return new WaitUntil(() => _scrollRect.content.childCount == 0);
             for (int i = 0; i < _heroSpecs.Count; i++)
             {
+                int level = _calculator.CalculateCurrentLevel(_heroSpecs[i].Experience);
+                if (level < _requiredLevel) continue;
                 if (ClassID == _heroSpecs[i].Class.Id &&
                     _heroSpecs[i].Origin == character.Class.Origin &&
                     character.Class.Id != _heroSpecs[i].Id)
