@@ -9,12 +9,15 @@ using CryptoQuest.Networking;
 using CryptoQuest.Sagas.Objects;
 using CryptoQuest.UI.Actions;
 using CryptoQuest.UI.Common;
+using CryptoQuest.UI.Dialogs.ChoiceDialog;
 using CryptoQuest.UI.Utilities;
 using IndiGames.Core.Common;
 using IndiGames.Core.Events;
 using UniRx;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Localization;
+using UnityEngine.UI;
 
 namespace CryptoQuest.Tavern.UI
 {
@@ -26,6 +29,14 @@ namespace CryptoQuest.Tavern.UI
         [SerializeField] private MerchantInput _merchantInput;
         [SerializeField] private UICharacterList _inGame;
         [SerializeField] private UICharacterList _inWallet;
+        [SerializeField] private LocalizedString _confirmMessage;
+
+        private UIChoiceDialog _confirmDialog;
+
+        private void Awake()
+        {
+            ChoiceDialogController.Instance.InstantiateAsync(dialog => _confirmDialog = dialog);
+        }
 
         private void OnEnable()
         {
@@ -37,12 +48,12 @@ namespace CryptoQuest.Tavern.UI
         {
             UnRegisterEvents();
         }
-        
+
         private void RegisterEvents()
         {
             _merchantInput.CancelEvent += Close;
             _merchantInput.ResetEvent += Reset;
-            _merchantInput.ExecuteEvent += Transfer;
+            _merchantInput.ExecuteEvent += ConfirmTransfer;
             _merchantInput.NavigateEvent += SwitchFocusPanel;
         }
 
@@ -50,7 +61,7 @@ namespace CryptoQuest.Tavern.UI
         {
             _merchantInput.CancelEvent -= Close;
             _merchantInput.ResetEvent -= Reset;
-            _merchantInput.ExecuteEvent -= Transfer;
+            _merchantInput.ExecuteEvent -= ConfirmTransfer;
             _merchantInput.NavigateEvent -= SwitchFocusPanel;
         }
 
@@ -120,18 +131,42 @@ namespace CryptoQuest.Tavern.UI
                 listToFocus.GetOrAddComponent<SelectFirstChildInList>().Select();
                 return;
             }
+
             EventSystem.current.SetSelectedGameObject(lastSelected.gameObject);
         }
-        
+
+        private void ConfirmTransfer()
+        {
+            var characterToRemove = _inGame.GetSelectedItems();
+            var characterToAdd = _inWallet.GetSelectedItems();
+            var hasNoSelectedItem = characterToAdd.Count == 0 && characterToRemove.Count == 0;
+            if (hasNoSelectedItem) return;
+
+            _merchantInput.NavigateEvent -= SwitchFocusPanel;
+            _inWallet.Interactable = false;
+            _inGame.Interactable = false;
+
+            _confirmDialog
+                .WithYesCallback(Transfer)
+                .WithNoCallback(() => { _merchantInput.NavigateEvent += SwitchFocusPanel; })
+                .SetMessage(_confirmMessage)
+                .WithHideCallback(() =>
+                {
+                    _inWallet.Interactable = true;
+                    _inGame.Interactable = true;
+                    _inWallet.GetOrAddComponent<SelectFirstChildInList>().Select();
+                    _inGame.GetOrAddComponent<SelectFirstChildInList>().Select();
+                })
+                .Show();
+        }
+
         private void Transfer()
         {
             ActionDispatcher.Dispatch(new ShowLoading());
             UnRegisterEvents();
             var characterToRemove = _inGame.GetSelectedItems();
             var characterToAdd = _inWallet.GetSelectedItems();
-            
-            if (characterToRemove.Count == 0 && characterToAdd.Count == 0) return;
-            
+
             int[] idsToRemove = new int[characterToRemove.Count];
             int[] idsToAdd = new int[characterToAdd.Count];
 
@@ -148,7 +183,7 @@ namespace CryptoQuest.Tavern.UI
                 idsToAdd[index] = characterListItem.Spec.Id;
                 _heroInventorySO.Add(characterListItem.Spec);
             }
-            
+
             StartCoroutine(CoTransfer(idsToRemove, idsToAdd));
         }
 
@@ -167,10 +202,11 @@ namespace CryptoQuest.Tavern.UI
                 .ToYieldInstruction();
             yield return op;
             RegisterEvents();
-            
+
             if (op.HasError)
             {
-                Debug.Log($"<color=white>Tavern::UITransferCharacter::TransferCharactersToBothSideFailed::Error</color>:: {op.Error}");
+                Debug.Log(
+                    $"<color=white>Tavern::UITransferCharacter::TransferCharactersToBothSideFailed::Error</color>:: {op.Error}");
                 yield break;
             }
 
