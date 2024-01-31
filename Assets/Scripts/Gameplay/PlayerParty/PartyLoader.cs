@@ -31,15 +31,11 @@ namespace CryptoQuest.Gameplay.PlayerParty
         private PartySlotSpec[] CreatePartyFromSave()
         {
             if (!_saveSystemSO.SaveData.TryGetValue(_partySO.name, out var json))
-            {
-                _saveSystemSO.SaveData[_partySO.name] = JsonConvert.SerializeObject(new PartyOrderSerializeObject()
-                {
-                    Ids = new[] { 0 }
-                });
                 return CreateDefaultParty();
-            }
 
             var partyOrder = JsonUtility.FromJson<PartyOrderSerializeObject>(json).Ids;
+            if (partyOrder.Length == 0)
+                return CreateDefaultParty();
             var party = new List<PartySlotSpec>();
             for (var index = 0; index < partyOrder.Length; index++)
             {
@@ -76,6 +72,10 @@ namespace CryptoQuest.Gameplay.PlayerParty
         /// <returns>Default party with single main hero at first slot</returns>
         private PartySlotSpec[] CreateDefaultParty()
         {
+            _saveSystemSO.SaveData[_partySO.name] = JsonConvert.SerializeObject(new PartyOrderSerializeObject()
+            {
+                Ids = new[] { 0 }
+            });
             return new[]
             {
                 new PartySlotSpec()
