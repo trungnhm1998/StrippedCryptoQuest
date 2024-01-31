@@ -75,7 +75,7 @@ namespace CryptoQuest.ChangeClass
 
         private IEnumerator SelectDefaultButton(UIClassMaterial classMaterial)
         {
-            yield return new WaitUntil(() => classMaterial.IsFilterClassMaterial);
+            yield return new WaitUntil(() => classMaterial.IsFinishInstantiateData);
             var materialNumber = classMaterial.ListClassCharacter.Count;
             if (materialNumber != 0)
                 EnableButtonInteractable(true, classMaterial);
