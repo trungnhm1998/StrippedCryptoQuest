@@ -50,7 +50,7 @@ namespace CryptoQuest.System.Settings
 
         public EValidation Validate(string input)
         {
-            input = input.ToLower().Trim();
+            input = input.ToLower();
 
             var containedBadWords = _badWordsRegex.IsMatch(input);
             if (containedBadWords)
@@ -70,9 +70,7 @@ namespace CryptoQuest.System.Settings
                 return EValidation.LongWord;
             }
 
-            return string.IsNullOrEmpty(input) || string.IsNullOrWhiteSpace(input)
-                ? EValidation.Null
-                : EValidation.Valid;
+            return EValidation.Valid;
         }
     }
 }

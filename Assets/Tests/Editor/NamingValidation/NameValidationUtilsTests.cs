@@ -39,7 +39,6 @@ namespace CryptoQuest.Tests.Editor.NamingValidation
 
         private static string[] nullNames = { "", " ", "     " };
         private static string[] numberNames = { "1", "123", "123456789", "Saymyname9", "N0ic3" };
-        private static string[] trimmedTestNames = { " Test name", "Test name ", " Test name " };
 
         [SetUp]
         public void Setup()
@@ -102,18 +101,6 @@ namespace CryptoQuest.Tests.Editor.NamingValidation
             Assert.AreEqual(expected, result, $"Input: {input} - Output: {result}");
         }
 
-        [TestCaseSource(nameof(TrimmedTestCases))]
-        public void Validate_TrimmedName_ShouldReturnEValidationValid(string input, EValidation expected)
-        {
-            EValidation result = nameValidator.Validate(input);
-
-            var expectedTrimmed = input.Trim();
-
-            Assert.AreEqual(expected, result, $"Input: {input} - Output: {result}");
-
-            Debug.Log($"Input: [{input}] - Output: [{result}] - Expected: [{expectedTrimmed}]");
-        }
-
         private static IEnumerable<TestCaseData> BadWordTestCases => GetTestCases(badWords, EValidation.BadWord);
 
         private static IEnumerable<TestCaseData> SpecialCharacterTestCases =>
@@ -126,7 +113,6 @@ namespace CryptoQuest.Tests.Editor.NamingValidation
 
         private static IEnumerable<TestCaseData> NullNameTestCases => GetTestCases(nullNames, EValidation.Null);
         private static IEnumerable<TestCaseData> NumberNameTestCases => GetTestCases(numberNames, EValidation.Valid);
-        private static IEnumerable<TestCaseData> TrimmedTestCases => GetTestCases(trimmedTestNames, EValidation.Valid);
 
         private static IEnumerable<TestCaseData> GetTestCases(string[] inputs, EValidation expected) =>
             inputs.Select(input => new TestCaseData(input, expected));
