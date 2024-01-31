@@ -1,9 +1,11 @@
-﻿using CryptoQuest.Battle.Components;
+﻿using System;
+using CryptoQuest.Battle.Components;
 using CryptoQuest.Character.Hero;
 using UnityEngine;
 
 namespace CryptoQuest.Inventory
 {
+    [Obsolete]
     public class HeroSpecInitializer : MonoBehaviour
     {
         [SerializeField] private HeroBehaviour _hero;
