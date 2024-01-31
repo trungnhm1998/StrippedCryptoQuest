@@ -13,7 +13,8 @@ namespace CryptoQuest.Ranch
         [field: SerializeField] public UIRanch UIRanch { get; private set; }
 
         [field: Header("Events")]
-        [field: SerializeField] public ShowWalletEventChannelSO ShowWalletEventChannel { get; private set; }
+        [field: SerializeField]
+        public ShowWalletEventChannelSO ShowWalletEventChannel { get; private set; }
 
         private void OnEnable()
         {
@@ -27,25 +28,8 @@ namespace CryptoQuest.Ranch
             RanchSystem.RanchClosedEvent -= RanchClosed;
         }
 
-        public void Initialize()
-        {
-            UIRanch.Initialize();
-        }
-
-        public void HideDialogs()
-        {
-            DialogController.NormalDialogue.Hide();
-        }
-
-        private void RanchOpened()
-        {
-            UIRanch.FarmOpened();
-            DialogController.RanchOpened();
-        }
-
-        private void RanchClosed()
-        {
-            UIRanch.FarmClosed();
-        }
+        public void Initialize() => UIRanch.Initialize();
+        private void RanchOpened() => UIRanch.FarmOpened();
+        private void RanchClosed() => UIRanch.FarmClosed();
     }
 }

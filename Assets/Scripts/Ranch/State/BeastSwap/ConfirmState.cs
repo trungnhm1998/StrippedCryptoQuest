@@ -13,23 +13,17 @@ namespace CryptoQuest.Ranch.State.BeastSwap
         [SerializeField] private LocalizedString _transferSucceededMsg;
         [SerializeField] private LocalizedString _transferFailedMsg;
 
-        private RanchStateController _controllerState;
-
-        private static readonly int SwapState = Animator.StringToHash("SwapState");
-
         private TinyMessageSubscriptionToken _transferFailedEvent;
         private TinyMessageSubscriptionToken _transferSucceedEvent;
 
         protected override void OnEnter()
         {
-            _controllerState = StateMachine.GetComponent<RanchStateController>();
-
             _transferSucceedEvent = ActionDispatcher.Bind<TransferSucceed>(ShowTransferSucceededMessage);
             _transferFailedEvent = ActionDispatcher.Bind<TransferFailed>(ShowTransferFailedMessage);
 
-            _controllerState.Controller.Input.CancelEvent += CancelTransmission;
+            _input.CancelEvent += CancelTransmission;
 
-            _controllerState.Controller.DialogController.ChoiceDialog
+            _stateController.Controller.DialogController.ChoiceDialog
                 .SetButtonsEvent(OnConfirm, OnCancel)
                 .SetMessage(_confirmMessage)
                 .Show();
@@ -37,12 +31,12 @@ namespace CryptoQuest.Ranch.State.BeastSwap
 
         protected override void OnExit()
         {
-            _controllerState.Controller.Input.SubmitEvent -= BackToSwapState;
+            _input.SubmitEvent -= BackToSwapState;
 
             ActionDispatcher.Unbind(_transferSucceedEvent);
             ActionDispatcher.Unbind(_transferFailedEvent);
 
-            _controllerState.Controller.DialogController.ChoiceDialog.Hide();
+            _stateController.Controller.DialogController.ChoiceDialog.Hide();
         }
 
         private void CancelTransmission() => StateMachine.Play(SwapState);
@@ -59,29 +53,29 @@ namespace CryptoQuest.Ranch.State.BeastSwap
 
         private void OnCancel()
         {
-            _controllerState.Controller.DialogController.ChoiceDialog.Hide();
+            _stateController.Controller.DialogController.ChoiceDialog.Hide();
             StateMachine.Play(SwapState);
         }
 
         private void HandleTransferMessage(LocalizedString msg)
         {
-            _controllerState.Controller.DialogController.NormalDialogue
+            _stateController.Controller.DialogController.NormalDialogue
                 .SetMessage(msg)
                 .Show();
 
-            _controllerState.Controller.Input.SubmitEvent += BackToSwapState;
+            _input.SubmitEvent += BackToSwapState;
         }
 
         private void BackToSwapState()
         {
-            _controllerState.Controller.DialogController.NormalDialogue.Hide();
+            _stateController.Controller.DialogController.NormalDialogue.Hide();
             StateMachine.Play(SwapState);
         }
 
         private void ProceedToSendBeasts()
         {
-            UIBeastItem[] inGameBeasts = _controllerState.UIBeastSwap.ToGame.ToArray();
-            UIBeastItem[] inDBoxBeasts = _controllerState.UIBeastSwap.ToWallet.ToArray();
+            UIBeastItem[] inGameBeasts = _stateController.UIBeastSwap.ToGame.ToArray();
+            UIBeastItem[] inDBoxBeasts = _stateController.UIBeastSwap.ToWallet.ToArray();
             ActionDispatcher.Dispatch(new ShowLoading());
             ActionDispatcher.Dispatch(new SendBeastsToBothSide(inGameBeasts, inDBoxBeasts));
         }
