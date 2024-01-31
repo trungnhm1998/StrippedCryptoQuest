@@ -42,7 +42,6 @@ namespace CryptoQuest.Ranch.Sagas
             ActionDispatcher.Dispatch(new ShowLoading(false));
 
             ActionDispatcher.Dispatch(new BeastUpgradeSucceed());
-            ActionDispatcher.Dispatch(new FetchProfileBeastsAction());
         }
 
         private void OnError(Exception exception)

@@ -8,30 +8,32 @@ namespace CryptoQuest.Ranch.Upgrade.Presenters
 {
     public class UpgradePresenter : MonoBehaviour
     {
-        [field: SerializeField] public UIConfigBeastUpgradePresenter ConfigBeast { get; private set; }
-        [field: SerializeField] public UIResultUpgradeBeastList ResultBeast { get; private set; }
-        [field: SerializeField] public UIBeastUpgradeDetail UiBeastUpgradeDetail { get; private set; }
-        [field: SerializeField] public UIBeastUpgradeList BeastList { get; private set; }
-        [field: SerializeField] public GameObject LeftPanel { get; private set; }
-
         public IBeast BeastToUpgrade { get; private set; } = NullBeast.Instance;
 
         public bool Interactable
         {
-            get => BeastList.Interactable;
-            set => BeastList.Interactable = value;
+            get => _beastList.Interactable;
+            set => _beastList.Interactable = value;
         }
+
+        [SerializeField] private UIResultUpgradeBeastList _resultBeast;
+        [SerializeField] private UIBeastUpgradeList _beastList;
+        [SerializeField] private UIBeastUpgradeDetail _uiBeastDetail;
+        [SerializeField] private UIBeastUpgradeDetail _uiBeastResultDetail;
+        [SerializeField] private CalculatorBeastStatsSO _calculatorBeastStatsSo;
+        [SerializeField] private BeastInventorySO _beastInventory;
+        [SerializeField] private GameObject _leftPanel;
 
         private void OnEnable()
         {
-            BeastList.OnInspectingEvent += ShowBeastDetails;
-            BeastList.OnBeastSelected += OnBeastSelected;
+            _beastList.OnInspectingEvent += ShowBeastDetails;
+            _beastList.OnBeastSelected += OnBeastSelected;
         }
 
         private void OnDisable()
         {
-            BeastList.OnInspectingEvent -= ShowBeastDetails;
-            BeastList.OnBeastSelected -= OnBeastSelected;
+            _beastList.OnInspectingEvent -= ShowBeastDetails;
+            _beastList.OnBeastSelected -= OnBeastSelected;
         }
 
         private void OnBeastSelected(IBeast beast)
@@ -41,22 +43,38 @@ namespace CryptoQuest.Ranch.Upgrade.Presenters
 
         private void ShowBeastDetails(UIBeastUpgradeListDetail ui)
         {
-            UiBeastUpgradeDetail.SetupUI(ui.Beast);
+            _uiBeastDetail.SetupUI(ui.Beast);
         }
 
         public void InitBeast(List<IBeast> beasts)
         {
-            LeftPanel.SetActive(true);
+            _leftPanel.SetActive(true);
             if (beasts.Count <= 0) return;
 
             Interactable = true;
-            BeastList.FillBeasts(beasts);
-            UiBeastUpgradeDetail.gameObject.SetActive(true);
+            _beastList.FillBeasts(beasts);
         }
 
         public void ActiveBeastDetail(bool value)
         {
-            UiBeastUpgradeDetail.gameObject.SetActive(value);
+            _uiBeastDetail.gameObject.SetActive(value);
+        }
+
+        public void ShowResult()
+        {
+            _resultBeast.Show();
+            _leftPanel.SetActive(false);
+            ActiveBeastDetail(false);
+
+            IBeast beast = _beastInventory.GetBeast(BeastToUpgrade.Id);
+
+            _uiBeastResultDetail.SetupUI(beast);
+            _calculatorBeastStatsSo.RaiseEvent(beast);
+        }
+
+        public void HideResult()
+        {
+            _resultBeast.Hide();
         }
     }
 }

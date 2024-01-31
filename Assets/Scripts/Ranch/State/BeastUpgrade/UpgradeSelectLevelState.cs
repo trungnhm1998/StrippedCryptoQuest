@@ -1,6 +1,4 @@
-using CryptoQuest.Input;
 using CryptoQuest.Ranch.Sagas;
-using CryptoQuest.Ranch.Upgrade.UI;
 using CryptoQuest.UI.Actions;
 using IndiGames.Core.Events;
 using TinyMessenger;
@@ -14,24 +12,15 @@ namespace CryptoQuest.Ranch.State.BeastUpgrade
         [SerializeField] private LocalizedString _warningMessage;
         [SerializeField] private LocalizedString _failedMessage;
 
-        private RanchStateController _stateController;
-        private UIConfigBeastUpgradePresenter _config;
-        private MerchantsInputManager _input;
-
-        private static readonly int UpgradeState = Animator.StringToHash("UpgradeState");
-        private static readonly int ResultState = Animator.StringToHash("UpgradeResultState");
-
         private TinyMessageSubscriptionToken _upgradeSucceed;
         private TinyMessageSubscriptionToken _upgradeFailed;
+        private TinyMessageSubscriptionToken _getDataSucceed;
 
         protected override void OnEnter()
         {
-            _stateController = StateMachine.GetComponent<RanchStateController>();
-            _config = _stateController.UpgradePresenter.ConfigBeast;
-            _input = _stateController.Controller.Input;
-
             _upgradeSucceed = ActionDispatcher.Bind<BeastUpgradeSucceed>(OnUpgradeSucceed);
             _upgradeFailed = ActionDispatcher.Bind<BeastUpgradeFailed>(OnUpgradeFailed);
+            _getDataSucceed = ActionDispatcher.Bind<GetBeastSucceeded>(OnGetDataSuccess);
 
             _config.InitUI();
 
@@ -45,13 +34,23 @@ namespace CryptoQuest.Ranch.State.BeastUpgrade
                 .Show();
         }
 
-        private void OnUpgradeFailed(ActionBase _) => _input.SubmitEvent += BackToUpgradeState;
+        private void OnUpgradeFailed(ActionBase _)
+        {
+            _stateController.DialogController.ChoiceDialog.Hide();
+            _stateController.DialogController.NormalDialogue
+                .SetMessage(_failedMessage)
+                .Show();
+
+            _input.SubmitEvent += BackToUpgradeState;
+        }
 
         private void OnUpgradeSucceed(ActionBase _)
         {
             _config.UpdateGold();
-            StateMachine.Play(ResultState);
+            ActionDispatcher.Dispatch(new FetchProfileBeastsAction());
         }
+
+        private void OnGetDataSuccess(ActionBase _) => StateMachine.Play(UpgradeResultState);
 
         private void InputOnNavigateEvent(Vector2 handleNavigation) => _config.HandleNavigation(handleNavigation);
 
@@ -62,16 +61,17 @@ namespace CryptoQuest.Ranch.State.BeastUpgrade
             if (!_config.IsUpgradeValid)
             {
                 _config.DeInitUI();
-                
+
+                _stateController.DialogController.ChoiceDialog.Hide();
                 _stateController.DialogController.NormalDialogue
                     .SetMessage(_failedMessage)
                     .Show();
-                
+
                 _input.SubmitEvent += BackToUpgradeState;
-                
+
                 return;
             }
-            
+
             ActionDispatcher.Dispatch(new ShowLoading());
             ActionDispatcher.Dispatch(new RequestUpgradeBeast()
             {
@@ -84,6 +84,7 @@ namespace CryptoQuest.Ranch.State.BeastUpgrade
         {
             ActionDispatcher.Unbind(_upgradeSucceed);
             ActionDispatcher.Unbind(_upgradeFailed);
+            ActionDispatcher.Unbind(_getDataSucceed);
 
             _config.DeInitUI();
             _stateController.DialogController.ChoiceDialog.Hide();

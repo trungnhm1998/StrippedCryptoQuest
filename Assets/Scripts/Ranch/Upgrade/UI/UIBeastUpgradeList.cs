@@ -44,7 +44,7 @@ namespace CryptoQuest.Ranch.Upgrade.UI
                 uiBeast.OnSubmit += OnItemSelected;
             }
 
-            _hasFocus = TryFocus();
+            TryFocus();
         }
 
         private void OnItemSelected(UIBeastUpgradeListDetail ui)
@@ -104,7 +104,6 @@ namespace CryptoQuest.Ranch.Upgrade.UI
         }
 
         private bool _interactable;
-        private bool _hasFocus;
 
         public bool Interactable
         {
