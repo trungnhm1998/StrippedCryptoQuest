@@ -12,6 +12,17 @@ namespace CryptoQuest.Tavern.UI
     {
         [SerializeField] private ScrollRect _scrollRect;
         [SerializeField] private UICharacterListItem _itemPrefab;
+        private bool _interactable;
+
+        public bool Interactable
+        {
+            set
+            {
+                _interactable = value;
+                var buttons = _scrollRect.content.GetComponentsInChildren<Button>();
+                foreach (var button in buttons) button.interactable = value;
+            }
+        }
 
         public void Init(List<Obj.Character> characterResponses)
         {
