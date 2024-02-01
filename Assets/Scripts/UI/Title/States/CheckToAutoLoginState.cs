@@ -1,5 +1,4 @@
-﻿using CryptoQuest.Actions;
-using CryptoQuest.Networking;
+﻿using CryptoQuest.Networking;
 using CryptoQuest.Sagas.Profile;
 using IndiGames.Core.Events;
 using TinyMessenger;
@@ -10,11 +9,7 @@ namespace CryptoQuest.UI.Title.States
     public class CheckToAutoLoginState : MonoBehaviour, IState
     {
         [SerializeField] private Credentials _credentials;
-        private string _token;
-        private string _refreshToken;
         private TitleStateMachine _stateMachine;
-        private TinyMessageSubscriptionToken _fetchFailed;
-        private TinyMessageSubscriptionToken _fetchSucceed;
 
         public void OnEnter(TitleStateMachine stateMachine)
         {
@@ -27,14 +22,7 @@ namespace CryptoQuest.UI.Title.States
                 return;
             }
 
-            _fetchFailed = ActionDispatcher.Bind<FetchProfileFailedAction>(TryToRefreshToken);
-            _fetchSucceed = ActionDispatcher.Bind<FetchProfileSucceedAction>(_ =>
-            {
-                if (_fetchSucceed != null) ActionDispatcher.Unbind(_fetchSucceed);
-                ActionDispatcher.Dispatch(new AuthenticateSucceed());
-            });
-
-            ActionDispatcher.Dispatch(new FetchProfileAction());
+            TryToRefreshToken();
         }
 
         private void ToLogin()
@@ -44,9 +32,8 @@ namespace CryptoQuest.UI.Title.States
 
         private TinyMessageSubscriptionToken _refreshTokenFailed;
 
-        private void TryToRefreshToken(FetchProfileFailedAction ctx)
+        private void TryToRefreshToken()
         {
-            if (_fetchFailed != null) ActionDispatcher.Unbind(_fetchFailed);
             if (string.IsNullOrEmpty(_credentials.RefreshToken))
             {
                 ToLogin();
@@ -60,8 +47,6 @@ namespace CryptoQuest.UI.Title.States
 
         public void OnExit(TitleStateMachine stateMachine)
         {
-            if (_fetchFailed != null) ActionDispatcher.Unbind(_fetchFailed);
-            if (_fetchSucceed != null) ActionDispatcher.Unbind(_fetchSucceed);
             if (_refreshTokenFailed != null) ActionDispatcher.Unbind(_refreshTokenFailed);
         }
     }

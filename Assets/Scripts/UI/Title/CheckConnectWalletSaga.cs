@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Net;
-using CryptoQuest.API;
 using CryptoQuest.Networking;
 using CryptoQuest.Sagas.Objects;
 using CryptoQuest.UI.Actions;
 using IndiGames.Core.Common;
 using IndiGames.Core.Events;
+using APIProfile = CryptoQuest.API.Profile;
 using UniRx;
 
 namespace CryptoQuest.UI.Title
@@ -21,7 +21,7 @@ namespace CryptoQuest.UI.Title
             ActionDispatcher.Dispatch(new ShowLoading());
             var restClient = ServiceProvider.GetService<IRestClient>();
             restClient.WithoutDispactError()
-                .Get<CommonResponse>(Nft.GET_TOKEN)
+                .Get<CommonResponse>(APIProfile.GET_PROFILE)
                 .Subscribe(OnGetToken, OnError);
         }
 

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using CryptoQuest.Actions;
 using CryptoQuest.Input;
+using CryptoQuest.Networking;
 using CryptoQuest.UI.Title.States;
 using IndiGames.Core.Events;
 using IndiGames.Core.Events.ScriptableObjects;
@@ -23,6 +24,7 @@ namespace CryptoQuest.UI.Title
         [SerializeField] private CheckToAutoLoginState _checkLoginCheckState;
         [field: SerializeField] public GameObject LoginFailedPanel { get; private set; }
         [field: SerializeField] public float AutoCloseLoginFailedPanelTime { get; private set; }
+        [field: SerializeField] public Credentials Credentials { get; private set; }
 
         private readonly Dictionary<Type, object> _cachedComponents = new();
         private IState _curState;

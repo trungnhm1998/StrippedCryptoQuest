@@ -29,6 +29,12 @@ namespace CryptoQuest.UI.Popups.Sagas
                 return;
             }
 
+            if (requestException.StatusCode == (long)HttpStatusCode.Unauthorized)
+            {
+                ActionDispatcher.Dispatch(new UnauthorizedPopup());
+                return;
+            }
+
             ActionDispatcher.Dispatch(new ServerErrorPopup());
         }
     }
