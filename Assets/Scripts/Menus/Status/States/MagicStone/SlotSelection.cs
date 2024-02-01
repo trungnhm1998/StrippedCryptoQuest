@@ -14,7 +14,9 @@ namespace CryptoQuest.Menus.Status.States.MagicStone
         private UIEquipmentDetails _uiEquipmentDetails;
         private TinyMessageSubscriptionToken _equipmentUpdatedToken;
 
-        public SlotSelection(UIStatusMenu statusPanel) : base(statusPanel) { }
+        public SlotSelection(UIStatusMenu statusPanel) : base(statusPanel)
+        {
+        }
 
         public override void OnEnter()
         {
@@ -35,6 +37,7 @@ namespace CryptoQuest.Menus.Status.States.MagicStone
             StatusPanel.UIAttachList.ExitSlotSelection();
             StatusPanel.Input.MenuCancelEvent -= BackToEquipmentSelection;
             StatusPanel.UIAttachList.AttachSlotSelectedEvent -= ToNavigatingBetweenElements;
+            StatusPanel.MagicStoneSelection.DeactivateTooltip();
             ActionDispatcher.Unbind(_equipmentUpdatedToken);
         }
 
@@ -45,7 +48,7 @@ namespace CryptoQuest.Menus.Status.States.MagicStone
                 fsm.RequestStateChange(State.MAGIC_STONE_ELEMENT_NAVIGATION);
                 return;
             }
-            
+
             CallDetachAPI(stoneData);
         }
 

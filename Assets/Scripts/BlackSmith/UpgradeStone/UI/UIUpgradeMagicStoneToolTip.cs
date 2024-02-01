@@ -14,16 +14,16 @@ namespace CryptoQuest.BlackSmith.UpgradeStone.UI
     {
         [SerializeField] private Image _icon;
         [SerializeField] private LocalizeStringEvent _name;
-        [SerializeField] private TMP_Text _lvlText;
-        [SerializeField] private GameObject _passiveInfoHolder;
-        [SerializeField] private UIPassiveInfoDetail _passiveInfoDetail;
+        [SerializeField] protected TMP_Text _lvlText;
+        [SerializeField] protected GameObject _passiveInfoHolder;
+        [SerializeField] protected UIPassiveInfoDetail _passiveInfoDetail;
         [SerializeField] private Color _baseColor;
         [SerializeField] private Color _upgradeColor;
 
-        private IObjectPool<UIPassiveInfoDetail> _passivePool;
+        protected IObjectPool<UIPassiveInfoDetail> _passivePool;
         private bool _isBaseStone;
-        private IMagicStone _stone;
-        private List<UIPassiveInfoDetail> _cachedItems = new();
+        protected IMagicStone _stone;
+        protected List<UIPassiveInfoDetail> _cachedItems = new();
 
         protected override bool CanShow()
         {
@@ -45,7 +45,7 @@ namespace CryptoQuest.BlackSmith.UpgradeStone.UI
             _isBaseStone = isBaseStone;
         }
 
-        public void SetupInfo()
+        public virtual void SetupInfo()
         {
             CleanUpPool();
             var color = GetColor();
@@ -66,7 +66,7 @@ namespace CryptoQuest.BlackSmith.UpgradeStone.UI
             return _isBaseStone ? Color.white : Color.green;
         }
 
-        private void CleanUpPool()
+        protected void CleanUpPool()
         {
             while (_cachedItems.Count > 0)
             {

@@ -27,6 +27,12 @@ namespace CryptoQuest.Menus.Status.UI.MagicStone
             _level.text = $"Lv{stoneData.Level.ToString()}";
         }
 
+        public void Reset()
+        {
+            _stoneData = null;
+        }
+
+
         public void OnPressed() => Pressed?.Invoke(_stoneData);
     }
 }
