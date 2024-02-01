@@ -1,13 +1,13 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using IndiGamesEditor.UnityBuilderAction.Input;
 using IndiGamesEditor.UnityBuilderAction.Reporting;
 using IndiGamesEditor.UnityBuilderAction.Versioning;
 using UnityEditor;
-using UnityEditor.AddressableAssets;
 using UnityEditor.AddressableAssets.Build;
 using UnityEditor.AddressableAssets.Settings;
+using UnityEditor.Build;
 using UnityEditor.Build.Reporting;
 using UnityEngine;
 
@@ -74,7 +74,27 @@ namespace CryptoQuest.Editor
             VersionApplicator.SetVersion(options.TryGetValue("buildVersion", out var buildVersion)
                 ? buildVersion
                 : VersionGenerator.Generate());
+            
+            if (options.TryGetValue("define", out var define))
+            {
+                Console.WriteLine("[CI/CD] Custom Defines: " + define.ToString());
+                var symbols = new List<string>();
+                symbols.AddRange(define.Split(','));
 
+                PlayerSettings.GetScriptingDefineSymbols(NamedBuildTarget.WebGL, out var allDefinesArr);
+
+                var allDefines = new List<string>(allDefinesArr);
+                allDefines.AddRange(symbols.Except(allDefines));
+
+                PlayerSettings.SetScriptingDefineSymbols(
+                    NamedBuildTarget.WebGL,
+                    allDefines.ToArray());
+
+                foreach (var item in allDefines)
+                {
+                    Console.WriteLine("[CI/CD] Define: " + item.ToString());
+                }
+            }
 
             // Apply Android settings
             if (buildPlayerOptions.target == BuildTarget.Android)
@@ -89,7 +109,7 @@ namespace CryptoQuest.Editor
                     buildPlayerOptions.target);
             if (switchResult)
             {
-                Debug.Log("Successfully changed Build Target to: " + buildPlayerOptions.target.ToString());
+                Console.WriteLine("Successfully changed Build Target to: " + buildPlayerOptions.target.ToString());
             }
             else
             {
