@@ -1,9 +1,11 @@
 ﻿using CryptoQuest.Inventory.Actions;
+using CryptoQuest.Inventory.ScriptableObjects;
 using CryptoQuest.Item.Equipment;
 using CryptoQuest.Sagas.Equipment;
 using CryptoQuest.Sagas.Objects;
 using IndiGames.Core.Common;
 using IndiGames.Core.Events;
+using UnityEngine;
 
 namespace CryptoQuest.Menus.DimensionalBox.Sagas
 {
@@ -19,6 +21,8 @@ namespace CryptoQuest.Menus.DimensionalBox.Sagas
 
     public class UpdateInventoryOnTransferSuccessSaga : SagaBase<UpdateEquipmentAction>
     {
+        [SerializeField] private EquipmentInventory _equipmentInventory;
+
         protected override void HandleAction(UpdateEquipmentAction ctx)
         {
             var converter = ServiceProvider.GetService<IEquipmentResponseConverter>();
@@ -32,7 +36,16 @@ namespace CryptoQuest.Menus.DimensionalBox.Sagas
             }
         }
 
-        private void AddEquipment(IEquipment equipment) => ActionDispatcher.Dispatch(new AddEquipmentAction(equipment));
+        private void AddEquipment(IEquipment equipment)
+        {
+            // Only add if not already in inventory
+            var matchEquipment = _equipmentInventory.Equipments.Find(e => e.Id == equipment.Id);
+            if (matchEquipment != null)
+                return;
+
+            ActionDispatcher.Dispatch(new AddEquipmentAction(equipment));
+        }
+
         private void RemoveEquipment(IEquipment equipment) => ActionDispatcher.Dispatch(new RemoveEquipmentAction(equipment));
     }
 }
