@@ -45,10 +45,17 @@ namespace CryptoQuestEditor.SuperTiled2Unity
                 {
                     if (isPolyEncounter.GetValueAsBool())
                     {
-                        objectsById[so.m_Id].AddComponent<EncounterZone>();
+                        if (so.m_Type == "OverlapEncounter")
+                            SetupOverlapping(objectsById, so, properties);
+                        else
+                        {
+                            objectsById[so.m_Id].AddComponent<EncounterZone>();
+                        }
+
                         continue;
                     }
                 }
+
                 var prefab = GetPrefabReplacement(so.m_Type);
                 if (prefab == null) continue;
 
@@ -59,6 +66,7 @@ namespace CryptoQuestEditor.SuperTiled2Unity
 
                 var width = so.m_Width;
                 var height = so.m_Height;
+
                 AddTrigger2DColliderBox(context, instance, width, height);
 
                 var gameObject = so.gameObject;
@@ -67,6 +75,14 @@ namespace CryptoQuestEditor.SuperTiled2Unity
                 goToDestroy.Add(gameObject);
                 objectsById[so.m_Id] = instance;
             }
+        }
+
+        private void SetupOverlapping(Dictionary<int, GameObject> objectsById, SuperObject so,
+            SuperCustomProperties properties)
+        {
+            var zone = objectsById[so.m_Id].AddComponent<OverlappingEncounterZone>();
+            if (!properties.TryGetCustomProperty("Priority", out CustomProperty priority)) return;
+            zone.Priority(priority.GetValueAsInt());
         }
 
         private static void AddTrigger2DColliderBox(SuperImportContext context, GameObject instance, float width,
@@ -82,7 +98,6 @@ namespace CryptoQuestEditor.SuperTiled2Unity
                 collider.offset = context.MakePoint(width * 0.5f, height * 0.5f);
                 collider.size = context.MakeSize(width, height);
             }
-
         }
 
         private void SetUpCustomProperties(SuperObject[] supers, Dictionary<int, GameObject> objectsById)
@@ -98,7 +113,8 @@ namespace CryptoQuestEditor.SuperTiled2Unity
             }
         }
 
-        private void PostProcessObject(SuperObject so, Dictionary<int, GameObject> objectsById, bool useCustomProp = false)
+        private void PostProcessObject(SuperObject so, Dictionary<int, GameObject> objectsById,
+            bool useCustomProp = false)
         {
             var properties = so.GetComponent<SuperCustomProperties>();
             var go = objectsById[so.m_Id];
@@ -106,8 +122,7 @@ namespace CryptoQuestEditor.SuperTiled2Unity
 
             if (collider != null)
             {
-                if (properties.TryGetCustomProperty(StringConstants.Unity_IsTrigger, out CustomProperty isTrigger) &&
-                    useCustomProp)
+                if (properties.TryGetCustomProperty(StringConstants.Unity_IsTrigger, out CustomProperty isTrigger))
                     collider.isTrigger = _context.GetIsTriggerOverridable(isTrigger.GetValueAsBool());
                 else
                     collider.isTrigger = true;
