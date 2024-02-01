@@ -66,8 +66,6 @@ namespace CryptoQuest.UI.Dialogs.RewardDialog
             base.Hide();
 
             ActionDispatcher.Dispatch(new PlayCachedBgmAction());
-            ActionDispatcher.Dispatch(new ResumeCutsceneAction());
-            // TODO: CHECK CUTSCENE BEFORE SHOW LEVEL UP
             ActionDispatcher.Dispatch(new ShowLevelUpAction());
 
             _inputAction.Disable();
