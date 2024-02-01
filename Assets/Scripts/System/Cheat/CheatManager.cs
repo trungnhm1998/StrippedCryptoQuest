@@ -33,7 +33,7 @@ namespace CryptoQuest.System.Cheat
 
         public void EnableTerminalInput()
         {
-#if !PRODUCTION_BUILD
+#if !PRODUCTION_BUILD || ENABLE_CHEAT
             _inputMediatorSO.InputActions.Terminal.Enable();
 #endif
         }
