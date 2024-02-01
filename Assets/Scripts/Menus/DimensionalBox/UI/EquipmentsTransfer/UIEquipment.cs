@@ -41,7 +41,7 @@ namespace CryptoQuest.Menus.DimensionalBox.UI.EquipmentsTransfer
             Response = equipment;
             _nameText.text = "Item " + Id;
             _equippedTag.SetActive(false);
-            _transferringTag.SetActive(Response.IsTransferring || Response.mintStatus != 2);
+            _transferringTag.SetActive(!Response.IsTransferrable || Response.mintStatus == 1);
 
             _equipment = ServiceProvider.GetService<IEquipmentResponseConverter>().Convert(equipment);
 
