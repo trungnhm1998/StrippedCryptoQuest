@@ -8,7 +8,7 @@ namespace CryptoQuest.Environment
 #if DEVELOPMENT_BUILD || UNITY_EDITOR
             "https://dev-api-game.crypto-quest.org/v1";
 #elif STAGING_BUILD
-            "https://staging-api-game.crypto-quest.org/v1";
+            "https://stg-api-game.crypto-quest.org/v1";
 #elif PRODUCTION_BUILD
             "https://dev-api-game.crypto-quest.org/v1";
 #else
