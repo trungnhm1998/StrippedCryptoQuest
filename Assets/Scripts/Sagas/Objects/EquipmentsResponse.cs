@@ -133,6 +133,6 @@ namespace CryptoQuest.Sagas.Objects
         public int[] passiveSkills;
         public int[] conditionSkills;
         public bool IsEquipped => !string.IsNullOrEmpty(attachUnitTokenId);
-        public bool IsTransferring => transferring == 1;
+        public bool IsTransferrable => transferring == 0;
     }
 }
