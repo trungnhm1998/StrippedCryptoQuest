@@ -86,6 +86,7 @@ namespace CryptoQuest.Menus.Status.States
 
         private void RenderHero(HeroBehaviour hero)
         {
+            StatusPanel.ShowTooltipEvent.RaiseEvent(false);
             StatusPanel.CharacterEquipmentsPanel.Show(StatusPanel.InspectingHero);
             StatusPanel.CharacterStatsPanel.InspectCharacter(StatusPanel.InspectingHero);
         }
