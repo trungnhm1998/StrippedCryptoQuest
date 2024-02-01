@@ -26,7 +26,7 @@ namespace CryptoQuest.ChangeClass.State
             _input = _stateController.Input;
             _input.SubmitEvent += SelectedClassMaterial;
             _input.CancelEvent += ExitState;
-            _input.InteractEvent += ShowDetail;
+            _input.ShowDetailEvent += ShowDetail;
             _input.NavigateEvent += HideDetail;
 
             _stateController.DialogController.Dialogue
@@ -54,7 +54,7 @@ namespace CryptoQuest.ChangeClass.State
         {
             _input.SubmitEvent -= SelectedClassMaterial;
             _input.CancelEvent -= ExitState;
-            _input.InteractEvent -= ShowDetail;
+            _input.ShowDetailEvent -= ShowDetail;
             _input.NavigateEvent -= HideDetail;
         }
 

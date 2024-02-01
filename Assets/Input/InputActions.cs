@@ -2231,6 +2231,15 @@ namespace CryptoQuest.Input
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""Interact"",
+                    ""type"": ""Button"",
+                    ""id"": ""dcba4059-7b52-43d5-b84d-dd8b45644555"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""ShowDetail"",
                     ""type"": ""Button"",
                     ""id"": ""91603a1f-32b1-493b-b9b5-5ee3fcfc0563"",
@@ -2270,15 +2279,6 @@ namespace CryptoQuest.Input
                     ""name"": ""Execute"",
                     ""type"": ""Button"",
                     ""id"": ""5a18f9bd-a885-47f7-aaf2-12134db16756"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Interact"",
-                    ""type"": ""Button"",
-                    ""id"": ""dcba4059-7b52-43d5-b84d-dd8b45644555"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -2629,30 +2629,19 @@ namespace CryptoQuest.Input
                 },
                 {
                     ""name"": """",
-                    ""id"": ""5bf0938e-feba-4890-a0b8-1b073da57d7f"",
+                    ""id"": ""8b1c0786-28a1-42b0-b031-0b81aacc80c2"",
                     ""path"": ""<Gamepad>/buttonWest"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
-                    ""action"": ""Interact"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""6b84193a-5ef2-47de-aa5a-de3365cdc854"",
-                    ""path"": ""<Keyboard>/x"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""MnK"",
-                    ""action"": ""Interact"",
+                    ""action"": ""ShowDetail"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
                     ""id"": ""e0f140e0-9e2d-41a1-89da-4aea232492c9"",
-                    ""path"": ""<Keyboard>/f"",
+                    ""path"": ""<Keyboard>/x"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""MnK"",
@@ -2734,6 +2723,17 @@ namespace CryptoQuest.Input
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Exit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6b84193a-5ef2-47de-aa5a-de3365cdc854"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MnK"",
+                    ""action"": ""Interact"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -3195,12 +3195,12 @@ namespace CryptoQuest.Input
             m_Merchants_Cancel = m_Merchants.FindAction("Cancel", throwIfNotFound: true);
             m_Merchants_Exit = m_Merchants.FindAction("Exit", throwIfNotFound: true);
             m_Merchants_ChangeTab = m_Merchants.FindAction("ChangeTab", throwIfNotFound: true);
+            m_Merchants_Interact = m_Merchants.FindAction("Interact", throwIfNotFound: true);
             m_Merchants_ShowDetail = m_Merchants.FindAction("ShowDetail", throwIfNotFound: true);
             m_Merchants_Navigate = m_Merchants.FindAction("Navigate", throwIfNotFound: true);
             m_Merchants_Submit = m_Merchants.FindAction("Submit", throwIfNotFound: true);
             m_Merchants_Reset = m_Merchants.FindAction("Reset", throwIfNotFound: true);
             m_Merchants_Execute = m_Merchants.FindAction("Execute", throwIfNotFound: true);
-            m_Merchants_Interact = m_Merchants.FindAction("Interact", throwIfNotFound: true);
             // Popup
             m_Popup = asset.FindActionMap("Popup", throwIfNotFound: true);
             m_Popup_Cancel = m_Popup.FindAction("Cancel", throwIfNotFound: true);
@@ -3797,12 +3797,12 @@ namespace CryptoQuest.Input
         private readonly InputAction m_Merchants_Cancel;
         private readonly InputAction m_Merchants_Exit;
         private readonly InputAction m_Merchants_ChangeTab;
+        private readonly InputAction m_Merchants_Interact;
         private readonly InputAction m_Merchants_ShowDetail;
         private readonly InputAction m_Merchants_Navigate;
         private readonly InputAction m_Merchants_Submit;
         private readonly InputAction m_Merchants_Reset;
         private readonly InputAction m_Merchants_Execute;
-        private readonly InputAction m_Merchants_Interact;
         public struct MerchantsActions
         {
             private @InputActions m_Wrapper;
@@ -3810,12 +3810,12 @@ namespace CryptoQuest.Input
             public InputAction @Cancel => m_Wrapper.m_Merchants_Cancel;
             public InputAction @Exit => m_Wrapper.m_Merchants_Exit;
             public InputAction @ChangeTab => m_Wrapper.m_Merchants_ChangeTab;
+            public InputAction @Interact => m_Wrapper.m_Merchants_Interact;
             public InputAction @ShowDetail => m_Wrapper.m_Merchants_ShowDetail;
             public InputAction @Navigate => m_Wrapper.m_Merchants_Navigate;
             public InputAction @Submit => m_Wrapper.m_Merchants_Submit;
             public InputAction @Reset => m_Wrapper.m_Merchants_Reset;
             public InputAction @Execute => m_Wrapper.m_Merchants_Execute;
-            public InputAction @Interact => m_Wrapper.m_Merchants_Interact;
             public InputActionMap Get() { return m_Wrapper.m_Merchants; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -3834,6 +3834,9 @@ namespace CryptoQuest.Input
                 @ChangeTab.started += instance.OnChangeTab;
                 @ChangeTab.performed += instance.OnChangeTab;
                 @ChangeTab.canceled += instance.OnChangeTab;
+                @Interact.started += instance.OnInteract;
+                @Interact.performed += instance.OnInteract;
+                @Interact.canceled += instance.OnInteract;
                 @ShowDetail.started += instance.OnShowDetail;
                 @ShowDetail.performed += instance.OnShowDetail;
                 @ShowDetail.canceled += instance.OnShowDetail;
@@ -3849,9 +3852,6 @@ namespace CryptoQuest.Input
                 @Execute.started += instance.OnExecute;
                 @Execute.performed += instance.OnExecute;
                 @Execute.canceled += instance.OnExecute;
-                @Interact.started += instance.OnInteract;
-                @Interact.performed += instance.OnInteract;
-                @Interact.canceled += instance.OnInteract;
             }
 
             private void UnregisterCallbacks(IMerchantsActions instance)
@@ -3865,6 +3865,9 @@ namespace CryptoQuest.Input
                 @ChangeTab.started -= instance.OnChangeTab;
                 @ChangeTab.performed -= instance.OnChangeTab;
                 @ChangeTab.canceled -= instance.OnChangeTab;
+                @Interact.started -= instance.OnInteract;
+                @Interact.performed -= instance.OnInteract;
+                @Interact.canceled -= instance.OnInteract;
                 @ShowDetail.started -= instance.OnShowDetail;
                 @ShowDetail.performed -= instance.OnShowDetail;
                 @ShowDetail.canceled -= instance.OnShowDetail;
@@ -3880,9 +3883,6 @@ namespace CryptoQuest.Input
                 @Execute.started -= instance.OnExecute;
                 @Execute.performed -= instance.OnExecute;
                 @Execute.canceled -= instance.OnExecute;
-                @Interact.started -= instance.OnInteract;
-                @Interact.performed -= instance.OnInteract;
-                @Interact.canceled -= instance.OnInteract;
             }
 
             public void RemoveCallbacks(IMerchantsActions instance)
@@ -4086,12 +4086,12 @@ namespace CryptoQuest.Input
             void OnCancel(InputAction.CallbackContext context);
             void OnExit(InputAction.CallbackContext context);
             void OnChangeTab(InputAction.CallbackContext context);
+            void OnInteract(InputAction.CallbackContext context);
             void OnShowDetail(InputAction.CallbackContext context);
             void OnNavigate(InputAction.CallbackContext context);
             void OnSubmit(InputAction.CallbackContext context);
             void OnReset(InputAction.CallbackContext context);
             void OnExecute(InputAction.CallbackContext context);
-            void OnInteract(InputAction.CallbackContext context);
         }
         public interface IPopupActions
         {

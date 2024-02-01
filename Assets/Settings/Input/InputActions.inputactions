@@ -2207,6 +2207,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "Interact",
+                    "type": "Button",
+                    "id": "dcba4059-7b52-43d5-b84d-dd8b45644555",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "ShowDetail",
                     "type": "Button",
                     "id": "91603a1f-32b1-493b-b9b5-5ee3fcfc0563",
@@ -2246,15 +2255,6 @@
                     "name": "Execute",
                     "type": "Button",
                     "id": "5a18f9bd-a885-47f7-aaf2-12134db16756",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Interact",
-                    "type": "Button",
-                    "id": "dcba4059-7b52-43d5-b84d-dd8b45644555",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -2605,30 +2605,19 @@
                 },
                 {
                     "name": "",
-                    "id": "5bf0938e-feba-4890-a0b8-1b073da57d7f",
+                    "id": "8b1c0786-28a1-42b0-b031-0b81aacc80c2",
                     "path": "<Gamepad>/buttonWest",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "Interact",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "6b84193a-5ef2-47de-aa5a-de3365cdc854",
-                    "path": "<Keyboard>/x",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "MnK",
-                    "action": "Interact",
+                    "action": "ShowDetail",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
                     "id": "e0f140e0-9e2d-41a1-89da-4aea232492c9",
-                    "path": "<Keyboard>/f",
+                    "path": "<Keyboard>/x",
                     "interactions": "",
                     "processors": "",
                     "groups": "MnK",
@@ -2710,6 +2699,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Exit",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6b84193a-5ef2-47de-aa5a-de3365cdc854",
+                    "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "MnK",
+                    "action": "Interact",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
