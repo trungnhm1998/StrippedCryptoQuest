@@ -43,7 +43,7 @@ namespace CryptoQuest.Ranch.State.BeastSwap
             _input.ExecuteEvent += SendItemsRequested;
             _input.ResetEvent += ResetTransferRequested;
             _input.CancelEvent += CancelBeastSwapState;
-            _input.InteractEvent += ToggleBeastDetailVisibility;
+            _input.ShowDetailEvent += ToggleBeastDetailVisibility;
 
             _stateController.Controller.ShowWalletEventChannel.EnableAll().Show();
             ActionDispatcher.Dispatch(new FetchProfileBeastsAction());
@@ -57,7 +57,7 @@ namespace CryptoQuest.Ranch.State.BeastSwap
             _input.ExecuteEvent -= SendItemsRequested;
             _input.ResetEvent -= ResetTransferRequested;
             _input.CancelEvent -= CancelBeastSwapState;
-            _input.InteractEvent -= ToggleBeastDetailVisibility;
+            _input.ShowDetailEvent -= ToggleBeastDetailVisibility;
 
             _stateController.Controller.ShowWalletEventChannel.Hide();
 

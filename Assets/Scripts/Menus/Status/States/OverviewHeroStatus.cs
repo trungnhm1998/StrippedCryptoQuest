@@ -47,7 +47,7 @@ namespace CryptoQuest.Menus.Status.States
             StatusPanel.ModifyingCategory = EEquipmentCategory.None;
 
             StatusPanel.Input.MenuCancelEvent += BackToMainMenuNavigation;
-            StatusPanel.Input.MenuNavigateEvent += HandleNavigate;
+            StatusPanel.Input.TabChangeEvent += HandleNavigate;
             UICharacterEquipmentSlot.Pressed += ToEquipmentSelection;
             StatusPanel.InspectingHeroChanged += RenderHero;
 
@@ -70,7 +70,7 @@ namespace CryptoQuest.Menus.Status.States
         {
             StatusPanel.ShowTooltipEvent.RaiseEvent(false);
             StatusPanel.Input.MenuCancelEvent -= BackToMainMenuNavigation;
-            StatusPanel.Input.MenuNavigateEvent -= HandleNavigate;
+            StatusPanel.Input.TabChangeEvent -= HandleNavigate;
             UICharacterEquipmentSlot.Pressed -= ToEquipmentSelection;
             StatusPanel.InspectingHeroChanged -= RenderHero;
         }
@@ -91,11 +91,10 @@ namespace CryptoQuest.Menus.Status.States
             StatusPanel.CharacterStatsPanel.InspectCharacter(StatusPanel.InspectingHero);
         }
 
-        private void HandleNavigate(Vector2 navigateAxis)
+        private void HandleNavigate(float direction)
         {
-            var direction = (int)navigateAxis.x;
             if (direction == 0) return; // prevent render multiple time
-            CurrentInspectingHeroIndex += direction;
+            CurrentInspectingHeroIndex += (int)direction;
         }
     }
 }
