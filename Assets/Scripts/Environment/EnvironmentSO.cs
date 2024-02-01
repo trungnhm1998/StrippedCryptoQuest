@@ -4,9 +4,15 @@ namespace CryptoQuest.Environment
 {
     public class EnvironmentSO : ScriptableObject
     {
-        [SerializeField] private string _apiUrl = "http://dev-api-game.crypto-quest.org";
-        [SerializeField] private string _apiVersion = "/v1";
-
-        public string API => $"{_apiUrl}{_apiVersion}";
+        public string API =>
+#if DEVELOPMENT_BUILD || UNITY_EDITOR
+            "https://dev-api-game.crypto-quest.org/v1";
+#elif STAGING_BUILD
+            "https://staging-api-game.crypto-quest.org/v1";
+#elif PRODUCTION_BUILD
+            "https://dev-api-game.crypto-quest.org/v1";
+#else
+            "https://dev-api-game.crypto-quest.org/v1";
+#endif
     }
 }
