@@ -1,6 +1,10 @@
-﻿using CryptoQuest.Item.MagicStone;
+﻿using System;
+using CryptoQuest.Item.MagicStone;
+using CryptoQuest.Menu;
+using CryptoQuest.UI.Tooltips.Events;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
 
 namespace CryptoQuest.Menus.Status.UI.MagicStone
 {
@@ -9,6 +13,7 @@ namespace CryptoQuest.Menus.Status.UI.MagicStone
         public event UnityAction Pressed;
         [SerializeField] private GameObject _selectedEffect;
         [SerializeField] private UISingleStone _singleStone;
+        [SerializeField] private ShowTooltipEvent _showTooltipEvent;
         public UISingleStone SingleStoneUI => _singleStone;
 
         public void OnPressed() => Pressed?.Invoke();
@@ -19,6 +24,8 @@ namespace CryptoQuest.Menus.Status.UI.MagicStone
         {
             _singleStone.SetInfo(stoneData);
             _singleStone.gameObject.SetActive(true);
+            if (EventSystem.current.currentSelectedGameObject == gameObject)
+                _showTooltipEvent.RaiseEvent(true);
         }
 
         public void Detach()

@@ -1,6 +1,8 @@
-﻿using CryptoQuest.Input;
+﻿using System.Collections;
+using CryptoQuest.Input;
 using CryptoQuest.Item.Equipment;
 using CryptoQuest.Item.MagicStone;
+using CryptoQuest.Menu;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -16,6 +18,7 @@ namespace CryptoQuest.Menus.Status.UI.MagicStone
         [SerializeField] private UIAttachSlot[] _attachSlots; // Max slots = 7
 
         private int _currentIndex = 0;
+
         private int CurrentIndex
         {
             get => _currentIndex;

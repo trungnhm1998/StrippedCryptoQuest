@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using CryptoQuest.UI.Tooltips.Events;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace CryptoQuest.Menus.Status.UI.MagicStone
@@ -7,6 +8,7 @@ namespace CryptoQuest.Menus.Status.UI.MagicStone
     {
         [field: SerializeField] public UIStoneList UIStoneList { get; private set; }
         [SerializeField] private Button[] _stoneTypes;
+        [SerializeField] private ShowTooltipEvent _showTooltipEvent;
 
         public void EnterElementNavigation()
         {
@@ -29,6 +31,11 @@ namespace CryptoQuest.Menus.Status.UI.MagicStone
         {
             foreach (var type in _stoneTypes)
                 type.enabled = enable;
+        }
+
+        public void DeactivateTooltip()
+        {
+            _showTooltipEvent.RaiseEvent(false);
         }
     }
 }

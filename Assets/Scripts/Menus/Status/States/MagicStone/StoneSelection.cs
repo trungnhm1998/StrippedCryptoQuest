@@ -13,7 +13,9 @@ namespace CryptoQuest.Menus.Status.States.MagicStone
         private TinyMessageSubscriptionToken _attachSucceededToken;
         private IMagicStone _stoneData;
 
-        public StoneSelection(UIStatusMenu statusPanel) : base(statusPanel) { }
+        public StoneSelection(UIStatusMenu statusPanel) : base(statusPanel)
+        {
+        }
 
         public override void OnEnter()
         {
