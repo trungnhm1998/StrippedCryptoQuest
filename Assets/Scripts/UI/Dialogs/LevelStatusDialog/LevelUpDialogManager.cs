@@ -1,6 +1,7 @@
 ﻿using CryptoQuest.Battle.Actions;
 using CryptoQuest.Events.UI.Dialogs;
 using CryptoQuest.Gameplay.Quest;
+using CryptoQuest.Quest.Controllers;
 using IndiGames.Core.Events;
 using TinyMessenger;
 using UnityEngine;
@@ -35,7 +36,11 @@ namespace CryptoQuest.UI.Dialogs.LevelStatusDialog
 
         private void ShowDialog(ShowLevelUpAction ctx)
         {
-            if (!_levelStatusData.IsValid()) return;
+            if (!_levelStatusData.IsValid())
+            {
+                ActionDispatcher.Dispatch(new ResumeCutsceneAction());
+                return;
+            }
             _levelUpDialogEvent.Show(_levelStatusData);
         }
     }

@@ -1,6 +1,8 @@
 using System.Collections;
 using CryptoQuest.Gameplay.Quest;
 using CryptoQuest.Input;
+using CryptoQuest.Quest.Controllers;
+using IndiGames.Core.Events;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Localization;
@@ -41,8 +43,9 @@ namespace CryptoQuest.UI.Dialogs.LevelStatusDialog
         {
             Close();
             _inputMediator.EnableMapGameplayInput();
+            ActionDispatcher.Dispatch(new ResumeCutsceneAction());
         }
-        
+
         public override UILevelStatusDialog Close()
         {
             if (this == null) return this;
