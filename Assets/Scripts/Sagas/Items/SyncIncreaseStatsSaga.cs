@@ -1,7 +1,6 @@
 ﻿using CryptoQuest.API;
 using CryptoQuest.Networking;
 using CryptoQuest.Sagas.Objects;
-using CryptoQuest.UI.Actions;
 using IndiGames.Core.Common;
 using IndiGames.Core.Events;
 using IndiGames.GameplayAbilitySystem.AttributeSystem.ScriptableObjects;
@@ -10,8 +9,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
 using CryptoQuest.Battle.Components;
-using Newtonsoft.Json;
-using Castle.Core.Internal;
+using CryptoQuest.Gameplay;
 
 namespace CryptoQuest.Sagas.Items
 {
@@ -74,7 +72,15 @@ namespace CryptoQuest.Sagas.Items
                     continue;
 
                 var existValue = 0f;
-                var existAttribute = ctx.Character.Stats.Attributes.Find(x => x.Attribute == attributeValue.Attribute);
+                var existAttribute = new CappedAttributeDef();
+                foreach (var attribute in ctx.Character.Stats.Attributes)
+                {
+                    if (attribute.Attribute == attributeValue.Attribute)
+                    {
+                        existAttribute = attribute;
+                        break;
+                    }
+                } 
                 if (existAttribute.Attribute != null)
                 {
                     existValue = existAttribute.ModifyValue;
