@@ -20,7 +20,7 @@ namespace CryptoQuest.UI.Title
         {
             ActionDispatcher.Dispatch(new ShowLoading());
             var restClient = ServiceProvider.GetService<IRestClient>();
-            restClient.WithoutDispactError()
+            restClient
                 .Get<CommonResponse>(APIProfile.GET_PROFILE)
                 .Subscribe(OnGetToken, OnError);
         }
