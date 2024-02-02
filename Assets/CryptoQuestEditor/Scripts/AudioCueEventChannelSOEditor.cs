@@ -19,34 +19,25 @@ namespace CryptoQuestEditor
         {
             var root = new VisualElement();
 
-            InspectorElement.FillDefaultInspector(root, serializedObject, this);
-
             Uxml.CloneTree(root);
 
             _playButton = root.Q<Button>("play-button");
             _playButton.SetEnabled(Application.isPlaying);
+            _playButton.clicked += PlayClicked;
 
             var objectField = root.Q<ObjectField>("cue-object");
             objectField.objectType = typeof(AudioCueSO);
-            objectField.RegisterValueChangedCallback(evt =>
-            {
-                _playButton.clicked += PlayClicked;
-                _audioCue = (AudioCueSO)evt.newValue;
-            });
-
+            objectField.RegisterValueChangedCallback(ChangeValueEditorCallback);
 
             return root;
         }
 
+        private void ChangeValueEditorCallback(ChangeEvent<Object> evt) => _audioCue = (AudioCueSO)evt.newValue;
+        private void PlayClicked() => Target.PlayAudio(_audioCue);
+
         private void OnDisable()
         {
-            if (_playButton == null) return;
-            _playButton.clicked -= PlayClicked;
-        }
-
-        private void PlayClicked()
-        {
-            Target.PlayAudio(_audioCue);
+            if (_playButton != null) _playButton.clicked -= PlayClicked;
         }
     }
 }
