@@ -1,4 +1,5 @@
-﻿using CryptoQuest.Networking;
+﻿using CryptoQuest.Audio;
+using CryptoQuest.Networking;
 using CryptoQuest.Sagas.Profile;
 using IndiGames.Core.Events;
 using TinyMessenger;
@@ -19,6 +20,7 @@ namespace CryptoQuest.UI.Title.States
             if (!_credentials.IsLoggedIn())
             {
                 stateMachine.ChangeState(new TitleState());
+                ActionDispatcher.Dispatch(new PlayMusicInTitleSceneAction());
                 return;
             }
 
@@ -28,6 +30,7 @@ namespace CryptoQuest.UI.Title.States
         private void ToLogin()
         {
             _stateMachine.ChangeState(new TitleState());
+            ActionDispatcher.Dispatch(new PlayMusicInTitleSceneAction());
         }
 
         private TinyMessageSubscriptionToken _refreshTokenFailed;
