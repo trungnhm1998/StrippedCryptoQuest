@@ -57,7 +57,7 @@ namespace CryptoQuest.System.SaveSystem.Savers
         {
             // Uploading might be fail but we still need to save the data locally.
             _saveSystem.Save();
-            Debug.Log("OnlineProgressionSaver::Save - Saved locally!");
+            Debug.Log($"OnlineProgressionSaver::Save - Saved locally! {_isUploading}");
 
             if (!_credentials.IsLoggedIn() || _isUploading) return;
             _isUploading = true;

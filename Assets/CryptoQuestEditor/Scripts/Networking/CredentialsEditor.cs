@@ -19,7 +19,7 @@ namespace CryptoQuestEditor.Networking
             InspectorElement.FillDefaultInspector(root, serializedObject, this);
 
 
-            var clearButton = new Button(() => { })
+            var clearButton = new Button(() => PlayerPrefs.DeleteAll())
             {
                 text = "Clear"
             };

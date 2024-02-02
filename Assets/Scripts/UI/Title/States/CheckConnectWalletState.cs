@@ -10,22 +10,21 @@ namespace CryptoQuest.UI.Title.States
     public class CheckConnectWalletState : IState
     {
         private TitleStateMachine _stateMachine;
-        private TinyMessageSubscriptionToken _fetchProfileSuccessToken;
-        private TinyMessageSubscriptionToken _fetchProfileFailToken;
+        private TinyMessageSubscriptionToken _checkSuccessToken;
+        private TinyMessageSubscriptionToken _checkFailToken;
 
         public void OnEnter(TitleStateMachine stateMachine)
         {
             _stateMachine = stateMachine;
-            ActionDispatcher.Dispatch(new CheckConnectWallet());
             if (string.IsNullOrEmpty(_stateMachine.Credentials.Wallet)) 
             {
                 CheckConnectedWalletFail();
                 return;
             }
 
-            _fetchProfileSuccessToken = ActionDispatcher.Bind<ConnectedWallet>(_ 
+            _checkSuccessToken = ActionDispatcher.Bind<ConnectedWallet>(_ 
                 => ConnectedWallet());
-            _fetchProfileFailToken = ActionDispatcher.Bind<ConnectedWalletFailed>(_ 
+            _checkFailToken = ActionDispatcher.Bind<ConnectedWalletFailed>(_ 
                 => _stateMachine.ChangeState(new TitleState()));
 
             // To check if token is expired or not
@@ -34,10 +33,10 @@ namespace CryptoQuest.UI.Title.States
 
         public void OnExit(TitleStateMachine stateMachine)
         {
-            if (_fetchProfileSuccessToken != null)
-                ActionDispatcher.Unbind(_fetchProfileSuccessToken);
-            if (_fetchProfileFailToken != null)
-                ActionDispatcher.Unbind(_fetchProfileFailToken);
+            if (_checkSuccessToken != null)
+                ActionDispatcher.Unbind(_checkSuccessToken);
+            if (_checkFailToken != null)
+                ActionDispatcher.Unbind(_checkFailToken);
         }
 
         private void ConnectedWallet()
