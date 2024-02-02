@@ -33,7 +33,7 @@ namespace CryptoQuest.Quest.Actor.Categories
         public override IEnumerator Spawn(Transform parent)
         {
             _handle = Data.Prefab.InstantiateAsync(parent.position, parent.rotation, parent);
-            _handle.Completed += OnHandleOnCompleted;
+            _handle.Completed += OnHandleSpawnCompleted;
 
             yield return _handle;
 
@@ -52,8 +52,10 @@ namespace CryptoQuest.Quest.Actor.Categories
             questGiver.Init(Data.Quest, actionCollider);
         }
 
-        private void OnHandleOnCompleted(AsyncOperationHandle<GameObject> handle)
+        private void OnHandleSpawnCompleted(AsyncOperationHandle<GameObject> handle)
         {
+            handle.Completed -= OnHandleSpawnCompleted;
+            
             if (!_isDestroyed) return;
             Object.Destroy(handle.Result);
             _isDestroyed = false;
