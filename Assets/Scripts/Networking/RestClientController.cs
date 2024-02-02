@@ -186,15 +186,15 @@ namespace CryptoQuest.Networking
                 mergeHeaders.TryAdd("Authorization", "Bearer " + accessToken);
             }
 
-            string bodyString = null;
+            string bodyString = "";
             if (_body != null)
             {
                 bodyString = SerializeObject(_body);
             }
 
-            var timestamp = DateTimeOffset.Now.ToUnixTimeSeconds();
-            mergeHeaders.TryAdd("x-signature", GetHash($"{bodyString}_{timestamp}", _environment.PKEY));
+            var timestamp = DateTimeOffset.Now.ToUnixTimeMilliseconds();
             mergeHeaders.TryAdd("x-timestamp", timestamp.ToString());
+            mergeHeaders.TryAdd("x-signature", GetHash($"{bodyString}_{timestamp}", _environment.PKEY));
 
             var request = new RequestHelper
             {
@@ -209,6 +209,9 @@ namespace CryptoQuest.Networking
 
 
 #if DEVELOPMENT_BUILD || UNITY_EDITOR
+            Debug.Log(
+                $"<color=white>RestClientController::GenerateRequest::Request</color>:: {_environment.API}/{path}");
+
             if (!string.IsNullOrEmpty(bodyString))
                 Debug.Log(
                     $"<color=white>RestClientController::GenerateRequest::Request With Body</color>:: {bodyString}");
@@ -283,6 +286,8 @@ namespace CryptoQuest.Networking
 
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
             Debug.LogWarning(exception);
+            if (exception is RequestException requestException)
+                Debug.LogWarning(requestException.Response);
 #endif
             Observer.OnError(exception);
         }
