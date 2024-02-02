@@ -25,7 +25,7 @@ namespace CryptoQuest.System.SaveSystem.Loaders
         {
             foreach (var consumable in _consumables)
             {
-                _consumableMap.Add(consumable.ID, consumable);
+                _consumableMap.TryAdd(consumable.ID, consumable);
             }
 
             _inventory.Items.Clear();
