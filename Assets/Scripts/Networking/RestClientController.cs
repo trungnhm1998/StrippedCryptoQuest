@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Security.Cryptography;
+using System.Text;
 using CryptoQuest.API;
 using CryptoQuest.Environment;
 using IndiGames.Core.Common;
@@ -163,6 +165,7 @@ namespace CryptoQuest.Networking
         }
 
         private bool _isDispactError = true;
+
         public IRestClient WithoutDispactError()
         {
             _isDispactError = false;
@@ -189,6 +192,10 @@ namespace CryptoQuest.Networking
                 bodyString = SerializeObject(_body);
             }
 
+            var timestamp = DateTimeOffset.Now.ToUnixTimeSeconds();
+            mergeHeaders.TryAdd("x-signature", GetHash($"{bodyString}_{timestamp}", _environment.PKEY));
+            mergeHeaders.TryAdd("x-timestamp", timestamp.ToString());
+
             var request = new RequestHelper
             {
                 Uri = $"{_environment.API}/{path}",
@@ -199,11 +206,14 @@ namespace CryptoQuest.Networking
                 EnableDebug = true,
 #endif
             };
-            
+
 
 #if DEVELOPMENT_BUILD || UNITY_EDITOR
-            if (!string.IsNullOrEmpty(bodyString)) Debug.Log($"<color=white>RestClientController::GenerateRequest::Request With Body</color>:: {bodyString}");
-            Debug.Log($"<color=white>RestClientController::GenerateRequest::Request With Header</color>:: {SerializeObject(mergeHeaders)}");
+            if (!string.IsNullOrEmpty(bodyString))
+                Debug.Log(
+                    $"<color=white>RestClientController::GenerateRequest::Request With Body</color>:: {bodyString}");
+            Debug.Log(
+                $"<color=white>RestClientController::GenerateRequest::Request With Header</color>:: {SerializeObject(mergeHeaders)}");
 #endif
             _params = null;
             _body = null;
@@ -233,6 +243,24 @@ namespace CryptoQuest.Networking
             }
 
             return finalHeaders;
+        }
+
+
+        public static string GetHash(string text, string key)
+        {
+            // change according to your needs, an UTF8Encoding
+            // could be more suitable in certain situations
+            ASCIIEncoding encoding = new ASCIIEncoding();
+
+            Byte[] textBytes = encoding.GetBytes(text);
+            Byte[] keyBytes = encoding.GetBytes(key);
+
+            Byte[] hashBytes;
+
+            using (HMACSHA256 hash = new HMACSHA256(keyBytes))
+                hashBytes = hash.ComputeHash(textBytes);
+
+            return BitConverter.ToString(hashBytes).Replace("-", "").ToLower();
         }
     }
 
