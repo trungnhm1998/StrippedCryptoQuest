@@ -38,12 +38,25 @@ namespace CryptoQuest.System.SaveSystem.Loaders
                 var heroOrigin = partySlotSpec.Hero.Origin;
                 if (heroOrigin != null && heroOrigin.DetailInformation.Id != 0) continue;
                 var heroSpec = partySlotSpec.Hero;
-                heroSpec.Stats = unit.Stats;
+                SyncStats(heroSpec, unit);
                 heroSpec.Class = unit.Class;
                 heroSpec.Elemental = unit.Element;
                 heroSpec.Origin = unit.Origin;
                 _party.GetParty()[index].Hero = heroSpec;
                 return;
+            }
+        }
+
+        private void SyncStats(HeroSpec hero, UnitSO unit)
+        {
+            // Only sync min max and perseve the random and modify value
+            for (var index = 0; index < hero.Stats.Attributes.Length; index++)
+            {
+                var unitAttribute = unit.Stats.Attributes;
+                var attribute = hero.Stats.Attributes[index];
+                attribute.MinValue = unitAttribute[index].MinValue;
+                attribute.MaxValue = unitAttribute[index].MaxValue;
+                attribute.RandomValue = unitAttribute[index].RandomValue;
             }
         }
     }

@@ -13,7 +13,7 @@ namespace CryptoQuest.Gameplay
     }
 
     [Serializable]
-    public struct CappedAttributeDef
+    public class CappedAttributeDef
     {
         public AttributeScriptableObject Attribute;
         public float MinValue;
@@ -21,7 +21,9 @@ namespace CryptoQuest.Gameplay
         public float RandomValue;
         public float ModifyValue;
 
-        public CappedAttributeDef(AttributeScriptableObject attribute) : this()
+        public CappedAttributeDef() { }
+
+        public CappedAttributeDef(AttributeScriptableObject attribute)
         {
             Attribute = attribute;
         }

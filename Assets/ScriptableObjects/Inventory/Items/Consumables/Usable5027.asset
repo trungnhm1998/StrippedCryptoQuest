@@ -37,7 +37,7 @@ MonoBehaviour:
     m_SubObjectName: 
     m_SubObjectType: 
     m_EditorAssetChanged: 0
-  <ConsumableType>k__BackingField: 0
+  <Type>k__BackingField: 0
   <Price>k__BackingField: 1000
   <SellPrice>k__BackingField: 500
   <Effect>k__BackingField: {fileID: 7025075402898729435}
@@ -75,7 +75,8 @@ MonoBehaviour:
     RequireTags: []
     IgnoreTags: []
   <RemoveGameplayEffectsWithTags>k__BackingField: []
-  <ExecutionCalculations>k__BackingField: []
+  <ExecutionCalculations>k__BackingField:
+  - {fileID: 11400000, guid: 26c343089820a564188ebeb9217608a1, type: 2}
   <ChanceToApply>k__BackingField: 1
   <CustomApplicationRequirements>k__BackingField: []
   references:
@@ -83,6 +84,7 @@ MonoBehaviour:
     RefIds:
     - rid: 4476345301540798524
       type: {class: InstantPolicy, ns: IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects.GameplayEffectActions, asm: IndiGames.GameplayAbilitySystem}
+      data: 
 --- !u!114 &7740832269115204702
 MonoBehaviour:
   m_ObjectHideFlags: 0
