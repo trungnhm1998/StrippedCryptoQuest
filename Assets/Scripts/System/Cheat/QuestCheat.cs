@@ -18,6 +18,7 @@ namespace CryptoQuest.System.Cheat
         [SerializeField] private List<QuestSO> _allQuest = new();
 
         private Dictionary<string, QuestSO> _questDict = new();
+        private static int HIGHEST_CHAPTER = 1;
 
         private void OnValidate()
         {
@@ -49,6 +50,9 @@ namespace CryptoQuest.System.Cheat
             Terminal.Shell.AddCommand("quest.complete.chapter", RequestCompleteQuestByChapter, 1, 1,
                 "quest.complete.chapter <chapter>, to complete all quest in chapter");
 
+            Terminal.Shell.AddCommand("quest.complete", RequestCompleteQuest, 1, 1,
+                "quest.complete <quest_guid>, to complete quest");
+
             foreach (var questSo in _allQuest)
             {
                 _questDict.Add(questSo.Guid, questSo);
@@ -56,29 +60,35 @@ namespace CryptoQuest.System.Cheat
             }
         }
 
-        private void RequestCompleteQuestByChapter(CommandArg[] args)
+        private void RequestCompleteQuest(CommandArg[] questGuids)
         {
-            int chapter = args[0].Int;
+            var guid = questGuids[0].String;
+
+            if (IsValid(guid)) return;
+
+            _saveData.AddCompleteQuest(guid);
+            Debug.Log($"<color=green>Completed quest {guid}</color>");
+        }
+
+        private void RequestCompleteQuestByChapter(CommandArg[] questGuids)
+        {
+            int chapter = questGuids[0].Int;
             if (chapter is 0 or -1) return;
 
-            List<QuestSO> quests = _allQuest.Where(quest => quest.Chapter == chapter).ToList();
-            quests.ForEach(quest => _saveData.AddCompleteQuest(quest.Guid));
+
+            if (chapter > HIGHEST_CHAPTER) HIGHEST_CHAPTER = chapter;
+
+            for (int chapterIndex = 0; chapterIndex < HIGHEST_CHAPTER; chapterIndex++)
+            {
+                List<QuestSO> quests = _allQuest.Where(quest => quest.Chapter == chapterIndex).ToList();
+                quests.ForEach(quest => _saveData.AddCompleteQuest(quest.Guid));
+            }
         }
 
         private void RequestDeleteAllCompletedQuests(CommandArg[] args)
         {
             ActionDispatcher.Dispatch(new QuestCleanAllAction());
             Debug.Log($"<color=green>Deleted all completed quests</color>");
-        }
-
-        private void RequestShowInProgressQuests(CommandArg[] args)
-        {
-            ShowQuests("Current In Progress Quest", _saveData.InProgressQuest);
-        }
-
-        private void RequestShowCompletedQuests(CommandArg[] args)
-        {
-            ShowQuests("Current Completed Quest", _saveData.CompletedQuests);
         }
 
         private void ShowQuests(string header, List<string> questGuids)
@@ -95,18 +105,27 @@ namespace CryptoQuest.System.Cheat
             }
         }
 
-        private void RequestDeleteCompletedQuest(CommandArg[] args)
+        private void RequestDeleteCompletedQuest(CommandArg[] questGuids)
         {
-            var guid = args[0].String;
+            var guid = questGuids[0].String;
 
-            if (!_saveData.CompletedQuests.Contains(guid))
-            {
-                Debug.Log($"<color=red>Quest {guid} is not completed</color>");
-                return;
-            }
+            if (IsValid(guid)) return;
 
             _saveData.RemoveCompleteQuest(guid);
             Debug.Log($"<color=green>Deleted quest {guid}</color>");
+        }
+
+        private void RequestShowInProgressQuests(CommandArg[] _) =>
+            ShowQuests("Current In Progress Quest", _saveData.InProgressQuest);
+
+        private void RequestShowCompletedQuests(CommandArg[] _) =>
+            ShowQuests("Current Completed Quest", _saveData.CompletedQuests);
+
+        private bool IsValid(string guid)
+        {
+            if (_saveData.CompletedQuests.Contains(guid)) return false;
+            Debug.Log($"<color=red>Quest {guid} is not completed</color>");
+            return true;
         }
     }
 }
