@@ -34,7 +34,7 @@ namespace CryptoQuest.Quest.Actor.Categories
             yield break;
         }
 
-        public override IEnumerator DeSpawn(GameObject parent)
+        public override IEnumerator Vanish(GameObject parent)
         {
             yield break;
         }

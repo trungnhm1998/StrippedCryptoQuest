@@ -30,7 +30,7 @@ namespace CryptoQuest.Quest.Actor.Categories
             targetCollider2D.isTrigger = parentCollider2D.isTrigger;
         }
 
-        public override IEnumerator DeSpawn(GameObject parent)
+        public override IEnumerator Vanish(GameObject parent)
         {
             if (!_handle.IsValid())
             {
