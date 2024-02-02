@@ -64,7 +64,11 @@ namespace CryptoQuest.System.Cheat
         {
             var guid = questGuids[0].String;
 
-            if (IsValid(guid)) return;
+            if (_saveData.CompletedQuests.Contains(guid))
+            {
+                Debug.Log($"<color=red>Quest {guid} is already completed</color>");
+                return;
+            }
 
             _saveData.AddCompleteQuest(guid);
             Debug.Log($"<color=green>Completed quest {guid}</color>");
