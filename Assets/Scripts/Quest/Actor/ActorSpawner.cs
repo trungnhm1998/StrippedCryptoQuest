@@ -1,5 +1,4 @@
-﻿using System;
-using CryptoQuest.Quest.Components;
+﻿using CryptoQuest.Quest.Components;
 using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -20,44 +19,71 @@ namespace CryptoQuest.Quest.Actor
         [FormerlySerializedAs("_actorDeSpawnSetting")] [SerializeField]
         private ActorSettingSO _actorDeSpawnSettingSO;
 
-        private ActorSettingInfo _actorSpawnSetting;
-        private ActorSettingInfo _actorDeSpawnSetting;
-
+        private ActorSettingInfo _spawnSetting;
+        private ActorSettingInfo _vanishSetting;
 
         private ActorInfo _actor;
-
-        private void Start() => _actor = _actorDef.CreateActor();
 
         private void OnEnable()
         {
             _onSceneLoadedEventChannel.EventRaised += ConfigureActors;
-            if (_actorSpawnSettingSO) _actorSpawnSetting = _actorSpawnSettingSO.CreateActorSettingInfo();
-            if (_actorDeSpawnSettingSO) _actorDeSpawnSetting = _actorDeSpawnSettingSO.CreateActorSettingInfo();
-            SubscribeSetting(_actorSpawnSetting, Spawn);
-            SubscribeSetting(_actorDeSpawnSetting, DeSpawn);
+
+            if (_actorSpawnSettingSO) _spawnSetting = _actorSpawnSettingSO.CreateActorSettingInfo();
+            if (_actorDeSpawnSettingSO) _vanishSetting = _actorDeSpawnSettingSO.CreateActorSettingInfo();
+
+            if (_spawnSetting != null) _spawnSetting.OnConfigure += ConditionToSpawn;
+            if (_vanishSetting != null) _vanishSetting.OnConfigure += ConditionToVanish;
         }
 
         private void OnDisable()
         {
             _onSceneLoadedEventChannel.EventRaised -= ConfigureActors;
 
-            UnsubscribeSetting(_actorSpawnSetting, ActivateSpawnActor);
-            UnsubscribeSetting(_actorDeSpawnSetting, ActivateDeSpawnActor);
+            if (_spawnSetting != null) _spawnSetting.OnQuestCompleted -= ActivateSpawnActor;
+            if (_vanishSetting != null) _vanishSetting.OnQuestCompleted -= ActivateVanishActor;
         }
 
         private void ConfigureActors()
         {
-            ActorSettingInfo actorSetting = _actorDeSpawnSetting ?? _actorSpawnSetting;
+            _actor = _actorDef.CreateActor();
 
+            ActorSettingInfo actorSetting = _vanishSetting ?? _spawnSetting;
             IQuestManager.OnConfigureQuest?.Invoke(actorSetting);
+        }
+
+        private void ConditionToSpawn(bool isEligible)
+        {
+            _spawnSetting.OnConfigure -= ConditionToSpawn;
+
+            if (!isEligible)
+            {
+                _spawnSetting.OnQuestCompleted += ActivateSpawnActor;
+                return;
+            }
+
+            ActivateSpawnActor();
+        }
+
+        private void ConditionToVanish(bool isEligible)
+        {
+            _vanishSetting.OnConfigure -= ConditionToVanish;
+
+            if (!isEligible)
+            {
+                InitSpawnSetting();
+                _vanishSetting.OnQuestCompleted += ActivateVanishActor;
+                return;
+            }
+
+            ActivateVanishActor();
         }
 
         private void InitSpawnSetting()
         {
-            if (_actorSpawnSetting != null)
+            if (_spawnSetting != null)
             {
-                _actorDeSpawnSetting.OnQuestCompleted -= ActivateDeSpawnActor;
-                IQuestManager.OnConfigureQuest?.Invoke(_actorSpawnSetting);
+                _vanishSetting.OnQuestCompleted -= ActivateVanishActor;
+                IQuestManager.OnConfigureQuest?.Invoke(_spawnSetting);
                 return;
             }
 
@@ -71,56 +97,11 @@ namespace CryptoQuest.Quest.Actor
             StartCoroutine(_actor.Spawn(_spawnPoint));
         }
 
-        private void ActivateDeSpawnActor()
+        private void ActivateVanishActor()
         {
             if (!_spawnPoint) return;
 
-            StartCoroutine(_actor.DeSpawn(gameObject));
+            StartCoroutine(_actor.Vanish(gameObject));
         }
-
-        private void Spawn(bool isQuestCompleted)
-        {
-            _actorSpawnSetting.OnConfigure -= Spawn;
-
-            if (!isQuestCompleted)
-            {
-                _actorSpawnSetting.OnQuestCompleted += ActivateSpawnActor;
-                return;
-            }
-
-            ActivateSpawnActor();
-        }
-
-        private void DeSpawn(bool isQuestCompleted)
-        {
-            _actorDeSpawnSetting.OnConfigure -= DeSpawn;
-
-            if (!isQuestCompleted)
-            {
-                InitSpawnSetting();
-                _actorDeSpawnSetting.OnQuestCompleted += ActivateDeSpawnActor;
-                return;
-            }
-
-            ActivateDeSpawnActor();
-        }
-
-        #region Extensions
-
-        private void SubscribeSetting(ActorSettingInfo setting, Action<bool> configureAction)
-        {
-            if (setting == null) return;
-
-            setting.OnConfigure += configureAction;
-        }
-
-        private void UnsubscribeSetting(ActorSettingInfo setting, Action activateAction)
-        {
-            if (setting == null) return;
-
-            setting.OnQuestCompleted -= activateAction;
-        }
-
-        #endregion
     }
 }

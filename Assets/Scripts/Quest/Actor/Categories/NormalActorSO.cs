@@ -16,7 +16,8 @@ namespace CryptoQuest.Quest.Actor.Categories
         [field: SerializeField] public string Name { get; private set; }
 
         [field: Header("Config Settings")]
-        [field: SerializeField] public QuestSO Quest { get; private set; }
+        [field: SerializeField]
+        public QuestSO Quest { get; private set; }
 
         public override ActorInfo CreateActor() => new NormalActorInfo(this);
     }
@@ -24,6 +25,7 @@ namespace CryptoQuest.Quest.Actor.Categories
     [Serializable]
     public class NormalActorInfo : ActorInfo<NormalActorSO>
     {
+        private bool _isDestroyed;
         private AsyncOperationHandle<GameObject> _handle;
         public NormalActorInfo(NormalActorSO npcActorSO) : base(npcActorSO) { }
         public NormalActorInfo() { }
@@ -31,6 +33,7 @@ namespace CryptoQuest.Quest.Actor.Categories
         public override IEnumerator Spawn(Transform parent)
         {
             _handle = Data.Prefab.InstantiateAsync(parent.position, parent.rotation, parent);
+            _handle.Completed += OnHandleOnCompleted;
 
             yield return _handle;
 
@@ -49,8 +52,17 @@ namespace CryptoQuest.Quest.Actor.Categories
             questGiver.Init(Data.Quest, actionCollider);
         }
 
-        public override IEnumerator DeSpawn(GameObject parent)
+        private void OnHandleOnCompleted(AsyncOperationHandle<GameObject> handle)
         {
+            if (!_isDestroyed) return;
+            Object.Destroy(handle.Result);
+            _isDestroyed = false;
+        }
+
+        public override IEnumerator Vanish(GameObject parent)
+        {
+            _isDestroyed = true;
+
             if (!_handle.IsValid())
             {
                 Object.Destroy(parent);
