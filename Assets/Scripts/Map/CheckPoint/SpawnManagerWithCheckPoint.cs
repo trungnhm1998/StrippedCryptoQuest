@@ -6,6 +6,7 @@ using IndiGames.Core.Events.ScriptableObjects;
 using UnityEngine;
 using UnityEngine.Localization;
 using CryptoQuest.Character.MonoBehaviours;
+using CryptoQuest.Gameplay;
 
 namespace CryptoQuest.Map.CheckPoint
 {
@@ -15,6 +16,7 @@ namespace CryptoQuest.Map.CheckPoint
         private UIGenericDialog _dialog;
         [SerializeField] private LocalizedString _revivalMessage;
         [SerializeField] private VoidEventChannelSO _showCheckPointMessageSO;
+        [SerializeField] private GameStateSO _gameState;
 
         protected override void OnAwake()
         {
@@ -58,13 +60,13 @@ namespace CryptoQuest.Map.CheckPoint
         private IEnumerator CoLoadDialogAndShowMessage()
         {
             yield return GenericDialogController.Instance.CoInstantiate(dialog => _dialog = dialog);
-
+            _gameState.UpdateGameState(EGameState.Dialogue);
             _dialog.WithMessage(_revivalMessage).RequireInput().WithHideCallback(EnableMapInput).Show();
         }
 
         private void EnableMapInput()
         {
-            _inputMediator.EnableMapGameplayInput();
+            _gameState.UpdateGameState(EGameState.Field);
         }
 
         private void ShowCheckPointMessage()
