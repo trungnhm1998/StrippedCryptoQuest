@@ -9,7 +9,7 @@ namespace CryptoQuest.Quest.Actor
     {
         public abstract bool IsValid();
         public abstract IEnumerator Spawn(Transform parent);
-        public abstract IEnumerator DeSpawn(GameObject parent);
+        public abstract IEnumerator Vanish(GameObject parent);
     }
 
     [Serializable]
@@ -25,7 +25,7 @@ namespace CryptoQuest.Quest.Actor
             yield return null;
         }
 
-        public override IEnumerator DeSpawn(GameObject parent)
+        public override IEnumerator Vanish(GameObject parent)
         {
             yield return null;
         }

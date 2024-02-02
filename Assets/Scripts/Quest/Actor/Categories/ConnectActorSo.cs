@@ -27,7 +27,7 @@ namespace CryptoQuest.Quest.Actor.Categories
             yield return _handle;
         }
 
-        public override IEnumerator DeSpawn(GameObject parent)
+        public override IEnumerator Vanish(GameObject parent)
         {
             if (!_handle.IsValid())
             {

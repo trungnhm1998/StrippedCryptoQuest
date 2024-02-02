@@ -49,7 +49,7 @@ namespace CryptoQuest.Quest.Actor.Categories
             targetCollider2D.size = parentCollider2D.size;
         }
 
-        public override IEnumerator DeSpawn(GameObject parent)
+        public override IEnumerator Vanish(GameObject parent)
         {
             if (!_handle.IsValid())
             {
