@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 3658334945100649731}
   - component: {fileID: -5065996382357614434}
   - component: {fileID: 6831289606101899120}
+  - component: {fileID: 6114004923814166995}
   m_Layer: 0
   m_Name: PartyManager
   m_TagString: Untagged
@@ -153,9 +154,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edf315e7c55553f46baab7507631f5f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _inventory: {fileID: 11400000, guid: 4b4903dbe1c434d418a3afff1b12a3ba, type: 2}
+  _party: {fileID: 11400000, guid: 197a08cf381438a48875f05c90e104fb, type: 2}
   _saveSystem: {fileID: 11400000, guid: 660bab7c7e2db6946b3a03dc73ffe40f, type: 2}
   _forceSaveEventChannel: {fileID: 11400000, guid: 210ba320e842f7444818cae9e426a5a8, type: 2}
+--- !u!114 &6114004923814166995
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3036391540655307661}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e23a948eecca8240b84c52afaa3e06a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _attributeMap:
+  - Name: modifyHP
+    Attribute: {fileID: 11400000, guid: 692557e6fee799243868270d0b093d7e, type: 2}
+  - Name: modifyMP
+    Attribute: {fileID: 11400000, guid: 0c164956786943a46b545cc58cc139f9, type: 2}
+  - Name: modifyStrength
+    Attribute: {fileID: 11400000, guid: 0d7a5bc26b58515459d9e824964fd7f8, type: 2}
+  - Name: modifyVitality
+    Attribute: {fileID: 11400000, guid: 6762f359f1a736c45b2df614e80aef45, type: 2}
+  - Name: modifyAgility
+    Attribute: {fileID: 11400000, guid: 2b6352f953a4cb54d806baed1b804397, type: 2}
+  - Name: maxLuck
+    Attribute: {fileID: 11400000, guid: 9ea7ef66c3bae0d47832b0244c8e6ff6, type: 2}
 --- !u!1001 &2799623590454960836
 PrefabInstance:
   m_ObjectHideFlags: 0

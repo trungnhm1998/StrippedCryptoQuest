@@ -143,7 +143,7 @@ namespace CryptoQuest.Sagas.Character
         {
             foreach (var modifyStat in response.modifyStats)
             {
-                if (_lookupAttribute.TryGetValue(modifyStat.AttributeName, out var attributeSO) == false) continue;
+                if (_lookupAttribute.TryGetValue(modifyStat.AttributeName.ToLower(), out var attributeSO) == false) continue;
                 if (!initialAttributes.TryGetValue(attributeSO, out var def)) continue;
                 def.ModifyValue = modifyStat.Value;
                 initialAttributes[attributeSO] = def;
