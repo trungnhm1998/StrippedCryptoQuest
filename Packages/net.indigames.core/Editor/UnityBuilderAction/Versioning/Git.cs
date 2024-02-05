@@ -52,7 +52,7 @@ namespace IndiGamesEditor.UnityBuilderAction.Versioning
         {
             try
             {
-                Run(@"fetch --all --tags --depth=1000");
+                Run(@"fetch --all --tags --depth=1000 --force");
             }
             catch (Exception e)
             {
@@ -84,9 +84,12 @@ namespace IndiGamesEditor.UnityBuilderAction.Versioning
 
         public static string GetLatestTagVersion()
         {
-            string version = Run(@"describe --tags $(git rev-list --tags --max-count=1)");
+            string hash = Run(@"rev-list --tags --max-count=1");
+            string version = Run(@$"describe --tags {hash}");
 
             version = version.Substring(1);
+            
+            Console.WriteLine($"Git::Latest tag is {version}");
 
             return version;
         }
@@ -134,10 +137,14 @@ namespace IndiGamesEditor.UnityBuilderAction.Versioning
             // , 12345678 is the commit hash and dirty means there are uncommitted changes)
             string meta = GetVersionString();
             var strippedVersion = meta.Replace(gitTagVersion, ""); // v-2-g12345678-dirty
+            Console.WriteLine($"Git::Stripped version is {strippedVersion}");
             var patchRegex = new Regex(@"-([0-9]+)");
             var patch = patchRegex.Match(strippedVersion).Groups[1].Value; // 2
+            Console.WriteLine($"Git::Patch is {patch}");
             meta = strippedVersion.Replace(patchRegex.Match(strippedVersion).Value, ""); // v-g12345678-dirty
+            Console.WriteLine($"Git::Meta is {meta}");
             meta = meta.Substring(2); // g12345678-dirty
+            Console.WriteLine($"Git::Meta is {meta}");
 
             Console.WriteLine($"Git::Version is {major}.{minor}.{patch}{prerelease}_{meta}");
 
@@ -155,7 +162,9 @@ namespace IndiGamesEditor.UnityBuilderAction.Versioning
         /// </summary>
         static string GetVersionString()
         {
-            return Run(@"describe --tags --long --match ""v[0-9]*"" --dirty --broken --always");
+            var output = Run(@"describe --tags --long --match ""v[0-9]*"" --dirty --broken --always");
+            Console.WriteLine($"Git::Version string is {output}");
+            return output;
 
             // Todo - implement split function based on this more complete query
             // return Run(@"describe --long --tags --dirty --always");
