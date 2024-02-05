@@ -2,6 +2,7 @@
 using System.Collections;
 using CryptoQuest.API;
 using CryptoQuest.Inventory.ScriptableObjects;
+using CryptoQuest.Item.Equipment;
 using CryptoQuest.Networking;
 using CryptoQuest.Sagas.Equipment;
 using CryptoQuest.Sagas.Objects;
@@ -15,9 +16,12 @@ namespace CryptoQuest.System.SaveSystem.Loaders
     public class EquipmentsLoader : Loader
     {
         [SerializeField] private EquipmentInventory _equipmentInventory;
+        [SerializeField] private EquipmentsMinStatsSO _equipmentsMinStatsSO;
 
         public override IEnumerator LoadAsync()
         {
+            _equipmentsMinStatsSO.EquipmentsMinStats.Clear();
+            
             var restClient = ServiceProvider.GetService<IRestClient>();
             var op = restClient
                 .WithParam("source", $"{((int)EEquipmentStatus.InGame).ToString()}")
