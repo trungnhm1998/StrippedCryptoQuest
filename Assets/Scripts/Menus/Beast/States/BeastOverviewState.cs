@@ -11,7 +11,6 @@ namespace CryptoQuest.Menus.Beast.States
         public override void OnEnter()
         {
             _beastPanel.Input.MenuCancelEvent += HandleCancel;
-            _beastPanel.Input.MenuNavigateEvent += NavigateSelector;
             _beastPanel.Focusing += ShowBeastList;
 
             UIBeast.OnBeastSelected += EquipBeast;
@@ -26,7 +25,6 @@ namespace CryptoQuest.Menus.Beast.States
             _beastPanel.DetailMenuBeastUIMenu.SetEnabled(false);
 
             _beastPanel.Input.MenuCancelEvent -= HandleCancel;
-            _beastPanel.Input.MenuNavigateEvent -= NavigateSelector;
             UIBeast.OnBeastSelected -= EquipBeast;
             _beastPanel.Focusing -= ShowBeastList;
         }
@@ -35,8 +33,6 @@ namespace CryptoQuest.Menus.Beast.States
         {
             _beastPanel.ListBeastUI.EquipBeast(ui);
         }
-
-        private void NavigateSelector(Vector2 dir) => _beastPanel.ListBeastUI.DisplayNavigateArrows();
 
         private void ShowBeastList()
         {
