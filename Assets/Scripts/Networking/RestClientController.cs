@@ -189,7 +189,7 @@ namespace CryptoQuest.Networking
             string bodyString = "";
             if (_body != null)
             {
-                bodyString = SerializeObject(_body);
+                bodyString = SerializeObject(_body, new TruncateDecimalJsonConverter());
             }
 
             var timestamp = DateTimeOffset.Now.ToUnixTimeMilliseconds();
@@ -292,4 +292,5 @@ namespace CryptoQuest.Networking
             Observer.OnError(exception);
         }
     }
+         
 }
