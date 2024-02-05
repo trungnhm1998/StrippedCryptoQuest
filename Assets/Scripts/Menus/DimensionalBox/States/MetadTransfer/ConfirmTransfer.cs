@@ -7,6 +7,8 @@ namespace CryptoQuest.Menus.DimensionalBox.States.MetadTransfer
     {
         private TinyMessageSubscriptionToken _transferSucceedEvent;
         private TinyMessageSubscriptionToken _transferFailedEvent;
+
+        private bool _isTransferring;
     
         public ConfirmTransfer(TransferMetadStateMachine fsm) : base(fsm)
         {
@@ -36,16 +38,19 @@ namespace CryptoQuest.Menus.DimensionalBox.States.MetadTransfer
     
         private void BackToInputAmound()
         {
+            if (_isTransferring) return;
             _fsm.RequestStateChange(EMetadState.InputTransferAmount);
         }
     
         private void BackToSelectSource()
         {
+            _isTransferring = false;
             _fsm.RequestStateChange(EMetadState.SelectSource);
         }
     
         private void DispatchTransferMetad()
         {
+            _isTransferring = true;
             ActionDispatcher.Dispatch(new TransferringMetad(_fsm.SelectedCurrency, _fsm.TransferAmount));
         }
     
