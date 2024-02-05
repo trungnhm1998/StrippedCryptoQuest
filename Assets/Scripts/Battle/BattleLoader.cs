@@ -18,6 +18,7 @@ namespace CryptoQuest.Battle
 {
     public class BattleLoader : MonoBehaviour
     {
+        public static event Action PreLoadBattle;
         public static event Action<int> LoadBattleWithId;
         public static void RequestLoadBattle(int id) => LoadBattleWithId?.Invoke(id);
         public static event Action<Battlefield> LoadBattle;
@@ -93,6 +94,7 @@ namespace CryptoQuest.Battle
 
         private void LoadingBattle(Battlefield party)
         {
+            PreLoadBattle?.Invoke();
             _gameState.UpdateGameState(EGameState.Battle);
             _battleInput.DisableAllInput(); // enable battle input when battle is loaded
             _battleBus.CurrentBattlefield = party;
