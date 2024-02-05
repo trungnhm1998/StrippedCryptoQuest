@@ -55,7 +55,7 @@ namespace CryptoQuest.BlackSmith.Upgrade.Sagas
         private IEquipment TryFindEquipment(int id)
         {
             var equippingEquipment = TryFindEquipping(id);
-            if (equippingEquipment != null) return equippingEquipment;
+            if (equippingEquipment != null && equippingEquipment.IsValid()) return equippingEquipment;
 
             if (_inventory.TryFindEquipment(id, out var equipment))
                 return equipment;
