@@ -20,8 +20,6 @@ namespace CryptoQuest.Menus.Beast.UI
         [Header("Scroll View Configs")] [SerializeField]
         private ScrollRect _scrollRect;
 
-        [SerializeField] private GameObject _upArrow;
-        [SerializeField] private GameObject _downArrow;
         [SerializeField] private UIBeast _prefab;
         private IObjectPool<UIBeast> _beastUIPool;
 
@@ -90,18 +88,6 @@ namespace CryptoQuest.Menus.Beast.UI
         {
             _beastUIs.ForEach(ui => BeastUIPool.Release(ui));
             _beastUIs.Clear();
-        }
-
-        private bool ShouldMoveUp => _scrollRect.content.anchoredPosition.y > _verticalOffset;
-
-        private bool ShouldMoveDown =>
-            _scrollRect.content.rect.height - _scrollRect.content.anchoredPosition.y
-            > _scrollRect.viewport.rect.height + _verticalOffset / 2;
-
-        public void DisplayNavigateArrows()
-        {
-            _upArrow.SetActive(ShouldMoveUp);
-            _downArrow.SetActive(ShouldMoveDown);
         }
 
         #region Pool

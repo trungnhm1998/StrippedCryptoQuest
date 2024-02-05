@@ -31,10 +31,12 @@ namespace CryptoQuest.UI.Common
             _downArrow.SetActive(CanScrollDown());
         }
 
+        private const float EPSILON = 0.001f;
+
         private bool CanScrollUp()
         {
             return _contentRectTransform.rect.height > _rectTransform.rect.height &&
-                   _contentRectTransform.anchoredPosition.y > 0;
+                   _contentRectTransform.anchoredPosition.y > EPSILON;
         }
 
         private bool CanScrollDown()

@@ -158,7 +158,8 @@ GameObject:
   m_Component:
   - component: {fileID: 152094193465404306}
   - component: {fileID: 3283020518707840763}
-  - component: {fileID: 1307970885211159308}
+  - component: {fileID: 2882327965797361681}
+  - component: {fileID: 1388779268124834516}
   m_Layer: 5
   m_Name: ScrollView
   m_TagString: Untagged
@@ -217,7 +218,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &1307970885211159308
+--- !u!114 &2882327965797361681
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -226,12 +227,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 522613704640841336}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: db680cf6b1e7353428c6159ae1ee1dec, type: 3}
+  m_Script: {fileID: 11500000, guid: 96887592a0334ea2879075e4d3a2a417, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _scrollRect: {fileID: 3283020518707840763}
-  _singleItemRect: {fileID: 3819038201093864387, guid: d2602948d3eeb4248877a886e8675e5e, type: 3}
-  _useUpdate: 1
+--- !u!114 &1388779268124834516
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 522613704640841336}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86522a7bd44e429e9884d6e05ea420cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _upArrow: {fileID: 2654307387862999773}
+  _downArrow: {fileID: 8783353553304334209}
 --- !u!1 &740384254875810209
 GameObject:
   m_ObjectHideFlags: 0
@@ -804,7 +816,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5322573206973676104}
   - component: {fileID: 5472047847149878255}
-  - component: {fileID: 4146645108649240348}
+  - component: {fileID: 4185944826772712552}
   m_Layer: 5
   m_Name: ScrollView
   m_TagString: Untagged
@@ -862,7 +874,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &4146645108649240348
+--- !u!114 &4185944826772712552
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -871,12 +883,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1328389726963166200}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: db680cf6b1e7353428c6159ae1ee1dec, type: 3}
+  m_Script: {fileID: 11500000, guid: 96887592a0334ea2879075e4d3a2a417, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _scrollRect: {fileID: 5472047847149878255}
-  _singleItemRect: {fileID: 908065879160047314, guid: 16ee39cd2db619c4b8e188e9436ae7fc, type: 3}
-  _useUpdate: 1
 --- !u!1 &1337604542852777742
 GameObject:
   m_ObjectHideFlags: 0
@@ -4141,7 +4150,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1030747034968584933}
   - component: {fileID: 3285967322377372132}
-  - component: {fileID: 4890641365396684236}
+  - component: {fileID: 5519539959844153339}
   m_Layer: 5
   m_Name: ScrollView
   m_TagString: Untagged
@@ -4199,7 +4208,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &4890641365396684236
+--- !u!114 &5519539959844153339
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4208,12 +4217,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 7594428163637699794}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: db680cf6b1e7353428c6159ae1ee1dec, type: 3}
+  m_Script: {fileID: 11500000, guid: 96887592a0334ea2879075e4d3a2a417, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _scrollRect: {fileID: 3285967322377372132}
-  _singleItemRect: {fileID: 908065879160047314, guid: 16ee39cd2db619c4b8e188e9436ae7fc, type: 3}
-  _useUpdate: 1
 --- !u!1 &7606428381767669815
 GameObject:
   m_ObjectHideFlags: 0
@@ -7989,10 +7995,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8417738637412273230, guid: 3c1e7d8e51f2c694eb71be38a2a037c5, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5051886432603144894, guid: 3c1e7d8e51f2c694eb71be38a2a037c5, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6302274775598723822}
   m_SourcePrefab: {fileID: 100100000, guid: 3c1e7d8e51f2c694eb71be38a2a037c5, type: 3}
 --- !u!1 &342604517186721316 stripped
 GameObject:
@@ -8013,6 +8023,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2b04fbe15e21935418b5e722a5835343, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &2584330091857714545 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5051886432603144894, guid: 3c1e7d8e51f2c694eb71be38a2a037c5, type: 3}
+  m_PrefabInstance: {fileID: 7333695791370149839}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &6302274775598723822
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2584330091857714545}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96887592a0334ea2879075e4d3a2a417, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &8329793503175051195
