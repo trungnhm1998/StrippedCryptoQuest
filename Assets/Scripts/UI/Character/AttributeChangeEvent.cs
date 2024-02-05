@@ -84,7 +84,7 @@ namespace CryptoQuest.UI.Character
         /// Set all observing attribute value to its current value
         /// so PostAttributeChange will be raised once when setup UI to update attribute display
         /// </summary>
-        private void UpdateAttributesValue()
+        public void UpdateAttributesValue()
         {
             var attributeSystem = _attributeSystemReference;
             foreach (var attributeEvent in AttributeEvents)
