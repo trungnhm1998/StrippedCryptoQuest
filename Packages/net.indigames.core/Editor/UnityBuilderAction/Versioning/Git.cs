@@ -84,7 +84,7 @@ namespace IndiGamesEditor.UnityBuilderAction.Versioning
 
         public static string GetLatestTagVersion()
         {
-            string version = Run(@"describe --abbrev=0");
+            string version = Run(@"describe --tags $(git rev-list --tags --max-count=1)");
 
             version = version.Substring(1);
 
@@ -106,7 +106,7 @@ namespace IndiGamesEditor.UnityBuilderAction.Versioning
         /// </summary>
         static bool HasAnyVersionTags()
         {
-            var output = Run(@"tag --list --merged HEAD | grep v[0-9]* | wc -l");
+            var output = Run(@"tag --list | grep v[0-9]* | wc -l");
             return "0" != output && !string.IsNullOrEmpty(output);
         }
 
