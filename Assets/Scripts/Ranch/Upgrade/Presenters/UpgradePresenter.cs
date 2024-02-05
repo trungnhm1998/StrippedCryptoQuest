@@ -49,6 +49,7 @@ namespace CryptoQuest.Ranch.Upgrade.Presenters
         public void InitBeast(List<IBeast> beasts)
         {
             _leftPanel.SetActive(true);
+            _beastList.Clear();
             if (beasts.Count <= 0) return;
 
             Interactable = true;

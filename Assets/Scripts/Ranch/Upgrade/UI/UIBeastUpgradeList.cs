@@ -67,7 +67,7 @@ namespace CryptoQuest.Ranch.Upgrade.UI
 
         #region Pool
 
-        private void Clear()
+        public void Clear()
         {
             foreach (var child in _scrollRect.GetComponentsInChildren<UIBeastUpgradeListDetail>()) Release(child);
         }
