@@ -14,6 +14,7 @@ namespace CryptoQuest.BlackSmith.Upgrade.Presenters
         [SerializeField] private UIUpgradeEquipmentTooltip _equipmentTooltip;
         [SerializeField] private UIPreviewUpgradeLevel _previewLevelUI;
         [SerializeField] private AttributeConfigMapping _attributeConfigMapping;
+        [SerializeField] private EquipmentsMinStatsSO _equipmentsMinStatsSO;
 
         private Dictionary<AttributeWithValue, UIPreviewableAttribute> _attributePreviewUIs = new();
 
@@ -41,10 +42,15 @@ namespace CryptoQuest.BlackSmith.Upgrade.Presenters
 
         public void PreviewEquipmentAtLevel(int level)
         {
+            var minStats = Equipment.Data.Stats;
+            if (_equipmentsMinStatsSO.EquipmentsMinStats.TryGetValue(Equipment.Id, out var foundminStats))
+                minStats = foundminStats;
+
             foreach (var attribute in Equipment.Data.Stats)
             {
-                var newValue = attribute.Value;
-                newValue += (level - Equipment.Level) * Equipment.Data.ValuePerLvl;
+                var minAttribute = minStats.Where(a => a.Attribute == attribute.Attribute).First();
+                var newValue = minAttribute.Value;
+                newValue += level * Equipment.Data.ValuePerLvl;
                 _attributePreviewUIs.TryGetValue(attribute, out var previewUI);
                 previewUI.SetPreviewValue(Mathf.FloorToInt(newValue));
             }

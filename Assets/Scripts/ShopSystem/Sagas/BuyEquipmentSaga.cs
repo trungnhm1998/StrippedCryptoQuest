@@ -8,6 +8,7 @@ using IndiGames.Core.Common;
 using IndiGames.Core.Events;
 using Newtonsoft.Json;
 using UniRx;
+using UnityEngine;
 
 namespace CryptoQuest.ShopSystem.Sagas
 {
@@ -23,6 +24,7 @@ namespace CryptoQuest.ShopSystem.Sagas
 
     public class BuyEquipmentSaga : SagaBase<BuyEquipmentAction>
     {
+        [SerializeField] private EquipmentsMinStatsSO _equipmentsMinStatsSO;
         [Serializable]
         struct Body
         {
@@ -51,6 +53,8 @@ namespace CryptoQuest.ShopSystem.Sagas
                 Data = item.Data,
                 IsNft = false,
             };
+            _equipmentsMinStatsSO.EquipmentsMinStats.TryAdd(equipment.Id, equipment.Stats);
+            
             ActionDispatcher.Dispatch(new AddEquipmentAction(equipment));
             ActionDispatcher.Dispatch(new FetchProfileAction());
             ActionDispatcher.Dispatch(new TransactionSucceedAction());
