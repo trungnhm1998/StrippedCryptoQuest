@@ -33,6 +33,7 @@ namespace CryptoQuest.UI.Title
 
         private void OnEnable()
         {
+            ConfirmButton.interactable = false;
             NameInput.onSubmit.AddListener(MenuSubmitEvent);
             Invoke(nameof(SelectInputField), 0);
         }
@@ -53,7 +54,11 @@ namespace CryptoQuest.UI.Title
             _saveSystem.Save();
         }
 
-        public void ValidateInput(string input) => _isInputValid = IsNameValid(input);
+        public void ValidateInput(string input)
+        {
+            _isInputValid = IsNameValid(input);
+            ConfirmButton.interactable = _isInputValid;
+        }
 
         private void MenuSubmitEvent(string input)
         {
