@@ -54,6 +54,7 @@ namespace CryptoQuest.Menus.Status.States
             StatusPanel.EquipmentPreviewer.ResetPreviewer();
 
             SelectInspectingHero();
+            StatusPanel.CharacterEquipmentsPanel.SetActiveAllEquipmentSlots(true);
             var selectable = StatusPanel.CharacterEquipmentsPanel.GetComponentInChildren<Selectable>();
             EventSystem.current.SetSelectedGameObject(selectable.gameObject);
         }
@@ -73,6 +74,7 @@ namespace CryptoQuest.Menus.Status.States
             StatusPanel.Input.TabChangeEvent -= HandleNavigate;
             UICharacterEquipmentSlot.Pressed -= ToEquipmentSelection;
             StatusPanel.InspectingHeroChanged -= RenderHero;
+            StatusPanel.CharacterEquipmentsPanel.SetActiveAllEquipmentSlots(false);
         }
 
         private void BackToMainMenuNavigation() => fsm.RequestStateChange(State.UNFOCUS);
