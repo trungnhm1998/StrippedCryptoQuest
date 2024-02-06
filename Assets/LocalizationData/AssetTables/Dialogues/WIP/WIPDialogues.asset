@@ -16,8 +16,42 @@ MonoBehaviour:
   m_Tables:
   - {fileID: 11400000, guid: 8fb543966576c0443926fcd1b9366b05, type: 2}
   - {fileID: 11400000, guid: 1e1349e8c6e75964eb1de6587548aa01, type: 2}
-  m_Extensions: []
+  m_Extensions:
+  - rid: 4982409572004135511
   m_Group: Dialogues
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 4982409572004135511
+      type: {class: CsvExtension, ns: UnityEditor.Localization.Plugins.CSV, asm: Unity.Localization.Editor}
+      data:
+        m_Collection: {fileID: 11400000}
+        m_ColumnsList:
+        - rid: 4982409572004135512
+        - rid: 4982409572004135513
+        - rid: 4982409572004135514
+        m_ConnectedFile: 
+    - rid: 4982409572004135512
+      type: {class: KeyIdColumns, ns: UnityEditor.Localization.Plugins.CSV.Columns, asm: Unity.Localization.Editor}
+      data:
+        m_IncludeId: 1
+        m_IncludeSharedComments: 1
+        m_KeyFieldName: Key
+        m_IdFieldName: Id
+        m_CommentFieldName: Shared Comments
+    - rid: 4982409572004135513
+      type: {class: LocaleColumns, ns: UnityEditor.Localization.Plugins.CSV.Columns, asm: Unity.Localization.Editor}
+      data:
+        m_LocaleIdentifier:
+          m_Code: en
+        m_FieldName: English(en)
+        m_CommentFieldName: English(en) Comments
+        m_IncludeComments: 1
+    - rid: 4982409572004135514
+      type: {class: LocaleColumns, ns: UnityEditor.Localization.Plugins.CSV.Columns, asm: Unity.Localization.Editor}
+      data:
+        m_LocaleIdentifier:
+          m_Code: ja
+        m_FieldName: Japanese(ja)
+        m_CommentFieldName: Japanese(ja) Comments
+        m_IncludeComments: 1
