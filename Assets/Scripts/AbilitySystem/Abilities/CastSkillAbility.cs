@@ -1,6 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Linq;
-using Cinemachine;
+using CryptoQuest.AbilitySystem.Abilities.Conditions;
 using CryptoQuest.AbilitySystem.Attributes;
 using CryptoQuest.Battle.Components;
 using CryptoQuest.Battle.Events;
@@ -41,6 +42,20 @@ namespace CryptoQuest.AbilitySystem.Abilities
 
         [field: SerializeField] public float SuccessRate { get; private set; } = 100;
         [field: SerializeField] public SkillTargetType TargetType { get; private set; }
+        
+
+        [field: SerializeReference, SubclassSelector] 
+        public IAbilityCondition[] Conditions { get; private set; } = Array.Empty<IAbilityCondition>();
+
+        private void OnValidate()
+        {
+            for (int i = 0; i < Conditions.Length; i++)
+            {
+                if (Conditions[i] != null) continue;
+                Conditions[i] = new AlwaysTrue();
+            }
+        }
+        
 #if UNITY_EDITOR
         public void SetSkillName(LocalizedString localizedString) => _skillName = localizedString;
         public void SetSkillDescription(LocalizedString localizedString) => _skillDescription = localizedString;
@@ -165,7 +180,7 @@ namespace CryptoQuest.AbilitySystem.Abilities
 
         protected bool CheckCastSkillSuccess()
         {
-            var roll = Random.Range(0, 100);
+            var roll = UnityEngine.Random.Range(0, 100);
             var result = roll < _def.SuccessRate;
             var resultMessage = result ? "Success" : "Failed";
             Debug.Log($"Casting {_def.name} with success rate {_def.SuccessRate} and roll {roll}: {resultMessage}");
@@ -237,6 +252,24 @@ namespace CryptoQuest.AbilitySystem.Abilities
         {
             base.OnAbilityRemoved(gameplayAbilitySpec);
             Owner.DestroyObject(_costEffect);
+        }
+
+        // TODO: Same logic with consume item ability condition, might refactor this later
+        // as ability custom condition be cause the tag condition not working
+        public override bool CanActiveAbility()
+        {
+            return base.CanActiveAbility() && CanPassAllCondition();
+        }
+
+        private bool CanPassAllCondition()
+        {
+            foreach (var condition in _def.Conditions)
+            {
+                var isConditionPass = condition.IsPass(new AbilityConditionContext(Owner, null)); 
+                if (!isConditionPass) return false;
+            }
+
+            return true;
         }
     }
 }

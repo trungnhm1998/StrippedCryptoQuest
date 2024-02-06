@@ -1,3 +1,4 @@
+using System;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using IndiGames.GameplayAbilitySystem.EffectSystem.ScriptableObjects;
 
@@ -19,6 +20,7 @@ namespace CryptoQuest.AbilitySystem.Abilities.Conditions
         }
     }
 
+    [Serializable]
     public class AlwaysTrue : IAbilityCondition
     {
         public bool IsPass(AbilityConditionContext ctx) => true;
