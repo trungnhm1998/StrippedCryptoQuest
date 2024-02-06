@@ -167,7 +167,11 @@ namespace CryptoQuest.Menus.Skill.States
 
             var skillSpec =
                 _skillPanel.SelectingHero.Hero.AbilitySystem.GiveAbility<CastSkillAbilitySpec>(_selectingSkill);
-            if (!CheckCostRequirement(skillSpec)) return;
+            if (!CheckCostRequirement(skillSpec))
+            {
+                ClearTargetSelectionAndSelectingSkill();
+                return;
+            }
 
             skillSpec.Execute(abilitySystemBehaviours);
             ClearTargetSelectionAndSelectingSkill();
