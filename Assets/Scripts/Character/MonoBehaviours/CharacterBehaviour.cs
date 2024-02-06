@@ -38,7 +38,7 @@ namespace CryptoQuest.Character.MonoBehaviours
         private static readonly int AnimIsWalking = Animator.StringToHash("IsWalking");
         private static readonly int AnimFacingDirection = Animator.StringToHash("IsFacingToHero");
 
-        public void SetFacingDirection(EFacingDirection facingDirection)
+        public virtual void SetFacingDirection(EFacingDirection facingDirection)
         {
             _facingDirection = facingDirection;
             _animatorComponent.SetBool(AnimFacingDirection, true);
