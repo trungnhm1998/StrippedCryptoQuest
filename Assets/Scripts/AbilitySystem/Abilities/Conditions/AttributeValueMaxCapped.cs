@@ -1,9 +1,11 @@
+using System;
 using CryptoQuest.AbilitySystem.Attributes;
 using IndiGames.GameplayAbilitySystem.EffectSystem;
 using UnityEngine;
 
 namespace CryptoQuest.AbilitySystem.Abilities.Conditions
 {
+    [Serializable]
     public class AttributeValueMaxCapped : IAbilityCondition
     {
         public AttributeValueMaxCapped() { }

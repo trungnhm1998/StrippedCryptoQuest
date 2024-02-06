@@ -1,3 +1,4 @@
+using System;
 using IndiGames.GameplayAbilitySystem.Helper;
 using IndiGames.GameplayAbilitySystem.TagSystem.ScriptableObjects;
 using UnityEngine;
@@ -10,12 +11,13 @@ namespace CryptoQuest.AbilitySystem.Abilities.Conditions
     /// For example: ability cure all status and heal HP, MP
     /// can be active if system has atleast 1 abnormal tag or dont have FullHP, FullMP tag
     /// </summary>
+    [Serializable]
     public class PassAtleastOneTag : IAbilityCondition
     {
         [SerializeField] private TagScriptableObject[] _acceptTags;
         [SerializeField] private TagScriptableObject[] _denyTags;
 
-        public bool IsPass(AbilityConditionContext ctx)
+        public virtual bool IsPass(AbilityConditionContext ctx)
         {
             var tagSystem = ctx.System.TagSystem;
 
