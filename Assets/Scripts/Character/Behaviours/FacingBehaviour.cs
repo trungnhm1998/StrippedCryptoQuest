@@ -38,6 +38,12 @@ namespace CryptoQuest.Character.Behaviours
                 SetFacingDirection(_inputVector);
         }
 
+        public override void SetFacingDirection(EFacingDirection facingDirection)
+        {
+            base.SetFacingDirection(facingDirection);
+            OnFacingDirectionChanged?.Invoke(_facingDirection);
+        }
+
         public override void SetFacingDirection(Vector2 velocity)
         {
             base.SetFacingDirection(velocity);
