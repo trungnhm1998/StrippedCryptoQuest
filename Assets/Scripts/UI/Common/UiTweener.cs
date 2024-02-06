@@ -13,10 +13,7 @@ namespace CryptoQuest.UI.Common
 
         public void Tween()
         {
-            Debug.Log($"{_content.rect.width} {_parent.rect.width}");
-            Debug.Log($"{_content.rect.width <= _parent.rect.width}");
             if (_content.rect.width <= _parent.rect.width) return;
-            Debug.Log($"who??");
             var reachValue = 0 - (_content.rect.width - _parent.rect.width);
             _sequence = DOTween.Sequence();
             _sequence
