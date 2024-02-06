@@ -3,6 +3,7 @@ using CryptoQuest.Battle.Components;
 using CryptoQuest.Item.Equipment;
 using CryptoQuest.Menu;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace CryptoQuest.Menus.Status.UI.Equipment
 {
@@ -61,6 +62,15 @@ namespace CryptoQuest.Menus.Status.UI.Equipment
         private void ResetEquipmentsUI()
         {
             foreach (var equipmentSlot in _equipmentSlots) equipmentSlot.Reset();
+        }
+
+        public void SetActiveAllEquipmentSlots(bool enable)
+        {
+            foreach (var slot in _equipmentSlots)
+            {
+                var button = slot.GetComponent<Button>();
+                button.enabled = enable;
+            }
         }
     }
 }
