@@ -35,7 +35,11 @@ namespace CryptoQuest.Menus.DimensionalBox.UI.EquipmentsTransfer
             return uiEquipment;
         }
 
-        protected virtual void OnGet(TItem uiItem) => uiItem.gameObject.SetActive(true);
+        protected virtual void OnGet(TItem uiItem)
+        {
+            uiItem.gameObject.SetActive(true);
+            uiItem.transform.SetAsLastSibling();
+        }
 
         protected virtual void OnRelease(TItem item)
         {
