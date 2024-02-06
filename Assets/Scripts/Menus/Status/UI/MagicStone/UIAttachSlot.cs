@@ -11,6 +11,7 @@ namespace CryptoQuest.Menus.Status.UI.MagicStone
     public class UIAttachSlot : MonoBehaviour
     {
         public event UnityAction Pressed;
+        [SerializeField] private GameObject _selectingEffect;
         [SerializeField] private GameObject _selectedEffect;
         [SerializeField] private UISingleStone _singleStone;
         [SerializeField] private ShowTooltipEvent _showTooltipEvent;
@@ -32,5 +33,8 @@ namespace CryptoQuest.Menus.Status.UI.MagicStone
         {
             _singleStone.gameObject.SetActive(false);
         }
+
+        public void Select() => _selectingEffect.SetActive(true);
+        public void Deselect() => _selectingEffect.SetActive(false);
     }
 }

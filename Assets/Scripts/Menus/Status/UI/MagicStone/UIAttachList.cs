@@ -5,6 +5,7 @@ using CryptoQuest.Item.MagicStone;
 using CryptoQuest.Menu;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace CryptoQuest.Menus.Status.UI.MagicStone
@@ -39,6 +40,7 @@ namespace CryptoQuest.Menus.Status.UI.MagicStone
                 _attachSlots[i].gameObject.SetActive(true);
                 _attachSlots[i].Pressed += OnAttachSlotSelected;
             }
+            Invoke(nameof(SelectCurrentSlot), 0.1f);
         }
 
         private void OnAttachSlotSelected()
@@ -64,20 +66,23 @@ namespace CryptoQuest.Menus.Status.UI.MagicStone
 
         private void GoUp()
         {
+            _attachSlots[CurrentIndex].Deselect();
             CurrentIndex--;
-            SelectCurrentSlot();
+            Invoke(nameof(SelectCurrentSlot), 0.1f);
         }
 
         private void GoDown()
         {
+            _attachSlots[CurrentIndex].Deselect();
             CurrentIndex++;
-            SelectCurrentSlot();
+            Invoke(nameof(SelectCurrentSlot), 0.1f);
         }
 
         private void SelectCurrentSlot()
         {
-            var slotButton = _attachSlots[CurrentIndex].GetComponent<Button>();
+            var slotButton = _attachSlots[CurrentIndex];
             slotButton.Select();
+            EventSystem.current.SetSelectedGameObject(_attachSlots[CurrentIndex].gameObject);
         }
 
         private void ResetUI()
