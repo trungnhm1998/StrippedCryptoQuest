@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 461577474559183162}
   - component: {fileID: 4671675036968419725}
   - component: {fileID: 8366940035670848961}
+  - component: {fileID: 8600896800791882875}
   m_Layer: 0
   m_Name: SpawnPoint
   m_TagString: Untagged
@@ -27,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 8446879304082921465}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -27.95, y: -69.92, z: 0}
+  m_LocalPosition: {x: -27.95, y: -70.62, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -57,7 +58,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7500d9ff073a48bc8797451014812df0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <SizeBox>k__BackingField: {x: 13.266086, y: 2.2049046}
+  <SizeBox>k__BackingField: {x: 14.4, y: 5.84}
+--- !u!65 &8600896800791882875
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8446879304082921465}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 12.81, y: 5, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8462426571574486041
 GameObject:
   m_ObjectHideFlags: 0
@@ -106,5 +128,5 @@ MonoBehaviour:
   _onSceneLoadedEventChannel: {fileID: 11400000, guid: b8b96e43d21a7bf4c96df4cb83c2b764, type: 2}
   _spawnPoint: {fileID: 461577474559183162}
   _actorDef: {fileID: 11400000, guid: 5020b0de572a37a4faee4009405a3aeb, type: 2}
-  _actorSpawnSettingSO: {fileID: 11400000, guid: ff5c4fc31a448de4ea0ab0320a418de8, type: 2}
-  _actorDeSpawnSettingSO: {fileID: 11400000, guid: 852fced1290ddd748ae24b00b930bd5d, type: 2}
+  _actorSpawnSettingSO: {fileID: 0}
+  _actorDeSpawnSettingSO: {fileID: 11400000, guid: e570e786b0f08c44b9428366cc76e502, type: 2}
