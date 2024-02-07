@@ -125,7 +125,7 @@ namespace IndiGamesEditor.UnityBuilderAction.Versioning
             // 1.6-alpha
             var gitTagVersion = GetLatestTagVersion();
 
-            var versionRegex = new Regex(@"([0-9]+).([0-9])(.*)");
+            var versionRegex = new Regex(@"([0-9]+).([0-9]+)(.*)");
             var match = versionRegex.Match(gitTagVersion);
             var major = match.Groups[1].Value; // 1
             var minor = match.Groups[2].Value; // 6
