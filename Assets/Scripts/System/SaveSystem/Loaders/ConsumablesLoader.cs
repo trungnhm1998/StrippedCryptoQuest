@@ -38,6 +38,7 @@ namespace CryptoQuest.System.SaveSystem.Loaders
             var itemResponses = op.Result.data.items;
             foreach (var item in itemResponses)
             {
+                if (item.itemNum <= 0) continue;
                 _inventory.Items.Add(new ConsumableInfo(_consumableMap[item.itemId], item.itemNum));
             }
 
