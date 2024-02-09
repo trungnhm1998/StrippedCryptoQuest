@@ -6,13 +6,12 @@ using UnityEngine;
 namespace CryptoQuest.AbilitySystem.Abilities.Conditions
 {
     /// <summary>
-    /// Return true if the system has atleast one tag in the accept list
-    /// OR the system don't have 1 tag in the deny list
-    /// For example: ability cure all status and heal HP, MP
-    /// can be active if system has atleast 1 abnormal tag or dont have FullHP, FullMP tag
+    /// Return true if the system has all one tag in the accept list
+    /// OR the system don't have any tag in the deny list
+    /// For example: ability heal need system dont have neither FullHP nor Dead tag
     /// </summary>
     [Serializable]
-    public class PassAtleastOneTag : IAbilityCondition
+    public class PassAllTags : IAbilityCondition 
     {
         [SerializeField] private TagScriptableObject[] _acceptTags;
         [SerializeField] private TagScriptableObject[] _denyTags;
@@ -23,15 +22,15 @@ namespace CryptoQuest.AbilitySystem.Abilities.Conditions
 
             foreach (var tag in _acceptTags)
             {
-                if (tagSystem.GrantedTags.CheckSystemHasTags(tag)) return true;
+                if (!tagSystem.GrantedTags.CheckSystemHasTags(tag)) return false;
             }    
 
             foreach (var tag in _denyTags)
             {
-                if (!tagSystem.GrantedTags.CheckSystemHasTags(tag)) return true;
+                if (tagSystem.GrantedTags.CheckSystemHasTags(tag)) return false;
             }    
         
-            return false;
+            return true;
         }
     }
 }
