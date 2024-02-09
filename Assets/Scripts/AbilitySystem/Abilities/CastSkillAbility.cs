@@ -7,6 +7,7 @@ using CryptoQuest.Battle.Components;
 using CryptoQuest.Battle.Events;
 using CryptoQuest.Battle.Extensions;
 using CryptoQuest.Battle.ScriptableObjects;
+using IndiGames.Core.Events;
 using IndiGames.GameplayAbilitySystem.AbilitySystem;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 using IndiGames.GameplayAbilitySystem.AbilitySystem.ScriptableObjects;
@@ -261,15 +262,30 @@ namespace CryptoQuest.AbilitySystem.Abilities
             return base.CanActiveAbility() && CanPassAllCondition();
         }
 
+        /// <summary>
+        /// If cast fail on just one condition at all targets, the ability will be canceled
+        /// if there's one target that can't pass the condition, the ability will still be active
+        /// </summary>
+        /// <returns></returns>
+        // TODO: Can I make the ability composable instead of keep adding condition/executing method when needed?
         private bool CanPassAllCondition()
         {
-            foreach (var condition in _def.Conditions)
+            var isSomeTargetPassed = false;
+            foreach (var target in Targets)
             {
-                var isConditionPass = condition.IsPass(new AbilityConditionContext(Owner, null)); 
-                if (!isConditionPass) return false;
+                // Target must pass all condition to consider passed
+                foreach (var condition in _def.Conditions)
+                {
+                    var isConditionPass = condition.IsPass(new AbilityConditionContext(target, null)); 
+                    isSomeTargetPassed = isConditionPass;
+                    if (!isConditionPass) break;
+                }
+                if (isSomeTargetPassed) return true;
             }
+            
+            ActionDispatcher.Dispatch(new AbilityConditionFailed(Owner));
 
-            return true;
+            return false;
         }
     }
 }
