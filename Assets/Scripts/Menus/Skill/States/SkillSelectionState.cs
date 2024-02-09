@@ -101,7 +101,7 @@ namespace CryptoQuest.Menus.Skill.States
             _targets = new List<HeroBehaviour>();
             foreach (var hero in _skillPanel.HeroButtons)
             {
-                if (hero.Hero.IsValidAndAlive() == false) continue;
+                if (hero.Hero != null && hero.Hero.IsValidAndAlive() == false) continue;
                 _targets.Add(hero.Hero);
             }
 
@@ -155,7 +155,7 @@ namespace CryptoQuest.Menus.Skill.States
             }
 
             var systems = from hero in _targets
-                where hero.IsValid()
+                where hero != null && hero.IsValid()
                 select hero.AbilitySystem;
 
             var abilitySystemBehaviours = systems as AbilitySystemBehaviour[] ?? systems.ToArray();
