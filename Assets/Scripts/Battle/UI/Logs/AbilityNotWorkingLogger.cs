@@ -3,10 +3,17 @@ using UnityEngine.Events;
 using UnityEngine.Localization;
 using TinyMessenger;
 using IndiGames.Core.Events;
-using CryptoQuest.AbilitySystem.Abilities.Conditions;
+using IndiGames.GameplayAbilitySystem.AbilitySystem.Components;
 
 namespace CryptoQuest.Battle.UI.Logs
 {
+    public class AbilityConditionFailed : ActionBase 
+    {
+        public AbilitySystemBehaviour Owner { get; private set; }
+        public AbilityConditionFailed(AbilitySystemBehaviour owner) 
+            => Owner = owner;
+    }
+
     public class AbilityNotWorkingLogger : MonoBehaviour
     {
         [SerializeField] private UnityEvent<LocalizedString> _presentLoggerEvent;
