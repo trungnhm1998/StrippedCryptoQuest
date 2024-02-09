@@ -42,6 +42,8 @@ namespace CryptoQuest.Quest.Actor.Categories
             NPCBehaviour npcBehaviour = parent.GetComponentInChildren<NPCBehaviour>();
             GiverActionCollider actionCollider = parent.GetComponentInChildren<GiverActionCollider>();
 
+            if (actionCollider == null) yield break;
+
             actionCollider.SetQuest(Data.Quest);
 
             if (!parent.TryGetComponent<ShowCubeWireUtil>(out var showCubeWireUtil)) yield break;
