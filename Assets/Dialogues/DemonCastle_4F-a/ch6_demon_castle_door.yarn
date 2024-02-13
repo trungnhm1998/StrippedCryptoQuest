@@ -1,26 +1,26 @@
 title: ch6_demon_castle_door1_1
 tags:
 ---
-Emma:We finally made it... #line:ch6demoncastle2_19
-Emma:You can tell even at the door, I can feel a force stronger than anything...There's a Demon King ahead... #line:ch6demoncastle2_20
+Emma: We finally made it... #line:ch6demoncastle2_19
+Emma: You can tell even at the door, I can feel a force stronger than anything...There's a Demon King ahead... #line:ch6demoncastle2_20
 ===
 title: ch6_demon_castle_door1_2
 tags:
 ---
-Emma:It's finally time to fight the Demon King. Let's prepare well and take on the challenge. #line:ch6demoncastle2_21
-Emma:You've come so far and grown so much; I believe in you, {GetPlayerName()}! Good luck! #line:ch6demoncastle2_22
-Bravo:Master! A powerful and wicked enemy awaits ahead! #line:ch6demoncastle2_23
-Bravo:But Master, you're stronger, kinder, and way cooler! You've got this! I'll give it my all too! #line:ch6demoncastle2_24
+Emma: It's finally time to fight the Demon King. Let's prepare well and take on the challenge. #line:ch6demoncastle2_21
+Emma: You've come so far and grown so much; I believe in you, {GetPlayerName()}! Good luck! #line:ch6demoncastle2_22
+Bravo: Master! A powerful and wicked enemy awaits ahead! #line:ch6demoncastle2_23
+Bravo: But master, you're stronger, kinder, and way cooler! You've got this! I'll give it my all too! #line:ch6demoncastle2_24
 ===
 
 title: ch6_demon_castle_door1_3
 tags:
 ---
-Do I open the door? #line:ch6demoncastle2_100
+Would you like to open the door? #line:ch6demoncastle2_100
 -> Open the Door #line:ch6demoncastle2_25
-   <<quest Flag_ch6Door_Enter>>
+    <<quest Flag_ch6Door_Enter>>
 -> Do not open the Door #line:ch6demoncastle2_26
-   <<quest Flag_ch6Door_NotEnter>>
+    <<quest Flag_ch6Door_NotEnter>>
 ===
 
 title: Enter_ch6castledoor
@@ -28,6 +28,6 @@ tags:
 ---
 Do I open the door? #line:ch6demoncastle2_101
 -> Open the Door #line:ch6demoncastle2_27
-   <<quest Flag_ch6Door_Enter>>
+    <<quest Flag_ch6Door_Enter>>
 -> Do not open the Door #line:ch6demoncastle2_28
 ===
