@@ -8,25 +8,25 @@ Emma: Hey Thief! Give us back his wallet! #line:ch2chasethief2
 title: ch002_q002_e005_chase_thief1
 tags:
 ---
-Pickpocketer: Whoa!!! I thought they were a bunch of dummies who didn't notice anything, so how did they find me! #line:ch2chasethief3
-Pickpocketer: Damn it, they can't get me! #line:ch2chasethief4
+Pickpocket: Whoa!!! I thought they were just a bunch of dummies who wouldn't notice a thing, but how did they catch on to me! #line:ch2chasethief3
+Pickpocket: No way, they can't catch me! If it comes down to it...! #line:ch2chasethief4
 ===
 
 
 title: ch002_q002_e005_chase_thief2
 tags:
 ---
-Emma: If it comes to this...! #line:ch2chasethief5
-Bravo: My Hero, What are we going to do! Do you still want to chase after him?! #line:ch2chasethief6
+Emma: Oh no! He ran off into the woods! #line:ch2chasethief5
+Bravo: My master, What are we going to do! Do you still want to chase after him?! #line:ch2chasethief6
 -> YES #line:ch2chasethief7
     Bravo: Alright! Then follow me! #line:ch2chasethief8
     <<choose followbravo>>
     <<jump CompleteCh2ChaseThief_Ready>>
 -> NO #line:ch2chasethief9
-    Emma: Well, we're going into the Lost Forest, so why don't we get a few things ready? #line:ch2chasethief10
-    Emma: But without your wallet... Oh, you have a little bit of money that you've separated in another luggage. #line:ch2chasethief11
-    Emma: Then let's get ready with that extra money and go after him. #line:ch2chasethief12
-    Emma: I don't think that the thief will be able to get through the Lost Forest that easily, so I don't think we need to rush. #line:ch2chasethief13
+    Emma: Since we're heading into the Lost Forest, we should probably prepare a few things. #line:ch2chasethief10
+    Emma: But now that your wallet's gone... Oh, you have some spare cash stored in another bag? #line:ch2chasethief11
+    Emma: Then let's use that extra money to get ready and pursue the thief. #line:ch2chasethief12
+    Emma: I doubt he'll navigate through the Lost Forest easily, so there's no need to hurry. #line:ch2chasethief13
     <<jump CompleteCh2ChaseThief_NotReady>>
     
 ===
@@ -40,8 +40,8 @@ tags:
 title: ch002_q002_e005_chase_thief_confirm
 tags:
 ---
-Bravo: My Hero, What are we going to do! Do you still want to chase after him?! #line:ch2confirmchasethief1
-->YES #line:ch2confirmchasethief2
+Bravo: My master, What are we going to do! Do you still want to chase after him?! #line:ch2confirmchasethief1
+-> YES #line:ch2confirmchasethief2
     Bravo: Alright! Then follow me! #line:ch2confirmchasethief3
     <<jump CompleteCh2ChaseThief_Ready>>
 -> NO #line:ch2confirmchasethief4

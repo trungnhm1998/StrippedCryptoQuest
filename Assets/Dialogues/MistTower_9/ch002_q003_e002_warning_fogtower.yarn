@@ -2,13 +2,13 @@ title: ch002_q003_e002_warning_misttower
 tags:
 ---
 Emma: We finally made it here. So this is the room on the top floor. #line:ch2warnmisttw1
-Bravo: There's something different in the air h ere! My body is buzzing! #line:ch2warnmisttw2
-Emma: Yeah, I guess we'd better get ready and go in. What do you say? Do you want to enter? #line:ch2warnmisttw3
-->YES #line:ch2warnmisttw4
-    Emma: All right! Let's go in the room! #line:ch2warnmisttw5
+Bravo: There's something different in the air here! My whole body is tingling! #line:ch2warnmisttw2
+Emma: Yeah, it looks like we should get prepared and head inside. What do you think? Should we go in? #line:ch2warnmisttw3
+-> YES #line:ch2warnmisttw4
+    Emma: Alright! Let's go in the room! #line:ch2warnmisttw5
     <<choose gogetthepen>>
     <<quest Ch2MistTower_Reconfirm>>
-->NO #line:ch2warnmisttw6
+-> NO #line:ch2warnmisttw6
     Emma: Sure. Let’s be more prepared before we go in. #line:ch2warnmisttw7
     <<quest FlagCh2Misttower_NotReady>>
 ===
@@ -16,11 +16,11 @@ Emma: Yeah, I guess we'd better get ready and go in. What do you say? Do you wan
 title: ch002_q003_e002_warning_misttower2
 tags:
 ---
-Emma: What do you want to do? Do you want to go in? #line:ch2warnmisttw8
-->YES #line:ch2warnmisttw9
-    Emma: All right! Let's go in the room! #line:ch2warnmisttw10
+Emma: What do you think? Should we go in? #line:ch2warnmisttw8
+-> YES #line:ch2warnmisttw9
+    Emma: Alright! Let's go in the room! #line:ch2warnmisttw10
     <<quest Ch2MistTower_Reconfirm>>
-->NO #line:ch2warnmisttw11
+-> NO #line:ch2warnmisttw11
     Emma: Sure. Let’s be more prepared before we go in. #line:ch2warnmisttw12
 ===
 
