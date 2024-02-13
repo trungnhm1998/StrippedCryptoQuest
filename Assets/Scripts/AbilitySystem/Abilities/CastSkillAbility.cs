@@ -271,6 +271,7 @@ namespace CryptoQuest.AbilitySystem.Abilities
         // TODO: Can I make the ability composable instead of keep adding condition/executing method when needed?
         private bool CanPassAllCondition()
         {
+            if (_def.Conditions.Length <= 0) return true;
             var isSomeTargetPassed = false;
             foreach (var target in Targets)
             {
