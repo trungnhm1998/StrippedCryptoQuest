@@ -35,11 +35,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 826ceb9ed908420c89db4316f386df6e, type: 3}
   m_Name: YarnQuestNodePlayableAsset
   m_EditorClassIdentifier: 
-  _yarnDialogWithQuest: {fileID: 0}
+  _yarnDialogWithQuest: {fileID: 11400000, guid: df0478f5a590e444eae55c328cb6681e, type: 2}
   _template:
     YarnNodeName: Start
     PauseTimelineOnClipEnds: 0
-    <YarnDialog>k__BackingField: {fileID: 0}
+    <YarnDialog>k__BackingField: {fileID: 11400000, guid: df0478f5a590e444eae55c328cb6681e, type: 2}
 --- !u!114 &-7307867848941630157
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1568,13 +1568,49 @@ MonoBehaviour:
     m_BlendOutDuration: 0.1833333333333318
     m_MixInCurve:
       serializedVersion: 2
-      m_Curve: []
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
     m_MixOutCurve:
       serializedVersion: 2
-      m_Curve: []
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
