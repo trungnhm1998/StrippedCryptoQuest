@@ -2416,6 +2416,50 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5166903202144938486, guid: 6c2f17244b7476541af705f8baf0029f, type: 3}
   m_PrefabInstance: {fileID: 1352059114}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1419435233
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1419435235}
+  - component: {fileID: 1419435234}
+  m_Layer: 0
+  m_Name: Static Coroutine RestClient
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1419435234
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1419435233}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 2058667418}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1419435235
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1419435233}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1491294857
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3504,6 +3548,21 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5166903202144938486, guid: 3228c81de254997439736d64771ee664, type: 3}
   m_PrefabInstance: {fileID: 2038612293}
   m_PrefabAsset: {fileID: 0}
+--- !u!115 &2058667418
+MonoScript:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  serializedVersion: 7
+  m_DefaultReferences: {}
+  m_Icon: {fileID: 0}
+  m_Type: 0
+  m_ExecutionOrder: 0
+  m_ClassName: StaticCoroutine/CoroutineHolder
+  m_Namespace: Proyecto26
+  m_AssemblyName: RestClient
 --- !u!1001 &2059776672
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4027,3 +4086,4 @@ SceneRoots:
   - {fileID: 1320061564}
   - {fileID: 659429784}
   - {fileID: 1534499559}
+  - {fileID: 1419435235}
