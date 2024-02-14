@@ -10,6 +10,11 @@ namespace CryptoQuest.UI.Popups.Sagas
     {
         protected override void HandleAction(ResponseWithError ctx)
         {
+#if UNITY_EDITOR
+            // I return early on this because the popup is really annoying in editor
+            // Remove this when you want to test error popups in editor
+            return;
+#endif
             var exception = ctx.RequestException;
 
             if (exception is AggregateException aggregateException)
