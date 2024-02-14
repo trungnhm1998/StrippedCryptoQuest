@@ -1319,7 +1319,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Position: {x: 28.021088, y: -44.326893, z: 0}
   Template:
-    Position: {x: 28.021088, y: -44.059116, z: 0}
+    Position: {x: 28.021088, y: -44.326893, z: 0}
 --- !u!114 &-1154964757203616207
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1803,7 +1803,25 @@ MonoBehaviour:
       m_RotationOrder: 4
     m_MixOutCurve:
       serializedVersion: 2
-      m_Curve: []
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
@@ -3658,11 +3676,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 826ceb9ed908420c89db4316f386df6e, type: 3}
   m_Name: YarnQuestNodePlayableAsset
   m_EditorClassIdentifier: 
-  _yarnDialogWithQuest: {fileID: 11400000, guid: 13856e03375ca2041be0c89c43f0af75, type: 2}
+  _yarnDialogWithQuest: {fileID: 11400000, guid: 043f9ccb115a4234b9bff7c9286bc31d, type: 2}
   _template:
     YarnNodeName: Start
     PauseTimelineOnClipEnds: 0
-    <YarnDialog>k__BackingField: {fileID: 11400000, guid: 13856e03375ca2041be0c89c43f0af75, type: 2}
+    <YarnDialog>k__BackingField: {fileID: 11400000, guid: 043f9ccb115a4234b9bff7c9286bc31d, type: 2}
 --- !u!114 &8488588560188139748
 MonoBehaviour:
   m_ObjectHideFlags: 1
