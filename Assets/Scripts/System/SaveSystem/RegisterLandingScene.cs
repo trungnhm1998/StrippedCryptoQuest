@@ -16,7 +16,7 @@ namespace CryptoQuest.System.SaveSystem
         [SerializeField] private MapPathSO _landingMapPath;
         [SerializeField] private VoidEventChannelSO _forceSaveEvent;
 
-        private void Awake()
+        private void Start()
         {
             _saveSystem.SaveData[Key] = _landingScene.Guid;
             _pathStorage.LastTakenPath = _landingMapPath;
