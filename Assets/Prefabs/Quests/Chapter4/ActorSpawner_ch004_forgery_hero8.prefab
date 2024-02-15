@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 6788910858970687995}
   - component: {fileID: 4093130934617841976}
+  - component: {fileID: 8192177462687239387}
+  - component: {fileID: 8818157845394939186}
   m_Layer: 0
   m_Name: ActorSpawner_ch004_forgery_hero8
   m_TagString: Untagged
@@ -51,6 +53,49 @@ MonoBehaviour:
   _actorDef: {fileID: 11400000, guid: c4dd88078d23cc1408e8495cf6bd1b4c, type: 2}
   _actorSpawnSettingSO: {fileID: 11400000, guid: 2063cea472ee83b40bf5cc6f844cfd25, type: 2}
   _actorDeSpawnSettingSO: {fileID: 11400000, guid: ce50fc91139325b40b3230ab74f8237a, type: 2}
+--- !u!114 &8192177462687239387
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4377640759608931618}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da6fef313009fe54cbdaff22ae0bd70e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _questCompletedEventChannelSo: {fileID: 11400000, guid: d1320590a1ab68e4389435932acb3474, type: 2}
+  _questToCheck: {fileID: 11400000, guid: 269365e665055c24a9386c7c69d00855, type: 2}
+  _onQuestCompleted:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8818157845394939186}
+        m_TargetAssemblyTypeName: CryptoQuest.Gameplay.Ship.ShipBusStateModifier,
+          IndiGames.CryptoQuest
+        m_MethodName: SetBusState
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &8818157845394939186
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4377640759608931618}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7839768975b40ea49a3aa4a02af017db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _shipBus: {fileID: 11400000, guid: 312b6b19365a1864b9390012b99f669d, type: 2}
 --- !u!1 &4613403891679985163
 GameObject:
   m_ObjectHideFlags: 0
