@@ -36,6 +36,7 @@ namespace CryptoQuest.UI.Tooltips.Equipment
         [SerializeField] private GameObject _conditionalHolder;
         [SerializeField] private GameObject _conditionalSkillPrefab;
         [SerializeField] private RectTransform _conditionalSkillsContainer;
+        [SerializeField] private UIRequiredLv _requiredLvUI;
 
         protected IEquipment _equipment;
 
@@ -73,6 +74,7 @@ namespace CryptoQuest.UI.Tooltips.Equipment
 
             _lvl.text = string.Format(_levelTextFormat, _equipment.Level, _equipment.Data.MaxLevel);
             _uiStars.SetStars(_equipment.Data.Stars);
+            _requiredLvUI.SetRequiredLevel(_equipment.Data.RequiredCharacterLevel);
         }
 
         protected virtual void SetupStats()

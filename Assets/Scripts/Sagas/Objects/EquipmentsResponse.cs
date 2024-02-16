@@ -89,6 +89,7 @@ namespace CryptoQuest.Sagas.Objects
         public string groupId;
         public int star;
         public int evoLv;
+        public int requiredLv;
         public int restrictedLv;
         public int price;
         public int sellingPrice;
