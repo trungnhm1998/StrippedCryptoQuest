@@ -97,7 +97,8 @@ namespace CryptoQuest.BlackSmith.UpgradeStone.States
             List<IMagicStone> filteredStoneLists = new();
             foreach (var stone in stoneLists)
             {
-                if (stone.Level == stoneToUpgrade.Level) filteredStoneLists.Add(stone);
+                if (!stone.IsEqual(stoneToUpgrade)) continue;
+                filteredStoneLists.Add(stone);
             }
 
 

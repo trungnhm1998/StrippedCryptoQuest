@@ -55,8 +55,10 @@ namespace CryptoQuest.BlackSmith.UpgradeStone.UI
             StartCoroutine(CoSelectFirstButton());
         }
 
+        private const float ERROR_PRONE_DELAY = 0.1f;
         private IEnumerator CoSelectFirstButton()
         {
+            yield return new WaitForSeconds(ERROR_PRONE_DELAY);
             foreach (var item in _cachedItems)
             {
                 if (!item.Button.interactable || !item.Button.gameObject.activeSelf) continue;
@@ -102,16 +104,9 @@ namespace CryptoQuest.BlackSmith.UpgradeStone.UI
         {
             foreach (var item in _cachedItems.ToList())
             {
-                if (exceptionUI != null && IsSameStone(item.MagicStone, exceptionUI.MagicStone)) continue;
+                if (exceptionUI != null && item.MagicStone.IsEqual(exceptionUI.MagicStone)) continue;
                 _itemPool.Release(item);
             }
-        }
-
-        private bool IsSameStone(IMagicStone cachedStone, IMagicStone stoneSelected)
-        {
-            return cachedStone.Definition == stoneSelected.Definition && cachedStone.Level == stoneSelected.Level &&
-                   cachedStone.Passives[0].Context.SkillInfo.Id == stoneSelected.Passives[0].Context.SkillInfo.Id &&
-                   cachedStone.Passives[1].Context.SkillInfo.Id == stoneSelected.Passives[1].Context.SkillInfo.Id;
         }
 
         private void OnInspectItem(UIUpgradableStone ui)

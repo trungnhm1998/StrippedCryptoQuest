@@ -16,5 +16,6 @@ namespace CryptoQuest.Item.MagicStone
         public PassiveAbility[] Passives => Array.Empty<PassiveAbility>();
 
         public bool IsValid() => Definition != null;
+        public bool IsEqual(IMagicStone other) => false;
     }
 }
