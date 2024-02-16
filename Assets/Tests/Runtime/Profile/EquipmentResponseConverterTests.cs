@@ -35,7 +35,7 @@ namespace CryptoQuest.Tests.Runtime.Profile
             Assert.AreEqual(equipmentResponse.id, equipment.Id);
             Assert.AreEqual(equipmentResponse.equipmentId, equipment.Data.ID);
             Assert.AreEqual(equipmentResponse.star, equipment.Data.Stars);
-            Assert.AreEqual(equipmentResponse.restrictedLv, equipment.Data.RequiredCharacterLevel);
+            Assert.AreEqual(equipmentResponse.requiredLv, equipment.Data.RequiredCharacterLevel);
             Assert.AreEqual(equipmentResponse.rarityId, equipment.Data.Rarity.ID);
 
             var frameCount = 0;

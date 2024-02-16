@@ -68,7 +68,7 @@ namespace CryptoQuest.Sagas.Equipment
                 ID = response.equipmentId,
                 Rarity = _rarities.FirstOrDefault(rarity => rarity.ID == response.rarityId),
                 Stars = response.star,
-                RequiredCharacterLevel = response.restrictedLv,
+                RequiredCharacterLevel = response.requiredLv,
                 MinLevel = response.minLv,
                 MaxLevel = response.maxLv,
                 ValuePerLvl = response.valuePerLv,
