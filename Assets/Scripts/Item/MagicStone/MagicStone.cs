@@ -12,6 +12,8 @@ namespace CryptoQuest.Item.MagicStone
         int AttachEquipmentId { get; set; }
         PassiveAbility[] Passives { get; }
         bool IsValid();
+
+        bool IsEqual(IMagicStone other);
     }
 
     [Serializable]
@@ -36,6 +38,13 @@ namespace CryptoQuest.Item.MagicStone
         public bool IsValid()
         {
             return Data != null && Data.Def != null;
+        }
+
+        public bool IsEqual(IMagicStone other)
+        {
+            return Definition == other.Definition && Level == other.Level && Passives.Length == other.Passives.Length
+                && Passives[0].Context.SkillInfo.Id == other.Passives[0].Context.SkillInfo.Id
+                && Passives[1].Context.SkillInfo.Id == other.Passives[1].Context.SkillInfo.Id;
         }
     }
 }
