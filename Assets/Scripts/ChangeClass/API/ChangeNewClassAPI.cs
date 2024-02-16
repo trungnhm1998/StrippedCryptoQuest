@@ -65,7 +65,7 @@ namespace CryptoQuest.ChangeClass.API
                 .ToYieldInstruction();
             yield return op;
             ActionDispatcher.Dispatch(new ShowLoading(false));
-            ActionDispatcher.Dispatch(new ChangeNewClassDataRespond(op.Result.data.newCharacter));
+            ActionDispatcher.Dispatch(new ChangeNewClassDataResponse(op.Result.data.newCharacter));
         }
     }
 }

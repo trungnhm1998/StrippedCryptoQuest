@@ -40,7 +40,7 @@ namespace CryptoQuest.ChangeClass
         {
             FirstClassMaterialEvent += GetFirstClassMaterial;
             LastClassMaterialEvent += GetLastClassMaterial;
-            _changeClassRequestSuccess = ActionDispatcher.Bind<ChangeNewClassDataRespond>(HandleChangeClassSuccess);
+            _changeClassRequestSuccess = ActionDispatcher.Bind<ChangeNewClassDataResponse>(HandleChangeClassSuccess);
         }
 
         private void OnDisable()
@@ -50,7 +50,7 @@ namespace CryptoQuest.ChangeClass
             ActionDispatcher.Unbind(_changeClassRequestSuccess);
         }
 
-        private void HandleChangeClassSuccess(ChangeNewClassDataRespond obj)
+        private void HandleChangeClassSuccess(ChangeNewClassDataResponse obj)
         {
             _syncData.SetNewClassData(obj.ResponseData, _previewNewClassStatus);
             _initializeCharacter.GetStats(obj.ResponseData);
