@@ -2,6 +2,7 @@
 using CryptoQuest.Inventory.ScriptableObjects;
 using CryptoQuest.Item.Equipment;
 using CryptoQuest.Sagas.Equipment;
+using CryptoQuest.Sagas.MagicStone;
 using CryptoQuest.Sagas.Objects;
 using IndiGames.Core.Common;
 using IndiGames.Core.Events;
@@ -34,6 +35,10 @@ namespace CryptoQuest.Menus.DimensionalBox.Sagas
                 else
                     RemoveEquipment(equipment);
             }
+
+            // Because when transfer equipment with stone, the stone is not attach any more
+            // So we need to fetch again to update the list of stone
+            ActionDispatcher.Dispatch(new FetchProfileMagicStonesAction());
         }
 
         private void AddEquipment(IEquipment equipment)
