@@ -57,8 +57,10 @@ namespace CryptoQuest.Map.CheckPoint
             }
         }
 
+        private const float ERROR_PRONE_DELAY = 0.5f;
         private IEnumerator CoLoadDialogAndShowMessage()
         {
+            yield return new WaitForSeconds(ERROR_PRONE_DELAY);
             yield return GenericDialogController.Instance.CoInstantiate(dialog => _dialog = dialog);
             _gameState.UpdateGameState(EGameState.Dialogue);
             _dialog.WithMessage(_revivalMessage).RequireInput().WithHideCallback(EnableMapInput).Show();
