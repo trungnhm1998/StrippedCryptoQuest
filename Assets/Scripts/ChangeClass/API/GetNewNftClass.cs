@@ -25,11 +25,11 @@ namespace CryptoQuest.ChangeClass.API
         }
     }
 
-    public class ChangeNewClassDataRespond : ActionBase
+    public class ChangeNewClassDataResponse : ActionBase
     {
         public NewCharacter ResponseData;
 
-        public ChangeNewClassDataRespond(NewCharacter response)
+        public ChangeNewClassDataResponse(NewCharacter response)
         {
             ResponseData = response;
         }

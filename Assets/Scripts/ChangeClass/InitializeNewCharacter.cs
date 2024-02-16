@@ -56,6 +56,8 @@ namespace CryptoQuest.ChangeClass
                 }
             }
 
+            InitializeRandomValue(response, ref initialAttributes);
+
             var stats = new StatsDef
             {
                 MaxLevel = 0,
@@ -63,6 +65,21 @@ namespace CryptoQuest.ChangeClass
             };
             _heroSpec.Stats = stats;
             BaseStats(response);
+        }
+
+        private void InitializeRandomValue(API.NewCharacter response,
+            ref Dictionary<AttributeScriptableObject, CappedAttributeDef> initialAttributes)
+        {
+            foreach (var fieldInfo in _fields)
+            {
+                var fieldName = fieldInfo.Name;
+                if (!fieldName.Contains("add")) continue;
+                if (_lookupAttribute.TryGetValue(fieldName, out var attributeSO) == false) continue;
+                var value = (float)fieldInfo.GetValue(response);
+                if (!initialAttributes.TryGetValue(attributeSO, out var def)) continue;
+                def.RandomValue = value;
+                initialAttributes[attributeSO] = def;
+            }
         }
 
         private void BaseStats(API.NewCharacter response)
