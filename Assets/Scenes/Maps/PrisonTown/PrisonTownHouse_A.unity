@@ -294,11 +294,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -2122207234586389093, guid: dabb4d17af24e4d4db1c05a202ff617d, type: 3}
       propertyPath: m_SortingLayer
-      value: 3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -2122207234586389093, guid: dabb4d17af24e4d4db1c05a202ff617d, type: 3}
       propertyPath: m_SortingLayerID
-      value: 1569843687
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4354391732402288074, guid: dabb4d17af24e4d4db1c05a202ff617d, type: 3}
       propertyPath: m_RootOrder
@@ -348,6 +348,46 @@ PrefabInstance:
       propertyPath: m_Name
       value: 26_A
       objectReference: {fileID: 0}
+    - target: {fileID: 6516492445802656878, guid: dabb4d17af24e4d4db1c05a202ff617d, type: 3}
+      propertyPath: m_PolygonShapes.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6516492445802656878, guid: dabb4d17af24e4d4db1c05a202ff617d, type: 3}
+      propertyPath: m_PolygonShapes.Array.data[6].m_Points.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6516492445802656878, guid: dabb4d17af24e4d4db1c05a202ff617d, type: 3}
+      propertyPath: m_PolygonShapes.Array.data[6].m_Points.Array.data[0].x
+      value: 5.7597656
+      objectReference: {fileID: 0}
+    - target: {fileID: 6516492445802656878, guid: dabb4d17af24e4d4db1c05a202ff617d, type: 3}
+      propertyPath: m_PolygonShapes.Array.data[6].m_Points.Array.data[0].y
+      value: -10.759766
+      objectReference: {fileID: 0}
+    - target: {fileID: 6516492445802656878, guid: dabb4d17af24e4d4db1c05a202ff617d, type: 3}
+      propertyPath: m_PolygonShapes.Array.data[6].m_Points.Array.data[1].x
+      value: 5.7597656
+      objectReference: {fileID: 0}
+    - target: {fileID: 6516492445802656878, guid: dabb4d17af24e4d4db1c05a202ff617d, type: 3}
+      propertyPath: m_PolygonShapes.Array.data[6].m_Points.Array.data[1].y
+      value: -11.299805
+      objectReference: {fileID: 0}
+    - target: {fileID: 6516492445802656878, guid: dabb4d17af24e4d4db1c05a202ff617d, type: 3}
+      propertyPath: m_PolygonShapes.Array.data[6].m_Points.Array.data[2].x
+      value: 3.8398438
+      objectReference: {fileID: 0}
+    - target: {fileID: 6516492445802656878, guid: dabb4d17af24e4d4db1c05a202ff617d, type: 3}
+      propertyPath: m_PolygonShapes.Array.data[6].m_Points.Array.data[2].y
+      value: -11.299805
+      objectReference: {fileID: 0}
+    - target: {fileID: 6516492445802656878, guid: dabb4d17af24e4d4db1c05a202ff617d, type: 3}
+      propertyPath: m_PolygonShapes.Array.data[6].m_Points.Array.data[3].x
+      value: 3.8398438
+      objectReference: {fileID: 0}
+    - target: {fileID: 6516492445802656878, guid: dabb4d17af24e4d4db1c05a202ff617d, type: 3}
+      propertyPath: m_PolygonShapes.Array.data[6].m_Points.Array.data[3].y
+      value: -10.759766
+      objectReference: {fileID: 0}
     - target: {fileID: 6596013344941618589, guid: dabb4d17af24e4d4db1c05a202ff617d, type: 3}
       propertyPath: m_SortingLayer
       value: 0
@@ -359,7 +399,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4580810859898712849, guid: dabb4d17af24e4d4db1c05a202ff617d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1407621110}
   m_SourcePrefab: {fileID: -2695619058785784247, guid: dabb4d17af24e4d4db1c05a202ff617d, type: 3}
 --- !u!4 &387437378 stripped
 Transform:
@@ -596,6 +639,56 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1445938002240597384, guid: 1d3e65446eeb0f8469f22e00c1d2daff, type: 3}
   m_PrefabInstance: {fileID: 1317962701}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1407621106 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4580810859898712849, guid: dabb4d17af24e4d4db1c05a202ff617d, type: 3}
+  m_PrefabInstance: {fileID: 387437377}
+  m_PrefabAsset: {fileID: 0}
+--- !u!61 &1407621110
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1407621106}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 5.27, y: -9.13}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 2.77, y: 0.72}
+  m_EdgeRadius: 0
 --- !u!1 &1641781705
 GameObject:
   m_ObjectHideFlags: 0
@@ -864,11 +957,11 @@ PrefabInstance:
       objectReference: {fileID: 175173877}
     - target: {fileID: 6640117740706423746, guid: 236c0a519355ba944849d552595f8baf, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 16.397696
+      value: 13.6
       objectReference: {fileID: 0}
     - target: {fileID: 6640117740706423746, guid: 236c0a519355ba944849d552595f8baf, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -53.549995
+      value: -20.999996
       objectReference: {fileID: 0}
     - target: {fileID: 8004070437169698952, guid: 236c0a519355ba944849d552595f8baf, type: 3}
       propertyPath: m_Name
