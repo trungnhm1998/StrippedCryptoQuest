@@ -69,10 +69,18 @@ MonoBehaviour:
     m_LocalVariables: []
   <SuccessRate>k__BackingField: 50
   <TargetType>k__BackingField: {fileID: 11400000, guid: 22b78d0c574a9b64984629f7aedc22ea, type: 2}
+  <Conditions>k__BackingField:
+  - rid: 7066461607497564193
   _effects:
   - {fileID: 11400000, guid: c334df55b8513e348b8eb1220b92aab9, type: 2}
   <CancelEffectWithTags>k__BackingField:
   - {fileID: 11400000, guid: c60a47c5f453a024d8657f7b3cafc7cc, type: 2}
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 7066461607497564193
+      type: {class: PassAllTags, ns: CryptoQuest.AbilitySystem.Abilities.Conditions, asm: IndiGames.CryptoQuest}
+      data:
+        _acceptTags:
+        - {fileID: 11400000, guid: c60a47c5f453a024d8657f7b3cafc7cc, type: 2}
+        _denyTags: []
