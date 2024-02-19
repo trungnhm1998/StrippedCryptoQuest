@@ -32,8 +32,11 @@ namespace CryptoQuest.UI.Dialogs.RewardDialog
         [field: SerializeField] public UIRewardItem RewardItemPrefab { get; private set; }
         [field: SerializeField] private RewardScroll _scroll;
         [field: SerializeField] private InputAction _inputAction;
+        // Prevent some action that close dialog immediately
+        [field: SerializeField] private float _delayCanHide = 1f;
 
         private RewardDialogData _rewardDialogData;
+        private bool _canHide;
 
         public void OnCloseButtonPressed() => Hide();
 
@@ -46,6 +49,9 @@ namespace CryptoQuest.UI.Dialogs.RewardDialog
         public override void Show()
         {
             base.Show();
+
+            _canHide = false;
+            Invoke(nameof(SetCanHide), _delayCanHide);
 
             ActionDispatcher.Dispatch(new PauseCutsceneAction());
             _inputAction.Enable();
@@ -61,8 +67,14 @@ namespace CryptoQuest.UI.Dialogs.RewardDialog
             DisplayItemsReward();
         }
 
+        private void SetCanHide()
+        {
+            _canHide = true;
+        }
+
         public override void Hide()
         {
+            if (!_canHide) return;
             base.Hide();
 
             ActionDispatcher.Dispatch(new PlayCachedBgmAction());
