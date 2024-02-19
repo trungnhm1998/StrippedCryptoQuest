@@ -68,6 +68,7 @@ namespace CryptoQuest.UI.Title
 
         private bool IsNameValid(string input)
         {
+            if (string.IsNullOrEmpty(input)) return false;
             var validationCode = _nameValidator.Validate(input);
             _validationStringEvent.StringReference.TableEntryReference = VALIDATION_TABLE_ENTRY + (int)validationCode;
 
