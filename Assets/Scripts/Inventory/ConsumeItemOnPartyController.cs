@@ -21,7 +21,7 @@ namespace CryptoQuest.Inventory
                 var hero = slot.HeroBehaviour;
                 var spec = hero.AbilitySystem.GiveAbility<ConsumableAbilitySpec>(item.Ability);
 
-                if (spec.CanActiveAbility() && !ableToUseOnAtLeastOneHero)
+                if (spec.CanActiveAbility())
                 {
                     ableToUseOnAtLeastOneHero = true;
                     Debug.Log($"Consuming {item} on {hero.GetInstanceID()}");
