@@ -35,7 +35,7 @@ MonoBehaviour:
       Category: {fileID: 0}
       Cost: 3
       UsageScenarioSO: 1
-      VfxId: 0
+      VfxId: -1
       SkillParameters:
         Element: {fileID: 0}
         BasePower: 50
@@ -44,11 +44,11 @@ MonoBehaviour:
         SkillPowerThreshold: 200
         PowerValueAdded: 0.2
         PowerValueReduced: 0.2
-        IsFixed: 0
+        IsFixed: 1
         ContinuesTurn: 0
         EffectType: 2
         TargetAttribute:
-          Attribute: {fileID: 0}
+          Attribute: {fileID: 11400000, guid: 24a1586ced727e44589346aa7eb0c294, type: 2}
           CaptureFrom: 1
   _skillName:
     m_TableReference:
@@ -70,7 +70,9 @@ MonoBehaviour:
     m_LocalVariables: []
   <SuccessRate>k__BackingField: 100
   <TargetType>k__BackingField: {fileID: 11400000, guid: 46a0f0c64b7c6eb4584f5549f7e03dbc, type: 2}
-  _effects: []
+  <Conditions>k__BackingField: []
+  _effects:
+  - {fileID: 11400000, guid: 4afd9964bf39a7045a13b89a5af7e369, type: 2}
   references:
     version: 2
     RefIds: []
