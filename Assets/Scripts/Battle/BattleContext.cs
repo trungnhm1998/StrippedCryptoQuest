@@ -83,7 +83,7 @@ namespace CryptoQuest.Battle
         {
             AliveEnemies = Enemies.Where(enemy => enemy.IsValidAndAlive()).ToList();
             AliveHeroes = PlayerParty.Slots
-                .Where(slot => slot.HeroBehaviour.IsValidAndAlive())
+                .Where(slot => slot.HeroBehaviour.IsValidAndAlive() && !slot.HeroBehaviour.HasTag(TagsDef.DisableActionInfinity))
                 .Select(slot => slot.HeroBehaviour).ToList();
         }
 
