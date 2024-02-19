@@ -183,18 +183,18 @@ namespace CryptoQuest.AbilitySystem.EffectActions
                     OpType = modifier.OperationType,
                     Magnitude = Spec.GetModifierMagnitude(index)
                 };
-                InternalExecuteMod(Spec, evalData);
                 // TODO: Refactor DRY
                 OnDamageOverTimeTaken(evalData);
+                InternalExecuteMod(Spec, evalData);
             }
 
             foreach (var evalData in ComputedModifiers)
             {
-                InternalExecuteMod(Spec, evalData);
-                
                 // TODO: Refactor DRY
+                // Because internal execute can cause character dead so
+                // The damage log is shown after dead log
                 OnDamageOverTimeTaken(evalData);
-
+                InternalExecuteMod(Spec, evalData);
             }
         }
 
