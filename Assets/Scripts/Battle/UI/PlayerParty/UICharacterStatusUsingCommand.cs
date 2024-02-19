@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using CryptoQuest.AbilitySystem;
 using CryptoQuest.Battle.Events;
 using CryptoQuest.Battle.Presenter.Commands;
@@ -58,7 +59,15 @@ namespace CryptoQuest.Battle.UI.PlayerParty
 
         protected override void TagRemoved(params TagScriptableObject[] baseTags)
         {
-            var command = new CharacterStatusIconCommand(this, baseTags, false);
+            var removeTags = new List<TagScriptableObject>();
+            // Tag remove is called but there still tag in system
+            foreach (var tag in baseTags)
+            {
+                if (CharacterTagSystem.HasTag(tag)) continue;
+                removeTags.Add(tag);
+            }
+
+            var command = new CharacterStatusIconCommand(this, removeTags.ToArray(), false);
             BattleEventBus.RaiseEvent<EnqueuePresentCommandEvent>(
                 new EnqueuePresentCommandEvent(command));
         }
