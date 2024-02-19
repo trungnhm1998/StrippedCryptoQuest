@@ -58,7 +58,7 @@ namespace CryptoQuest.Gameplay.Encounter
                 
             }
 
-            var finalBuff = 1 / ((1 - Mathf.Clamp01(passiveBuff)) * (1 - Mathf.Clamp01(externalBuff)));
+            var finalBuff = 1 / ((1 - Mathf.Clamp01(-passiveBuff)) * (1 - Mathf.Clamp01(-externalBuff)));
             Debug.Log($"EncounterBuff:: Final buff value {finalBuff}");
             OnEncounterBuffApplied(finalBuff);
         }

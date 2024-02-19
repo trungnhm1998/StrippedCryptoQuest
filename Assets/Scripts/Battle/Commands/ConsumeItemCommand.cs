@@ -34,9 +34,9 @@ namespace CryptoQuest.Battle.Commands
                     ItemInfo = _selectedItem,
                     Target = target,
                 });
-                Debug.Log($"{_owner.DisplayName} using {_selectedItem.Data.name} on {target.DisplayName}");
                 var spec = target.AbilitySystem.GiveAbility<ConsumableAbilitySpec>(_selectedItem.Data.Ability);
-                if (spec.CanActiveAbility() && ableToUseOnAtLeastOneHero == false) ableToUseOnAtLeastOneHero = true;
+                if (spec.CanActiveAbility()) ableToUseOnAtLeastOneHero = true;
+                Debug.Log($"{_owner.DisplayName} using {_selectedItem.Data.name} on {target.DisplayName}");
                 spec.TryActiveAbility(_selectedItem.Data);
             }
 
