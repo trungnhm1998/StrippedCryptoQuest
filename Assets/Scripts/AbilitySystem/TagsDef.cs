@@ -13,9 +13,9 @@ namespace CryptoQuest.AbilitySystem
         public static TagScriptableObject Buff { get; private set; }
         public static TagScriptableObject DeBuff { get; private set; }
         public static TagScriptableObject DamageOnce { get; private set; }
-        public static TagScriptableObject Absorb { get; private set; }
         public static TagScriptableObject SealMagic { get; private set; }
         public static TagScriptableObject SealPhysic { get; private set; }
+        public static TagScriptableObject DisableActionInfinity { get; private set; }
 
         [field: SerializeField] public TagScriptableObject AbnormalTag { get; private set; }
         [field: SerializeField] public TagScriptableObject DeadTag { get; private set; }
@@ -25,9 +25,9 @@ namespace CryptoQuest.AbilitySystem
         [field: SerializeField] public TagScriptableObject DamageOnceTag { get; private set; }
         [field: SerializeField] public TagScriptableObject BuffTag { get; private set; }
         [field: SerializeField] public TagScriptableObject DeBuffTag { get; private set; }
-        [field: SerializeField] public TagScriptableObject AbsorbTag { get; private set; }
         [field: SerializeField] public TagScriptableObject SealMagicTag { get; private set; }
         [field: SerializeField] public TagScriptableObject SealPhysicTag { get; private set; }
+        [field: SerializeField] public TagScriptableObject DisableActionInfinityTag { get; private set; }
 
         private void OnEnable()
         {
@@ -39,9 +39,9 @@ namespace CryptoQuest.AbilitySystem
             Buff = BuffTag;
             DeBuff = DeBuffTag;
             DamageOnce = DamageOnceTag;
-            Absorb = AbsorbTag;
             SealMagic = SealMagicTag;
             SealPhysic = SealPhysicTag;
+            DisableActionInfinity = DisableActionInfinityTag;
         }
     }
 }
