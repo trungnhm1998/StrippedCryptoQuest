@@ -28,35 +28,22 @@ namespace CryptoQuest.Ocarina
         [SerializeField] private FadeConfigSO _fadeConfig;
         [SerializeField] private Color _transitionColor = Color.black;
 
-        [Header("Listen")]
-        [SerializeField] private VoidEventChannelSO _onSceneLoadedEventChannel;
+        [Header("Listen")] [SerializeField] private VoidEventChannelSO _onSceneLoadedEventChannel;
 
         [SerializeField] private RegisterTownToOcarinaEventChannelSO _registerTownEvent;
 
-        [Header("Raise")]
-        [SerializeField] private LoadSceneEventChannelSO _requestLoadMapEvent;
+        [Header("Raise")] [SerializeField] private LoadSceneEventChannelSO _requestLoadMapEvent;
 
         [SerializeField] private UnityEvent _onOcarinaTriggered;
 
-        [Header("Ocarina UI")]
-        [SerializeField] private GameObject _ocarinaUI;
+        [Header("Ocarina UI")] [SerializeField]
+        private GameObject _ocarinaUI;
 
         private readonly List<GoFrom> _cachedDestinations = new();
 
         private void Awake()
         {
-            _registerTownEvent.EventRaised += RegisterTown;
             _ocarinaUI.SetActive(false);
-        }
-
-        private void OnDestroy()
-        {
-            _registerTownEvent.EventRaised -= RegisterTown;
-        }
-
-        private void RegisterTown(OcarinaEntrance location)
-        {
-            _ocarinaData.Locations.Add(location);
         }
 
         public void StartTeleportSequence(MapPathSO path)

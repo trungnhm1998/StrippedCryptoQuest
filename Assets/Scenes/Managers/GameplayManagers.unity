@@ -1713,6 +1713,58 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5501960068818661884, guid: ceb8d725c7c84b24d90703a74758e88d, type: 3}
   m_PrefabInstance: {fileID: 1448873403}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1518932088
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1518932090}
+  - component: {fileID: 1518932089}
+  m_Layer: 0
+  m_Name: OcarinaLocationsController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1518932089
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1518932088}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c45705786be540959f3291adef06d73c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _saveSo: {fileID: 11400000, guid: 5c9856a90c199bf4e89581771701754b, type: 2}
+  _ocarinaLocations: {fileID: 11400000, guid: e1a8fc228b0646346b1744f53d19c13b, type: 2}
+  _transferLocations: {fileID: 11400000, guid: ba0ff12218d002748b25834af70cfcf2, type: 2}
+  _conditionalOcarinaLocations: {fileID: 11400000, guid: e14df16edd597be4980abf8806a664bb, type: 2}
+  _conditionalTransferLocations: {fileID: 11400000, guid: 8b306cf3fa7dffc45bc59ec19893724b, type: 2}
+  _loadSceneEvent: {fileID: 11400000, guid: 932ea26428d5f4c4f8bdfd48ebc80873, type: 2}
+  _registerOcarinaTown: {fileID: 11400000, guid: 3ea2dceec7e7a764da0d5ccbd12c59be, type: 2}
+  _registerTransferTown: {fileID: 11400000, guid: a4524aa1b0e4e344a8e781c7d8411214, type: 2}
+--- !u!4 &1518932090
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1518932088}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 33.20895, y: -19.886333, z: -0.23290461}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1546054423
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3547,6 +3599,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 779570723721215504, guid: 761b80542e63d284b98d036400c94023, type: 3}
+      propertyPath: managedReferences[-2]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 779570723721215504, guid: 761b80542e63d284b98d036400c94023, type: 3}
+      propertyPath: _progressionSavers.Array.size
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 779570723721215504, guid: 761b80542e63d284b98d036400c94023, type: 3}
+      propertyPath: _progressionSavers.Array.data[7]
+      value: 6954124506256375844
+      objectReference: {fileID: 0}
+    - target: {fileID: 779570723721215504, guid: 761b80542e63d284b98d036400c94023, type: 3}
+      propertyPath: managedReferences[6954124506256375844]
+      value: IndiGames.CryptoQuest CryptoQuest.System.SaveSystem.Savers.OcarinaDestinationSaver
+      objectReference: {fileID: 0}
+    - target: {fileID: 779570723721215504, guid: 761b80542e63d284b98d036400c94023, type: 3}
+      propertyPath: managedReferences[6954124506256375844]._saveSo
+      value: 
+      objectReference: {fileID: 11400000, guid: 5c9856a90c199bf4e89581771701754b, type: 2}
     - target: {fileID: 2778439153741272122, guid: 761b80542e63d284b98d036400c94023, type: 3}
       propertyPath: m_Name
       value: ProgressionManagers
@@ -3612,6 +3684,10 @@ PrefabInstance:
       propertyPath: _skillMenu
       value: 
       objectReference: {fileID: 4525518738145489080}
+    - target: {fileID: 1197050108460157464, guid: 9d92b4e45a5c6d846b162a478aef2bab, type: 3}
+      propertyPath: _registerTown
+      value: 
+      objectReference: {fileID: 11400000, guid: a4524aa1b0e4e344a8e781c7d8411214, type: 2}
     - target: {fileID: 1197050108460157464, guid: 9d92b4e45a5c6d846b162a478aef2bab, type: 3}
       propertyPath: _teleportEvent.m_PersistentCalls.m_Calls.Array.size
       value: 2
@@ -4905,3 +4981,4 @@ SceneRoots:
   - {fileID: 1140828952}
   - {fileID: 279603953}
   - {fileID: 1653884311}
+  - {fileID: 1518932090}

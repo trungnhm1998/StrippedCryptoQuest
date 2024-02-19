@@ -4,6 +4,8 @@ using CryptoQuest.Input;
 using CryptoQuest.Map;
 using CryptoQuest.Menus.Item.States;
 using CryptoQuest.Menus.TownTransfer;
+using CryptoQuest.Ocarina;
+using CryptoQuest.System.SaveSystem.Loaders;
 using IndiGames.Core.Events;
 using IndiGames.Core.Events.ScriptableObjects;
 using TinyMessenger;
@@ -22,21 +24,24 @@ namespace CryptoQuest.Menus.Skill.UI.TownTransfer
         [SerializeField] private UISkillMenu _skillMenu;
         [SerializeField] private InputMediatorSO _inputMediatorSO;
 
-        [Header("Listen on")]
-        [SerializeField] private VoidEventChannelSO _showTownMenuEvent;
+        [Header("Listen on")] [SerializeField] private VoidEventChannelSO _showTownMenuEvent;
 
 
-        [Header("Raise event on")]
-        [SerializeField] private VoidEventChannelSO _forceCloseMenuEvent;
+        [Header("Raise event on")] [SerializeField]
+        private VoidEventChannelSO _forceCloseMenuEvent;
 
         [SerializeField] private UnityEvent<MapPathSO> _teleportEvent;
         [SerializeField] private UnityEvent _teleportCancel;
+        [SerializeField] private RegisterTownToTransferEventChannelSO _registerTown;
         private TinyMessageSubscriptionToken _triggerTransferAbilityEventToken;
         private bool _isActivateFromAbility = false;
+        private TinyMessageSubscriptionToken _loadLocations;
 
         private void Awake()
         {
             _showTownMenuEvent.EventRaised += Show;
+            _registerTown.EventRaised += RegisterTown;
+            _loadLocations = ActionDispatcher.Bind<DestinationsLoaded>(HandleLoadedDestinations);
             foreach (var town in _transferLocations.Locations)
             {
                 RegisterTown(town);
@@ -46,7 +51,18 @@ namespace CryptoQuest.Menus.Skill.UI.TownTransfer
         private void OnDestroy()
         {
             _showTownMenuEvent.EventRaised -= Show;
+            _registerTown.EventRaised -= RegisterTown;
+            ActionDispatcher.Unbind(_loadLocations);
             DestroyAllChildren();
+        }
+
+        private void HandleLoadedDestinations(DestinationsLoaded _)
+        {
+            for (var index = 0; index < _transferLocations.ConditionalLocations.Count; index++)
+            {
+                var town = _transferLocations.ConditionalLocations[index];
+                RegisterTown(town);
+            }
         }
 
         private void RegisterTown(TownTransferPath town)
