@@ -1,4 +1,5 @@
-﻿using CryptoQuest.Battle.Events;
+﻿using System;
+using CryptoQuest.Battle.Events;
 using IndiGames.GameplayAbilitySystem.TagSystem.ScriptableObjects;
 
 namespace CryptoQuest.Battle.Components
@@ -34,6 +35,8 @@ namespace CryptoQuest.Battle.Components
         {
             foreach (var tagScriptableObject in tagScriptableObjects)
             {
+                // Dont dispatch event if player still affect by this tag
+                if (Character.HasTag(tagScriptableObject)) continue;
                 BattleEventBus.RaiseEvent(new EffectRemovedEvent()
                 {
                     Tag = tagScriptableObject,
