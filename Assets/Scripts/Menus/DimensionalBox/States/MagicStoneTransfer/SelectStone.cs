@@ -8,6 +8,7 @@ namespace CryptoQuest.Menus.DimensionalBox.States.MagicStoneTransfer
     public class SelectStone : ActionState<EMagicStoneState, EStateAction>
     {
         private TransferringMagicStoneStateMachine _fsm;
+        private bool _hasDetailOpened;
 
         public SelectStone(TransferringMagicStoneStateMachine fsm) : base(false)
         {
@@ -17,8 +18,8 @@ namespace CryptoQuest.Menus.DimensionalBox.States.MagicStoneTransfer
             AddAction(EStateAction.OnExecute, OnTransferring);
             AddAction<Vector2>(EStateAction.OnNavigate, NavigateList);
             AddAction(EStateAction.OnReset, ResetSelected);
+            AddAction(EStateAction.OnInteract, ToggleStoneDetailVisibility);
         }
-
 
         public override void OnEnter()
         {
@@ -40,12 +41,14 @@ namespace CryptoQuest.Menus.DimensionalBox.States.MagicStoneTransfer
             _fsm.ToGame = toGame;
 
             _fsm.IngameList.Interactable = _fsm.DBoxList.Interactable = false;
+            HideStoneTooltip();
 
             fsm.RequestStateChange(EMagicStoneState.Confirm);
         }
 
          private void NavigateList(Vector2 axis)
         {
+            HideStoneTooltip();
             switch (axis.x)
             {
                 case 0:
@@ -57,13 +60,33 @@ namespace CryptoQuest.Menus.DimensionalBox.States.MagicStoneTransfer
                     _fsm.IngameList.TryFocus();
                     break;
             }
-        }        private void ResetSelected()
+        }        
+        
+        private void ResetSelected()
         {
+            HideStoneTooltip();
             _fsm.DBoxList.Reset();
             _fsm.IngameList.Reset();
             ActionDispatcher.Dispatch(new FetchProfileMagicStonesAction());
         }
+        
+        private void ToggleStoneDetailVisibility()
+        {
+            _hasDetailOpened = !_hasDetailOpened;
+            _fsm.ShowTooltipEventChannel.RaiseEvent(_hasDetailOpened);
+        }
 
-        private void OnCancel() => fsm.RequestStateChange(EMagicStoneState.Overview);
+        private void HideStoneTooltip()
+        {
+            if(!_hasDetailOpened) return;
+            _hasDetailOpened = false;
+            _fsm.ShowTooltipEventChannel.RaiseEvent(_hasDetailOpened);
+        }
+
+        private void OnCancel() 
+        {
+            HideStoneTooltip();
+            fsm.RequestStateChange(EMagicStoneState.Overview);
+        }
     }
 }

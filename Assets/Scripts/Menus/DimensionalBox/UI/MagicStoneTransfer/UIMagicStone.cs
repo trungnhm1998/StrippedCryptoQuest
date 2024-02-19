@@ -6,11 +6,12 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Localization.Components;
 using UnityEngine.UI;
+using CryptoQuest.Menus.Status.UI.MagicStone;
 using MagicStone = CryptoQuest.Sagas.Objects.MagicStone;
 
 namespace CryptoQuest.Menus.DimensionalBox.UI.MagicStoneTransfer
 {
-    public class UIMagicStone : MonoBehaviour
+    public class UIMagicStone : MonoBehaviour, ITooltipStoneProvider
     {
         [SerializeField] private Image _icon;
         [SerializeField] private TMP_Text _nameText;

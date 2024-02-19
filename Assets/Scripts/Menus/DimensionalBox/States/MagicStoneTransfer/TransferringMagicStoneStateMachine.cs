@@ -3,6 +3,7 @@ using CryptoQuest.Input;
 using CryptoQuest.Menus.DimensionalBox.UI.MagicStoneTransfer;
 using CryptoQuest.Sagas.MagicStone;
 using CryptoQuest.Sagas.Objects;
+using CryptoQuest.UI.Tooltips.Events;
 using FSM;
 using IndiGames.Core.Events;
 using TinyMessenger;
@@ -22,6 +23,7 @@ namespace CryptoQuest.Menus.DimensionalBox.States.MagicStoneTransfer
         private bool _hasFocus;
         public InputMediatorSO Input => _rootFsm.Panel.Input;
         public TransferMagicStonesPanel Panel => _rootFsm.Panel.TransferMagicStonesPanel;
+        public ShowTooltipEvent ShowTooltipEventChannel => Panel.ShowTooltipEventChannel;
         public UIMagicStoneList IngameList => Panel.IngameList;
         public UIMagicStoneList DBoxList => Panel.InboxList;
 
