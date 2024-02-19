@@ -143,12 +143,17 @@ namespace CryptoQuest.Tavern.UI
             if (hasNoSelectedItem) return;
 
             _merchantInput.NavigateEvent -= SwitchFocusPanel;
+            _merchantInput.ResetEvent -= Reset;
             _inWallet.Interactable = false;
             _inGame.Interactable = false;
 
             _confirmDialog
                 .WithYesCallback(Transfer)
-                .WithNoCallback(() => { _merchantInput.NavigateEvent += SwitchFocusPanel; })
+                .WithNoCallback(() => 
+                { 
+                    _merchantInput.NavigateEvent += SwitchFocusPanel; 
+                    _merchantInput.ResetEvent += Reset;
+                })
                 .SetMessage(_confirmMessage)
                 .WithHideCallback(() =>
                 {
