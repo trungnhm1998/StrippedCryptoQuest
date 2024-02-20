@@ -32,7 +32,7 @@ namespace CryptoQuest.Ocarina
             _loadSceneEvent.LoadingRequested -= OnSceneLoaded;
         }
 
-        private void Awake()
+        private void Start()
         {
             foreach (var conditionalOcarinaLocation in _conditionalOcarinaLocations.Locations)
             {
