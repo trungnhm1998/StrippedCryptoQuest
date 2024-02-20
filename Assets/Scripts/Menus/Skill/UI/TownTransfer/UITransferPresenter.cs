@@ -96,7 +96,7 @@ namespace CryptoQuest.Menus.Skill.UI.TownTransfer
         {
             _forceCloseMenuEvent.RaiseEvent();
             _teleportEvent.Invoke(location);
-            Hide();
+            _content.SetActive(false);
         }
 
         private void DestroyAllChildren()
