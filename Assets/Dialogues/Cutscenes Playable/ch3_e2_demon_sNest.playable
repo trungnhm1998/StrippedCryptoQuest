@@ -183,10 +183,10 @@ MonoBehaviour:
   m_Children: []
   m_Clips:
   - m_Version: 1
-    m_Start: 5.419376196712254
+    m_Start: 6.333333333333337
     m_ClipIn: 0
     m_Asset: {fileID: -3403820488155338951}
-    m_Duration: 0.1306238032877447
+    m_Duration: 0.1833333333333309
     m_TimeScale: 1
     m_ParentTrack: {fileID: -7067043372351369166}
     m_EaseInDuration: 0
@@ -250,7 +250,7 @@ MonoBehaviour:
     m_PreExtrapolationMode: 0
     m_PostExtrapolationTime: 0
     m_PreExtrapolationTime: 0
-    m_DisplayName: (0.00, 0.00, 0.00)
+    m_DisplayName: (7.52, -8.71, 0.00)
   m_Markers:
     m_Objects: []
 --- !u!114 &-6769663103610749289
@@ -1315,6 +1315,98 @@ MonoBehaviour:
   m_Clips: []
   m_Markers:
     m_Objects: []
+--- !u!114 &-1331592070894080426
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4fd7e0bc468426896e9f1ce54739fbd, type: 3}
+  m_Name: Yarn Quest Node Track Asset
+  m_EditorClassIdentifier: 
+  m_Version: 3
+  m_AnimClip: {fileID: 0}
+  m_Locked: 0
+  m_Muted: 0
+  m_CustomPlayableFullTypename: 
+  m_Curves: {fileID: 0}
+  m_Parent: {fileID: 11400000}
+  m_Children: []
+  m_Clips:
+  - m_Version: 1
+    m_Start: 6.166666666666669
+    m_ClipIn: 0
+    m_Asset: {fileID: 5416989212271168656}
+    m_Duration: 0.16666666666666785
+    m_TimeScale: 1
+    m_ParentTrack: {fileID: -1331592070894080426}
+    m_EaseInDuration: 0
+    m_EaseOutDuration: 0
+    m_BlendInDuration: 0
+    m_BlendOutDuration: 0
+    m_MixInCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_MixOutCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_BlendInCurveMode: 0
+    m_BlendOutCurveMode: 0
+    m_ExposedParameterNames: []
+    m_AnimationCurves: {fileID: 0}
+    m_Recordable: 0
+    m_PostExtrapolationMode: 0
+    m_PreExtrapolationMode: 0
+    m_PostExtrapolationTime: 0
+    m_PreExtrapolationTime: 0
+    m_DisplayName: YDQuest_ch3_e2_demon_sNest_BeforeBattle
+  m_Markers:
+    m_Objects: []
 --- !u!114 &-1142533911058368410
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1685,6 +1777,7 @@ MonoBehaviour:
   - {fileID: 8088994949831131330}
   - {fileID: -7288324088276099507}
   - {fileID: 6214317485796170035}
+  - {fileID: -1331592070894080426}
   - {fileID: -5257513959680246345}
   - {fileID: 1318505149594275443}
   - {fileID: -2094836982696552756}
@@ -1881,7 +1974,7 @@ MonoBehaviour:
     m_Start: 1.1833333333333331
     m_ClipIn: 0
     m_Asset: {fileID: -4577142489176932053}
-    m_Duration: 4.983333333333336
+    m_Duration: 5.333333333333334
     m_TimeScale: 1
     m_ParentTrack: {fileID: 1266099658992168199}
     m_EaseInDuration: 0
@@ -1890,25 +1983,7 @@ MonoBehaviour:
     m_BlendOutDuration: -1
     m_MixInCurve:
       serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
+      m_Curve: []
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
@@ -1947,7 +2022,25 @@ MonoBehaviour:
       m_RotationOrder: 4
     m_MixOutCurve:
       serializedVersion: 2
-      m_Curve: []
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
@@ -2051,10 +2144,10 @@ MonoBehaviour:
   m_Children: []
   m_Clips:
   - m_Version: 1
-    m_Start: 5.419376196712254
+    m_Start: 6.333333333333337
     m_ClipIn: 0
     m_Asset: {fileID: 5534826574128700940}
-    m_Duration: 0.2139571366210804
+    m_Duration: 0.1833333333333309
     m_TimeScale: 1
     m_ParentTrack: {fileID: 2467288989657822217}
     m_EaseInDuration: 0
@@ -2692,6 +2785,23 @@ MonoBehaviour:
   _template:
     Transition: {fileID: 11400000, guid: f27642e759a3e0d43bd3055935e84b63, type: 2}
     TransitionEvent: {fileID: 11400000, guid: 88d96a754c9f3d34c864be8e29ba710a, type: 2}
+--- !u!114 &5416989212271168656
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 826ceb9ed908420c89db4316f386df6e, type: 3}
+  m_Name: YarnQuestNodePlayableAsset
+  m_EditorClassIdentifier: 
+  _yarnDialogWithQuest: {fileID: 11400000, guid: b7f11655cf78c0c4e8dcb394e81858d8, type: 2}
+  _template:
+    YarnNodeName: Start
+    PauseTimelineOnClipEnds: 0
+    <YarnDialog>k__BackingField: {fileID: 11400000, guid: b7f11655cf78c0c4e8dcb394e81858d8, type: 2}
 --- !u!114 &5443468259121067426
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3127,7 +3237,7 @@ MonoBehaviour:
     m_Start: 4.416666666666664
     m_ClipIn: 0
     m_Asset: {fileID: 5072238777454397072}
-    m_Duration: 1.1333333333333342
+    m_Duration: 1.2166666666666703
     m_TimeScale: 1
     m_ParentTrack: {fileID: 8088994949831131330}
     m_EaseInDuration: 0
