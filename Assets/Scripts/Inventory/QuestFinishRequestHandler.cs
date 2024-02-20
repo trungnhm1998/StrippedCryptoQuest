@@ -38,11 +38,13 @@ namespace CryptoQuest.Inventory
 
         private void OnSucceed(RewardResponse response)
         {
-            if (response.data.rewards == null) return;
-            var rewards = response.data.rewards;
             AddGold(response.data.rewardGold);
             AddDiamond(response.data.rewardMetad);
             AddExp(response.data.rewardExp);
+            
+            if (response.data.rewards == null) return;
+            var rewards = response.data.rewards;
+
             AddEquipments(rewards.equipments);
             AddItems(rewards.items);
             AddStones(rewards.stones);
