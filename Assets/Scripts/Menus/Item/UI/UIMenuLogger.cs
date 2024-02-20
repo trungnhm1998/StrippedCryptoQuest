@@ -1,5 +1,7 @@
 using System.Collections;
+using CryptoQuest.Quest.Actor.Categories;
 using DG.Tweening;
+using IndiGames.Core.Events.ScriptableObjects;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Localization;
@@ -11,8 +13,20 @@ namespace CryptoQuest.Menus.Item.UI
         [SerializeField] private TMP_Text _text;
         [SerializeField] private GameObject _panel;
         [SerializeField] private float _delayTime = 1f;
+        [SerializeField] private VoidEventChannelSO _clearMenuLoggerEvent;
 
         private Tween _delayTween;
+
+        private void OnEnable()
+        {
+            _clearMenuLoggerEvent.EventRaised += HideLoggerPanel;
+        }
+
+        private void OnDisable()
+        {
+            _clearMenuLoggerEvent.EventRaised -= HideLoggerPanel;
+        }
+
 
         /// <summary>
         /// Set logger text and auto hide the panel after _delayTime

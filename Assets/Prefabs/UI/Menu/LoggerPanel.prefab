@@ -1,5 +1,84 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &986604005187822895
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4632195975016079083}
+  - component: {fileID: 7034460558025729626}
+  m_Layer: 5
+  m_Name: AddEffectLogger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &4632195975016079083
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 986604005187822895}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 5309947716781742760}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &7034460558025729626
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 986604005187822895}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac2cf04725531f749a4908896cb9bde1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _presentLoggerEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3062763335464865199}
+        m_TargetAssemblyTypeName: CryptoQuest.Menus.Item.UI.UIMenuLogger, IndiGames.CryptoQuest.Menus.Item
+        m_MethodName: SetLoggerText
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  _messageLog:
+    m_TableReference:
+      m_TableCollectionName: GUID:810dd60b781de0a4589f9f164a4b0a8c
+    m_TableEntryReference:
+      m_KeyId: 942061969444
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  _tagAttributeMappings:
+  - Tag: {fileID: 11400000, guid: aa2e47f619a8cc143a7db05c21962c9e, type: 2}
+    Attribute: {fileID: 11400000, guid: 24a1586ced727e44589346aa7eb0c294, type: 2}
+  _attributeConfigMapping: {fileID: 11400000, guid: bbbb07ca878ba794db30359afe0e06f4, type: 2}
+  references:
+    version: 2
+    RefIds: []
 --- !u!1 &1666553092157181688
 GameObject:
   m_ObjectHideFlags: 0
@@ -612,6 +691,7 @@ MonoBehaviour:
   _text: {fileID: 5823150769588528370}
   _panel: {fileID: 5082259340805782263}
   _delayTime: 3
+  _clearMenuLoggerEvent: {fileID: 11400000, guid: 9e95f67cd0e48ae449c05b05ab8441c4, type: 2}
 --- !u!1 &6806434349276912136
 GameObject:
   m_ObjectHideFlags: 0
@@ -718,6 +798,7 @@ RectTransform:
   - {fileID: 2961192426988124110}
   - {fileID: 4127307578392900715}
   - {fileID: 7484164240995660635}
+  - {fileID: 4632195975016079083}
   - {fileID: 835245520634838761}
   - {fileID: 3894278535949656735}
   - {fileID: 556204319412761239}
@@ -824,7 +905,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 0c164956786943a46b545cc58cc139f9, type: 2}
   - {fileID: 11400000, guid: 0d7a5bc26b58515459d9e824964fd7f8, type: 2}
   - {fileID: 11400000, guid: 6762f359f1a736c45b2df614e80aef45, type: 2}
-  - {fileID: 11400000, guid: 24a1586ced727e44589346aa7eb0c294, type: 2}
   _attributeConfigMapping: {fileID: 11400000, guid: bbbb07ca878ba794db30359afe0e06f4, type: 2}
   references:
     version: 2
