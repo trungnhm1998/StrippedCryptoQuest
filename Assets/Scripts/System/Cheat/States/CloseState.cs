@@ -21,12 +21,14 @@ namespace CryptoQuest.System.Cheat.States
 
         private void OpenTerminal()
         {
+#if DEVELOPMENT_BUILD || UNITY_EDITOR || ENABLE_CHEAT
             if (Manager.GameState.CurrentGameState is EGameState.Field or EGameState.Battle)
             {
                 Manager.Input.DisableAllInput();
                 var openFull = Anim.GetBool(CheatManager.FullSize);
                 Anim.Play(openFull ? "OpenFull" : "OpenSmall");
             }
+#endif
         }
     }
 }
