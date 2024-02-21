@@ -61,6 +61,13 @@ namespace CryptoQuest.System.SaveSystem.Sagas
         {
             Debug.Log("LoadSave: " + JsonConvert.SerializeObject(response));
             if (response.code != (int)HttpStatusCode.OK) return;
+
+            if (response.data.ids.Length == 0)
+            {
+                UseNewSaveOnError(new Exception("No save found"));
+                OnComplete();
+                return;
+            }
             var restClient = ServiceProvider.GetService<IRestClient>();
             restClient
                 .Get<SaveDataResponse>(Accounts.USER_SAVE_DATA + "/" + response.data.ids[0])
