@@ -14,6 +14,7 @@ namespace CryptoQuest.Sagas
     public class WalletConnectSaga : SagaBase<ConnectWallet>
     {
         private const string WALLET_CONNECT_URL = "crypto/wallet/connect";
+        [SerializeField] private Credentials _credentials;
 
         [Serializable]
         public struct RequestBody
@@ -73,6 +74,7 @@ namespace CryptoQuest.Sagas
         private void WalletConnected(WalletResponse response)
         {
             Debug.Log("WalletConnected: address = " + response.Data.Address + ", metad = " + response.Data.Metad);
+            _credentials.Wallet = response.Data.Address;
             ActionDispatcher.Dispatch(new ConnectWalletCompleted(true));
         }
 
